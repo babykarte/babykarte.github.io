@@ -54,7 +54,7 @@ Beginn der allgemeinen Behandlung des Themas mit Bezug zu der Babykarte.
   - Den Namen des Betriebssystems, welches Du nutzt um ins Internet zu gehen.
   - Beispiel: Windows 10, Linux/Debian
 - die Seite woher der Nutzer kommt (Referrerurl).
-  - Die Internetseite, von der die Anfrage an den OSM Server, an komoot etc. kommt. Im Fall der Babykarte wird es immer die Internetadresse der Babykarte sein. Diese ist http://Babykarte.github.io
+  - Die Internetseite, von der die Anfrage an den OSM Server, an komoot etc. kommt. Im Fall der Babykarte wird es immer die zukünftige Internetadresse der Babykarte sein.
 
 ### Standort des Nutzers
 Idealerweise fragt Dein Browser nach, ob die Babykarte Deinen Standort verwenden darf. Wenn Du zustimmst, dann springt die Kaffee zu dem Punkt auf der Weltkarte, an der Dein Browser Deine Position vermutet. Dieser Standort ist je nach verwendeter Ermittlungsmethode nicht unbedingt genau. Bei der Verwendung von Standortdiensten wie GPS ist das Ergebnis um viel mehr genauer als bei der Verwendung Deiner öffentlichen IP Adresse zur Ermittlung Deines Standortes. Wenn Du nicht zustimmen solltest, so springt die Babykarte in einen Park in München oder zu der gewünschten Adresse, die vorher in der Url specifiziert wurde. Wenn Dein Browser Dich nicht fragt, dann hat die Babykarte nicht die Erlaubnis auf Deinen Standort zuzugreifen. Sie funktioniert auch ohne Standort. Sollte dies dennoch der Fall sein, dass die Babykarte auf Deinen Standort zugreifen kann und Du wurdest nicht gefragt, dann a) Du hast schon einmal die Nachfrage erhalten und zusätzlich zur Zusage Deinem Browser gesagt, dass er Deine Entscheidung speichern soll, b) Du verwendest einen schlechten Browser und solltest zu einem anderen wechseln.
