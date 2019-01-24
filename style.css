@@ -1,0 +1,113 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+html, body, #map {
+	height: 100%;
+	width: 100%;
+}
+a {
+	color:#0078a8;
+}
+details {
+	padding-top:5px;
+	padding-bottom:5px;
+}
+details summary {
+	font-size:14px;
+	color:grey;
+	font-weight:bold;
+}
+h3 {
+	display:inline;
+	margin-bottom:0px;
+	color:grey;
+}
+ul {
+	padding-top:5px;
+	padding-bottom:5px;
+}
+ul:hover {
+	cursor:pointer;
+	background-color:#d9d9d9;
+}
+section {
+	display:flex;
+	width:100%;
+	height:100%;
+}
+.layermenu {
+	width:25%;
+	height:inherit;
+}
+.map {
+	width:75%;
+	height:inherit;
+}
+.specialbtn {
+	text-decoration:none;
+	background-color:rgba(51, 102, 255, 0.1);
+	border:2px solid #2a8db7;
+	border-radius:5px;
+	padding:5px;
+	margin-right:10px;
+	margin-top:5px;
+	font-size:14px;
+	display:inline-block;
+}
+.info {
+	font-size:22px;
+	top:0px;
+	text-align:center;
+	z-index:2;
+	position:fixed;
+	width:100%;
+	/*border-bottom:1px solid rgb(115, 115, 115, 0.6);
+	background-color:rgba(255, 255, 255, 0.6);*/
+	border-bottom:1px solid rgb(13, 107, 186, 0.6);
+	background-color:rgba(35, 159, 255,0.6);
+}
+.leaflet-control-container {
+	z-index:3;
+}
+.searchImg:hover + #extended {
+	display:block;
+}
+input[type=button] {
+	margin-top:10px;
+}
+#map{
+	z-index:1;
+}
+#extended{
+	display:none;
+}
+.searchImg {
+	display:block;
+	height:40px;
+	width:40px;
+	background-color:white;
+}
+#overpass-api-controls {
+	padding: 10px;
+	background-color: rgb(255, 255, 255);
+}
+#overpass-api-controls a {
+	display: inline;
+}
+#searchfield {
+	padding-top:10px;
+	padding-bottom:10px;
+}
+#smokingPermitted {
+	width:50px;
+	height:50px;
+}
+#wlanIcon {
+	width:50px;
+	height:50px;
+}
+#positiveIcon {
+	width:30px;
+	height:20px;
+}
