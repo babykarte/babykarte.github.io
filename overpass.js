@@ -1,7 +1,7 @@
 
       function createfn(){
         var oac = document.getElementById("filtersGround");
-        for (var [key, value] of coffee_keys.entries()) {
+        for (var [key, value] of baby_keys.entries()) {
           var entry = document.createElement('input');
           entry.type = "checkbox";
           entry.id = key;
@@ -103,12 +103,25 @@
         }
       }
       function checkboxes2overpass(){
+      	var bounds = map.getBounds().getSouth() + ',' + map.getBounds().getWest() + ',' + map.getBounds().getNorth() + ',' + map.getBounds().getEast();
         var checkBox;
         var andquery = ""
-        for (var [key, value] of coffee_keys.entries()) {
+        for (var [key, value] of baby_keys.entries()) {
           checkBox = document.getElementById(key);
           if (checkBox.checked == true){
-            andquery += "[" + value + "]";
+          	if (value.indexOf(";") > -1) {
+          		for (var item in value.split(";")) {
+          			andquery += "node[" + item + "]";
+          		}
+          		andquery += "(" + bounds + ");";
+          		for (var item in value.split(";")) {
+          			andquery += "way[" + item + "]";
+          		}
+          		andquery += "(" + bounds + ");";
+          	} else {
+            	andquery += "node[" + value + "](" + bounds + ");";
+            	andquery += "way[" + value + "](" + bounds + ");";
+            }
           }
         }
         return andquery;
@@ -133,20 +146,8 @@
         north_old = map.getBounds().getNorth();
         east_old = map.getBounds().getSouth();
         var overpassQuery = checkboxes2overpass()
-        var amen = 'node["amenity"="cafe"]';
-        if (document.getElementById("restaurant").checked == true) {
-          //amen = 'node[\"amenity\"~\"cafe|restaurant|bakery\"]';
-          amen = 'node["amenity"~"restaurant|cafe"]';
-        }
-        var ncafe = amen + overpassQuery + '(' + bounds + ');';
-        var ncoffee = 'node["drink:coffee"="yes"]' + overpassQuery + '(' + bounds + ');';
-        var wcafe = 'way["amenity"="cafe"]' + overpassQuery + '(' + bounds + ');';
-        var wcoffee = 'way["drink:coffee"="yes"]' + overpassQuery + '(' + bounds + ');';
-        ncoffee += 'node["cuisine"~"coffee_shop"]' + overpassQuery + '(' + bounds + ');';
-        ncoffee += 'node["vending"="coffee"]' + overpassQuery + '(' + bounds + ');';
-        wcoffee = wcoffee + 'way["cuisine"~"coffee_shop"]' + overpassQuery + '(' + bounds + ');';
-        var query = '?data=[out:json][timeout:15];(' + ncafe + ncoffee + wcafe + wcoffee +');out body center;';
-        var baseUrl = 'https://overpass-api.de/api/interpreter';
+        var query = "?data=[out:json][timeout:15];" + overpassQuery + "out body center;";
+        var baseUrl = "https://overpass-api.de/api/interpreter";
         var resultUrl = baseUrl + query;
         return resultUrl;
       }
@@ -180,14 +181,22 @@ function getStateFromHash() {
 	}
 }
 //init map
-var coffee_keys = new Map();
-coffee_keys.set("Aussenbereich", "\"outdoor_seating\"!=\"no\"");
-coffee_keys.set("Siebtraeger", "\"drink:coffee:portafilter\"=\"yes\"");
-coffee_keys.set("Vollautomat", "\"drink:coffee:automatic\"=\"yes\"");
-coffee_keys.set("ToGo", "\"drink:coffee:togo\"~\"yes|deposit|only\"");
-coffee_keys.set("Wickeltisch", "\"diaper\"=\"yes\"");
+var baby_keys = new Map();
+baby_keys.set("Kinderärzte", "\"healthcare\"=\"doctor\";\"healthcare:speciality\"=\"paediatrics\"");
+baby_keys.set("Hebamme", "\"healthcare\"=\"midwife\"");
+baby_keys.set("Spielplätze", "\"leisure\"=\"playground\"");
+baby_keys.set("Babysachen einkaufen", "\"shop\"=\"baby goods\"");
+baby_keys.set("Spielsachen einkaufen", "\"shop\"=\"toys\"");
+baby_keys.set("Kinderkleidung einkaufen", "\"shop\"=\"clothes\";\"clothes\"=\"babies\";\"clothes\"=\"children\"");
+baby_keys.set("Kindergärten", "\"amenity\"=\"kindergarten\"");
+baby_keys.set("Zoo", "\"tourism\"=\"zoo\"");
+baby_keys.set("Puppentheater", "\"amenity\"=\"theatre\";\"theatre:genre\"=puppet\"");
+baby_keys.set("Tierattraktionen", "\"attraction\"=\"animal\"");
+baby_keys.set("Wickelplätze", "\"diaper\"=\"yes\"");
+baby_keys.set("Cafès", "\"amenity\"=\"cafe\"");
+baby_keys.set("Restaurant", "\"amenity\"=\"restaurant\"");
 var map = L.map('map')
-map.options.maxZoom = 19;
+map.options.maxZoom = 17;
 map.options.minZoom = 10;
 map.setView([saved_lat, saved_lon], 15);
 maxSouth = map.getBounds().getSouth();
