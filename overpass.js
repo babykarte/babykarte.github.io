@@ -105,26 +105,27 @@
       function checkboxes2overpass(){
       	var bounds = map.getBounds().getSouth() + ',' + map.getBounds().getWest() + ',' + map.getBounds().getNorth() + ',' + map.getBounds().getEast();
         var checkBox;
-        var andquery = ""
+        var andquery = "(";
         for (var [key, value] of baby_keys.entries()) {
           checkBox = document.getElementById(key);
           if (checkBox.checked == true){
           	if (value.indexOf(";") > -1) {
+          		andquery += "node"
           		for (var item in value.split(";")) {
-          			andquery += "node[" + item + "]";
+          			andquery += "[" + item + "]";
           		}
-          		andquery += "(" + bounds + ");";
+          		andquery += "(" + bounds + ");way";
           		for (var item in value.split(";")) {
-          			andquery += "way[" + item + "]";
+          			andquery += "[" + item + "]";
           		}
-          		andquery += "(" + bounds + ");";
+          		andquery += "(" + bounds + "););";
           	} else {
             	andquery += "node[" + value + "](" + bounds + ");";
             	andquery += "way[" + value + "](" + bounds + ");";
             }
           }
         }
-        return andquery;
+        return andquery + ");";
       }
       function parseOpening_hours(value) {
       	var toTranslate = {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"};
@@ -165,7 +166,7 @@
           	//Analysing, filtering and preparing for display of the OSM keys
           	
           	//and then finally add then to Popup
-          	marker.bindPopup(poi.properties.tags["name"]);
+          	marker.bindPopup(poi.properties.tags["name"] + "<br/> " + poi.properties.tags["leisure"]);
           }
         });
       }

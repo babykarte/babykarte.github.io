@@ -24,12 +24,19 @@ h3 {
 	color:grey;
 }
 ul {
+	list-style-type: none;
 	padding-top:5px;
 	padding-bottom:5px;
+	padding-left:0px;
+	margin:0px;
+	color:#142a52;
 }
 ul:hover {
 	cursor:pointer;
-	background-color:#d9d9d9;
+	background-color:#c6ebc6;
+}
+li {
+	list-style-type: none;
 }
 section {
 	display:flex;
@@ -78,7 +85,7 @@ input[type=button] {
 }
 #map{
 	z-index:1;
-}
+}#c6ebc6
 #extended{
 	display:none;
 }
@@ -98,6 +105,16 @@ input[type=button] {
 #searchfield {
 	padding-top:10px;
 	padding-bottom:10px;
+}
+#autocomplete {
+	padding:5px;
+	z-index:5;
+	position:absolute;
+	top:0px;
+	background-color:white;
+	border-radius:5px;
+	border:1px solid #142a52;
+	left:15%;
 }
 #smokingPermitted {
 	width:50px;
