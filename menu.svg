@@ -28,24 +28,24 @@
      transform="translate(0,-124)"
      id="layer1">
     <rect
-       y="129.17857"
-       x="3.779762"
-       height="15.119046"
-       width="201.83929"
+       y="129"
+       x="4"
+       height="12"
+       width="100"
        id="rect10"
        style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:9.56499958;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
-       y="204.01785"
-       x="4.9136858"
-       height="15.119046"
-       width="201.83929"
+       y="174"
+       x="4"
+       height="12"
+       width="100"
        id="rect10-6"
        style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:9.56499958;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
-       y="277.72321"
-       x="3.9687457"
-       height="15.119046"
-       width="201.83929"
+       y="217"
+       x="4"
+       height="12"
+       width="100"
        id="rect10-6-5"
        style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:9.56499958;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>

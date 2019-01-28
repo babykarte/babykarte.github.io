@@ -53,6 +53,8 @@ section {
 	z-index:1;
 	width:33.34%;
 	height:100%;
+	padding-left:5px;
+	padding-right:4px;
 }
 .specialbtn {
 	text-decoration:none;
@@ -77,10 +79,11 @@ section {
 }
 #menubutton {
 	display:none;
-	padding-left:5px;
-	padding-right:5px;
+	margin-top:12px; 
+	margin-left:10px;
+	margin-right:-10px;
 	width:50px;
-	height:50px;
+	opacity:0.7;
 }
 #map{
 	z-index:1;
@@ -89,8 +92,10 @@ section {
 #searchfield {
 	padding-top:10px;
 	padding-bottom:10px;
+	padding-left:5px;
 	margin-top:5px;
 	margin-bottom:5px;
+	margin-left:4px;
 	width:95%;
 }
 #autocomplete {
@@ -118,5 +123,8 @@ section {
 #map {
 	width:100%;
 	height:calc(100% - 15px);
+}
+#searchfield {
+	margin-right:20px;
 }
 }
