@@ -2,7 +2,7 @@ body {
 	padding: 0;
 	margin: 0;
 }
-html, body, #map {
+html, body{
 	height: 100%;
 	width: 100%;
 }
@@ -24,19 +24,19 @@ h3 {
 	color:grey;
 }
 ul {
-	list-style-type: none;
-	padding-top:5px;
-	padding-bottom:5px;
-	padding-left:0px;
+	list-style-type:none;
 	margin:0px;
+	padding:0px;
 	color:#142a52;
 }
-ul:hover {
+li {
+	list-style-type:none;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+li:hover {
 	cursor:pointer;
 	background-color:#c6ebc6;
-}
-li {
-	list-style-type: none;
 }
 section {
 	display:flex;
@@ -44,12 +44,9 @@ section {
 	height:100%;
 }
 .layermenu {
+	z-index:1;
 	width:33.34%;
-	height:inherit;
-}
-.map {
-	width:66.66%;
-	height:inherit;
+	height:100%;
 }
 .specialbtn {
 	text-decoration:none;
@@ -66,65 +63,55 @@ section {
 	font-size:22px;
 	top:0px;
 	text-align:center;
-	z-index:2;
+	z-index:3;
 	position:fixed;
 	width:100%;
-	/*border-bottom:1px solid rgb(115, 115, 115, 0.6);
-	background-color:rgba(255, 255, 255, 0.6);*/
 	border-bottom:1px solid rgb(13, 107, 186, 0.6);
 	background-color:rgba(35, 159, 255,0.6);
 }
-.leaflet-control-container {
-	z-index:3;
-}
-.searchImg:hover + #extended {
+.layermenu:hover {
 	display:block;
 }
 input[type=button] {
 	margin-top:10px;
 }
+input[type=checkbox] {
+	margin-top:5px;
+}
 #map{
 	z-index:1;
-}#c6ebc6
-#extended{
-	display:none;
-}
-.searchImg {
-	display:block;
-	height:40px;
-	width:40px;
-	background-color:white;
-}
-#overpass-api-controls {
-	padding: 10px;
-	background-color: rgb(255, 255, 255);
-}
-#overpass-api-controls a {
-	display: inline;
+	flex:1;
 }
 #searchfield {
 	padding-top:10px;
 	padding-bottom:10px;
+	margin-top:5px;
+	margin-bottom:5px;
+	width:95%;
 }
 #autocomplete {
+	display:none;
 	padding:5px;
 	z-index:5;
-	position:absolute;
+	position:relative;
 	top:0px;
 	background-color:white;
-	border-radius:5px;
-	border:1px solid #142a52;
-	left:15%;
+	/*border-radius:5px;
+	border:1px solid #142a52;*/
 }
-#smokingPermitted {
-	width:50px;
+@media only screen and (max-width:800px) {
+section {
+	display:block;
+}
+.searchImg {
+	display:block;
+}
+.layermenu {
+	width:100%;
 	height:50px;
 }
-#wlanIcon {
-	width:50px;
-	height:50px;
+#map {
+	width:100%;
+	height:100%;
 }
-#positiveIcon {
-	width:30px;
-	height:20px;
 }

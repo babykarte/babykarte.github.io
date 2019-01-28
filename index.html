@@ -10,18 +10,16 @@
   <body>
   	<div class="info" id="infoPopup" style="display:none;"></div>
   	<section>
-  	<div style='display:none;' id='restaurant'></div>
-  	<div id="layermenu">
+  	<div class="layermenu">
      	<div id="searchgroup">
      		<input type="text" onclick="geocode()" placeholder="Stadt" id="searchfield" /><br/>
 			<div id="autocomplete"></div>
 		</div>
 		<div id="filtersGround"></div>
-		<input id="query-button" type="button" value="Neu laden"><br/>
-        <a href="https://github.com/kaffeekarte/kaffeekarte.github.io/blob/master/README.md" target="_blank;" style="color:#0078a8;">Über das Projekt</a>
+		<input id="query-button" type="button" value="Filter anwenden"><br/>
+        <a href="https://github.com/Discostu36/Baby-Karte/blob/master/README.md" target="_blank;" style="color:#0078a8;">Über das Projekt</a>
     </div>
-    <div id="map">
-	</div>
+    <div id="map"></div>
 	</section>
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

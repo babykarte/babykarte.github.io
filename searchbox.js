@@ -63,16 +63,17 @@ function geocode() {
 			"lang": languageOfUser
 		}, function(data) {
 			var current_bounds = map.getBounds();
-			var autocomplete_content = "<li>";
+			var autocomplete_content = "<ul>";
 
 			$.each(data.features, function(number, feature) {
 				var latlng = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
 
-				autocomplete_content += "<ul onclick='jumpto(" + latlng[0] + ", " + latlng[1] + ", \"" + feature.properties.name + ", " + feature.properties.country + "\")'>" + feature.properties.name + ", " + feature.properties.country + "</ul>";
+				autocomplete_content += "<li onclick='jumpto(" + latlng[0] + ", " + latlng[1] + ", \"" + feature.properties.name + ", " + feature.properties.country + "\")'>" + feature.properties.name + ", " + feature.properties.country + "</li>";
 			});
-
-			$("#autocomplete").html(autocomplete_content+"</li>");
-			$("#autocomplete").show();
+			if (autocomplete) {
+				$("#autocomplete").html(autocomplete_content+"</ul>");
+				$("#autocomplete").show();
+			}
 		});
 	}
 };
