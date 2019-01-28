@@ -194,10 +194,10 @@ baby_keys.set("Zoo", "\"tourism\"=\"zoo\"");
 baby_keys.set("Puppentheater", "\"amenity\"=\"theatre\";\"theatre:genre\"=puppet\"");
 baby_keys.set("Tierattraktionen", "\"attraction\"=\"animal\"");
 baby_keys.set("Wickelplätze", "\"diaper\"=\"yes\"");
-baby_keys.set("Cafès", "\"amenity\"=\"cafe\"");
+baby_keys.set("Cafés", "\"amenity\"=\"cafe\"");
 baby_keys.set("Restaurant", "\"amenity\"=\"restaurant\"");
 var map = L.map('map')
-map.options.maxZoom = 17;
+map.options.maxZoom = 19;
 map.options.minZoom = 10;
 map.setView([saved_lat, saved_lon], 15);
 maxSouth = map.getBounds().getSouth();
@@ -209,7 +209,7 @@ map.on("click", function(e) {location.hash = String(map.getZoom()) + "&" + Strin
 map.on("moveend", locateNewArea);
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 17,
+  maxZoom: 19,
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 map.locate({setView: true});
