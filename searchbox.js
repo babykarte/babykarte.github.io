@@ -6,9 +6,16 @@ var maxSouth = 0;
 var maxWest = 0;
 var maxNorth = 0;
 var maxEast = 0;
-var languageOfUser, south_old, west_old, north_old, east_old, maxSouth, maxWest, maxNorth, maxEast;
+var languageOfUser, south_old, west_old, north_old, east_old, message;
 var poi_markers = new Array();
-var message;
+function toggleFilterList() {
+	var obj = document.getElementsByClassName("layermenu")[0]
+	if (obj.style.height != "auto") {
+		obj.style.height = "auto";
+	} else {
+		obj.style.height = "50px";
+	}
+}
 function showGlobalPopup(m) {
 	message = m
 	setTimeout(function() {

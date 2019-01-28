@@ -2,29 +2,31 @@
 <html>
   <head>
     <title>Babykarte</title>
-  	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-    <link rel="stylesheet" href="/style.css" />
+  	<meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <link rel='stylesheet' href='https://unpkg.com/leaflet@1.0.3/dist/leaflet.css' />
+    <link rel='stylesheet' href='/style.css' />
   </head>
   <body>
-  	<div class="info" id="infoPopup" style="display:none;"></div>
+  	<div class='info' id='infoPopup' style='display:none;'></div>
   	<section>
-  	<div class="layermenu">
-     	<div id="searchgroup">
-     		<input type="text" onclick="geocode()" placeholder="Stadt" id="searchfield" /><br/>
-			<div id="autocomplete"></div>
+  	<div class='layermenu'>
+     	<div id='searchgroup'>
+     		<div style='display:flex;'>
+     			<img id='menubutton' src='/menu.svg' onclick='toggleFilterList()' alt='Menü'></img> <input type='text' onclick='geocode()' placeholder='Stadt' id='searchfield' />
+     		</div>
+			<div id='autocomplete'></div>
 		</div>
-		<div id="filtersGround"></div>
-		<input id="query-button" type="button" value="Filter anwenden"><br/>
-        <a href="https://github.com/Discostu36/Baby-Karte/blob/master/README.md" target="_blank;" style="color:#0078a8;">Über das Projekt</a>
+		<div id='filtersGround'></div>
+		<input id='query-button' type='button' value='Filter anwenden'><br/>
+        <a href='https://github.com/Discostu36/Baby-Karte/blob/master/README.md' target='_blank;' style='color:#0078a8;'>Über das Projekt</a>
     </div>
-    <div id="map"></div>
+    <div id='map'></div>
 	</section>
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://unpkg.com/osmtogeojson@2.2.12/osmtogeojson.js"></script>
-    <script src="/searchbox.js"></script>
-    <script src="/overpass.js"></script>
+    <script src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js'></script>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script src='https://unpkg.com/osmtogeojson@2.2.12/osmtogeojson.js'></script>
+    <script src='/searchbox.js'></script>
+    <script src='/overpass.js'></script>
   </body>
 </html>
