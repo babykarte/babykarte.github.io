@@ -18,7 +18,14 @@ ToDo: Liste erstellen.
 Die Babykarte nutzt folgende Drittanbieter. Ihre Funktion ist ebenso beschrieben. Die Babykarte selber wertet keine Nutzerdaten aus. Sie leitet die Eingaben des Nutzers lediglich nur weiter.
 
 - Photon von Komoot
-  - Suchanbieter, nutzt Nutzerdaten nicht.
+  - Suchanbieter
+  - Siehe [Komoot's Privacy Policy](https://www.komoot.de/privacy)
+- Unpkg
+  - Cacheserver, nutzt Google Sites.
+  - Siehe [Google's Privacy Policy](https://policies.google.com/privacy#infocollect)
+- JQuery Cacheserver
+  - Cacheserver, nutzt digitalocean als Webhoster
+  - Siehe [DigitalOcean's Privacy Policy](https://www.digitalocean.com/legal/privacy-policy/)
 - OpenStreetMap Tiles
   - Map Tiles; Darstellung der Karte.
   - Erfasst anonymisiert Daten, die erforderlich sind z.B. um Missbrauch der OSM Server zu vermeiden bzw. zu erkennen. OSM hat ne strenge aber akzeptable [Usage Policy](https://operations.osmfoundation.org/policies/tiles/).
