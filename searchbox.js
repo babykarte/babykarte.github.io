@@ -2,12 +2,7 @@
 var supported_languages = ["de", "en", "it", "fr"]
 var saved_lat = 48.160474925320834;
 var saved_lon = 11.4992094039917;
-var maxSouth = 0;
-var maxWest = 0;
-var maxNorth = 0;
-var maxEast = 0;
-var languageOfUser, south_old, west_old, north_old, east_old, message;
-var poi_markers = new Array();
+var languageOfUser, message;
 function toggleFilterList() {
 	var obj = document.getElementsByClassName("layermenu")[0]
 	if (obj.style.height != "auto") {
