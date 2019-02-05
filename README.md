@@ -63,6 +63,13 @@ Beginn der allgemeinen Behandlung des Themas mit Bezug zu der Babykarte.
 - die Seite woher der Nutzer kommt (Referrerurl).
   - Die Internetseite, von der die Anfrage an den OSM Server, an komoot etc. kommt. Im Fall der Babykarte wird es immer die zukünftige Internetadresse der Babykarte sein.
 
+### Andere Definitionen
+
+#### Cacheserver
+Ein Cacheserver speichert Dateien, die oft von den Browsern der Nutzer angefragt werden. Dadurch wird die Ladezeit einer Webseite in Deinem Browser verkürzt. Cacheserver dienen Webseitenentwicklern als Speicherort für in der Programmierung häufig benötigten Dateien. Cacheserver können maschinell, durch Erhebung von Browserdaten, aber auch von Hand gepflegt werden. Wenn sie von Hand gepflegt werden, dann stimmen sich mehrere Entwickler ab oder der Serverbetreiber/Servermieter orientiert sich an den verwendeten Standards.
+
+Eine häufig verwendete Datei in der Webprogrammierung nennt sich z.B. "JQuery", von dem es auch mehrere Versionen gibt. Diese Datei erleichert Programmierern die Arbeit und verkürzt deren Code, was sich positiv auf die Ladeperformance Deines Browsers auswirkt. Dadurch, dass die Datei von vielen Webentwicklern verwendet und damit von vielen Webseiten angefordert wird, lohnt es sich diese Datei an einem Ort abzuspeichern, damit Dein Browser diese nur einmal herunterladen muss und das Laden von Webseiten sich verschnellert.
+
 ### Standort des Nutzers
 Idealerweise fragt Dein Browser nach, ob die Babykarte Deinen Standort verwenden darf. Wenn Du zustimmst, dann springt die Kaffee zu dem Punkt auf der Weltkarte, an der Dein Browser Deine Position vermutet. Dieser Standort ist je nach verwendeter Ermittlungsmethode nicht unbedingt genau. Bei der Verwendung von Standortdiensten wie GPS ist das Ergebnis um viel mehr genauer als bei der Verwendung Deiner öffentlichen IP Adresse zur Ermittlung Deines Standortes. Wenn Du nicht zustimmen solltest, so springt die Babykarte in einen Park in München oder zu der gewünschten Adresse, die vorher in der Url specifiziert wurde. Wenn Dein Browser Dich nicht fragt, dann hat die Babykarte nicht die Erlaubnis auf Deinen Standort zuzugreifen. Sie funktioniert auch ohne Standort. Sollte dies dennoch der Fall sein, dass die Babykarte auf Deinen Standort zugreifen kann und Du wurdest nicht gefragt, dann a) Du hast schon einmal die Nachfrage erhalten und zusätzlich zur Zusage Deinem Browser gesagt, dass er Deine Entscheidung speichern soll, b) Du verwendest einen schlechten Browser und solltest zu einem anderen wechseln.
 
@@ -93,9 +100,6 @@ Dies kann mehrere Gründe haben.
 - Vom Browser gespeicherte Informationen kann man von diesem nach dem Beenden löschen lassen.
 
 ### Anmerkungen von Valor Naram
-
 Ich - Valor Naram - erhalte keine Daten bei der Nutzung der Babykarte vom Nutzer. Mich persönlich interessieren diese Daten auch nicht. Ich weiß nicht, was der Nutzer mit der Babykarte macht. Ich kann nur mutmaßen und Theorien aufstellen.
 
 Ich bin laut TMG (Telemediengesetz) auch kein Diensteanbieter. Ein Diensteanbieter bietet eine normalerweise gegen Entgelt angebotene Dienstleistung an. Mit dieser Dienstleistung versucht er sich zu profillieren. Ich als jmd. der die Babykarte in seiner Frezeit entwickelt, profilliert sich davon nicht.
-
-Ich helfe nur dem Ideengeber, da er selber nicht gut programmieren kann bzw. nicht genug Zeit dafür hat. Ich selber profitiere nicht davon, dass ich die Babykarte entwickele. Ich mache das ehrenamtlich, mir macht das Coden Spaß und möchte anderen Menschen helfen. Ich selber trinke kein Kaffee, ich mag dieses Getränk nicht.

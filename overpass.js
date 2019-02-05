@@ -1,15 +1,18 @@
 function locationFound(e) {
+	//Clicks on the button, so we jump to the coordinates of the user.
 	document.getElementById('query-button').click();
+	//Fires the notification that Babykarte shows the location of the user.
 	showGlobalPopup("Dein Standort.");
 }
 function locationError(e) {
+	//Fires the notification that Babykarte shows NOT the location of the user, because it has no permission to do so.
 	showGlobalPopup("Standort nicht ermittelbar.");
 }
-function checkboxes2overpass(bounds=undefined, actFilter=undefined){
-	if (bounds == undefined) {
+function checkboxes2overpass(bounds, actFilter){ //Bug found, function gets not called correctly. But why?
+	if (!bounds) {
 		bounds = map.getBounds().getSouth() + ',' + map.getBounds().getWest() + ',' + map.getBounds().getNorth() + ',' + map.getBounds().getEast();
 	}
-	if (actFilter == undefined) {
+	if (!actFilter) {
 		actFilter = activeFilter;
 	}
 	var andquery = "(";
@@ -33,11 +36,11 @@ function checkboxes2overpass(bounds=undefined, actFilter=undefined){
 	return andquery + ");";
 }
 function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
+	//Complex algorithm. It calculates the coordinates when the user moves the map. Then the coordinates will be used to fetch just more POIs without overwriting/overlaying the existing ones.
 	//NORTH: Number increases when moving to the top (North)
 	//SOUTH: Number decreases when moving to the bottom (South)
 	//WEST: Number decreases when moving to the left (West)
 	//EAST: Number increases when moving to the right (East)
-	console.log(fltr);
 	var accuracy = 0.001;
 	var clear = 0;
 	var loadingAllowed = false;
@@ -124,34 +127,42 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 		filter[fltr].coordinates.max.west = west_new;
 		filter[fltr].coordinates.max.north = north_new;
 		filter[fltr].coordinates.max.east = east_new;
-		return checkboxes2overpass(south_new + ',' + west_new + ',' + north_new + ',' + east_new, dict);
+		return checkboxes2overpass(String(south_new) + ',' + String(west_new) + ',' + String(north_new) + ',' + String(east_new), dict);
 	}
 	return false;
 }
 function locateNewAreaBasedOnFilter() {
+	//Wrapper around locateNewArea().
+	//Adds filter compactibility to locateNewArea() function.
 	var url = "";
 	for (var fltr in activeFilter) {
 		url += locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
+		url = url.replace(");(", "") //Removes the delimiter between Overpass union syntax, because we want to have just one 'union' tag. Combines two (or more 'union's (we're in a loop)) into one.
 	}
 	loadPOIS(url=url);
 }
 function parseOpening_hours(value) {
+	//Parsing opening hours syntax of OSM.
+	// var toTranslate = {"<OSM expression>": "<human expression, will be shown to user instead of <OSM expression>>", ...}
 	var toTranslate = {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"};
 	var syntaxToHTML = {"; " : "<br/>", ";" : "<br/>",  "," : ", ", "-" : " - "}
+	//Translates by replacing <OSM expression>'s with the respective <human expression>'s.
 	for (var item in toTranslate) {
 		value = value.replace(new RegExp(item, "g"), "<b>" + toTranslate[item] + "</b>");
 	}
+	//Do some translating of special command chars into HTML code or beautiful looking human speech.
 	for (var item in syntaxToHTML) {
 		value = value.replace(new RegExp(item, "g"), "<b>" + syntaxToHTML[item] + "</b>");
 	}
    	return value
 }
-function buildOverpassApiUrlFromCheckboxes(overpassQuery=undefined) {
+function buildOverpassApiUrlFromCheckboxes(overpassQuery) {
+	//Wrapper araund checkboxes2overpass() function to support filters.
 	/*south_old = map.getBounds().getSouth();
 	west_old = map.getBounds().getWest();
 	north_old = map.getBounds().getNorth();
 	east_old = map.getBounds().getSouth();*/
-	if (overpassQuery == undefined) {
+	if (!overpassQuery) {
 		overpassQuery = checkboxes2overpass();
 	}
 	var query = "?data=[out:json][timeout:15];" + overpassQuery + "out body center;";
@@ -159,22 +170,29 @@ function buildOverpassApiUrlFromCheckboxes(overpassQuery=undefined) {
 	var resultUrl = baseUrl + query;
 	return resultUrl;
 }
-function loadPOIS(bounds="", url=undefined, clear=1) {
-	if (clear == 1) {
-		Layergroup.clearLayers();
-	}
-	if (url == undefined) {
+function loadPOIS(e, url) {
+	//Main function of POI loading.
+	//Handles connection to OSM Overpass server and parses the response into beautiful looking details view for each POI
+	if (!url) {
+		//No url was specified, because none of the filter functions called it.
 		url = buildOverpassApiUrlFromCheckboxes();
+	} else {
+		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + url + "out body center;";
 	}
+	console.log(url);
+	//Connect to OSM server
 	$.get(url, function (osmDataAsJson) {
+		//Convert to GEOjson, a special format for handling with coordinate details (POI's).
 		var resultAsGeojson = osmtogeojson(osmDataAsJson);
 		for (var poi in resultAsGeojson.features) {
 			var poi = resultAsGeojson.features[poi];
+			//creates a new Marker() Object and groups into the layers given by our filters.
 			var marker = groupIntoLayers(poi);
 			//Analysing, filtering and preparing for display of the OSM keys
 			
 			//and then finally add then to Popup
 			marker.bindPopup(poi.properties.tags["name"] + "<br/> " + poi.properties.tags["leisure"]);
+			//Show marker on map
 			marker.addTo(map);
 		}
 	});
