@@ -14,7 +14,16 @@ ToDo: Liste erstellen.
 
 ## Datenerhebung (von der Babykarte nicht selber durchgeführt)
 
-### Nutzungsdaten
+### Nutzungsdaten (Fließtext)
+Die Babykarte nutzt folgende Drittanbieter. Ihre Funktion ist ebenso beschrieben. Die Babykarte selber wertet keine Nutzerdaten aus. Sie leitet die Eingaben des Nutzers lediglich nur weiter.
+
+Bei der Verwendung der Suche zur Suche nach einem Ort sendet die Babykarte nach dem 3. Buchstaben die Sucheingabe an Komoot, welcher eine Suche nach Orten auf der Weltkarte ermöglicht. Wie Komoot mit den gesendeten Daten umgeht erfährst Du in deren [Privacy Policy](https://www.komoot.de/privacy).
+
+Beim Besuch der Babykarte fragt Dein Browser diverse Dateien bei fremden Servern ab. Diese Server sind Cacheserver von zwei unterschiedlichen Anbietern. Der erste ist Google und deren Datenschutzerklärung ist [hier einsehbar](https://policies.google.com/privacy#infocollect). Der zweite nennt sich DigitalOcean und hat ebenso eine eigene [Privacy Policy](https://www.digitalocean.com/legal/privacy-policy/).
+
+Die Babykarte nutzt zur Darstellung der Karte und anderen Daten wie z.B. Adresse-, Öffnungszeiten- und Name des Geschäftes/der Einrichtung Kartenmaterial und andere Daten der OpenStreetMap Community. Die OpenStreetMap Foundation hostet diese Daten auf ihren eigenen Servern. Auch diese haben eine eigene [Privacy Policy]( https://wiki.osmfoundation.org/wiki/Privacy_Policy#Data_we_receive_automatically).
+
+### Nutzungsdaten (Stichpunkte) (technisch)
 Die Babykarte nutzt folgende Drittanbieter. Ihre Funktion ist ebenso beschrieben. Die Babykarte selber wertet keine Nutzerdaten aus. Sie leitet die Eingaben des Nutzers lediglich nur weiter.
 
 - Photon von Komoot
@@ -93,13 +102,10 @@ Nein, sind diese nicht. In Zeiten, wo Software geupdated wird wie das Zeug hält
 Dies kann mehrere Gründe haben.
 
 - Um herauszufinden, wie viele Nutzer z.B. welches Betriebssystem verwenden, welchen Browser. Diese Daten werden verwendet, da Browser Webseitencode anders interpretieren und jede Webseite auf jeden Browser etwas anders funktioniert. Dies kann dem Nutzer in Form von etw. anderem Aussehen, nicht richtiges funktionieren einzelner Elemente auf der Seite usw. auffallen. Der Anbieter erhofft sich durch die anonymisierte Erhebung dieser Daten herauszufinden, ob sich die Anpassung der Webseite für bestimmte Browser oder Betriebssysteme lohnt.
+- Fehler beheben zu können.
+- Zur Möglichkeit der Zurückverfolgung der IP Adresse seitens der Behörden bei einem Serverangriff.
 - Herauszufinden was der Nutzer mag oder nicht. Google oder Facebook tun das. Dazu ziehen sie aber auch andere Daten in Betracht.
 
 ### Wie kann man sich vor Datenerhebung schützen.
 - TOR Browser nutzen.
-- Vom Browser gespeicherte Informationen kann man von diesem nach dem Beenden löschen lassen.
-
-### Anmerkungen von Valor Naram
-Ich - Valor Naram - erhalte keine Daten bei der Nutzung der Babykarte vom Nutzer. Mich persönlich interessieren diese Daten auch nicht. Ich weiß nicht, was der Nutzer mit der Babykarte macht. Ich kann nur mutmaßen und Theorien aufstellen.
-
-Ich bin laut TMG (Telemediengesetz) auch kein Diensteanbieter. Ein Diensteanbieter bietet eine normalerweise gegen Entgelt angebotene Dienstleistung an. Mit dieser Dienstleistung versucht er sich zu profillieren. Ich als jmd. der die Babykarte in seiner Frezeit entwickelt, profilliert sich davon nicht.
+- Vom Browser gespeicherte Informationen kann man von diesem nach dem Beenden löschen lassen. Lese dazu in der Bedienungsanleitung Deines Browsers nach.
