@@ -8,7 +8,7 @@ function locationError(e) {
 	//Fires the notification that Babykarte shows NOT the location of the user, because it has no permission to do so.
 	showGlobalPopup("Standort nicht ermittelbar.");
 }
-function checkboxes2overpass(bounds, actFilter){ //Bug found, function gets not called correctly. But why?
+function checkboxes2overpass(bounds, actFilter) {
 	if (!bounds) {
 		bounds = map.getBounds().getSouth() + ',' + map.getBounds().getWest() + ',' + map.getBounds().getNorth() + ',' + map.getBounds().getEast();
 	}
@@ -47,7 +47,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	var south_new = map.getBounds().getSouth();
 	var west_new = map.getBounds().getWest();
 	var north_new = map.getBounds().getNorth();
-	var east_new = map.getBounds().getSouth();
+	var east_new = map.getBounds().getEast();
 	var north_old = filter[fltr].coordinates.current.north;
 	var east_old = filter[fltr].coordinates.current.east;
 	var south_old = filter[fltr].coordinates.current.south;
@@ -66,6 +66,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 			loadingAllowed = true;
 			south_new = maxNorth;
 			maxNorth = north_new;
+			
 		}
 	} else if (north_new - north_old >= accuracy && east_new - east_old >= accuracy) {
 		south_new = north_old;
@@ -123,11 +124,11 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	if (loadingAllowed) {
 		var dict = {};
 		dict[fltr] = true;
-		filter[fltr].coordinates.max.south = south_new;
-		filter[fltr].coordinates.max.west = west_new;
-		filter[fltr].coordinates.max.north = north_new;
-		filter[fltr].coordinates.max.east = east_new;
-		return checkboxes2overpass(String(south_new) + ',' + String(west_new) + ',' + String(north_new) + ',' + String(east_new), dict);
+		filter[fltr].coordinates.max.south = maxSouth;
+		filter[fltr].coordinates.max.west = maxWest;
+		filter[fltr].coordinates.max.north = maxNorth;
+		filter[fltr].coordinates.max.east = maxEast;
+		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
 }
@@ -135,11 +136,18 @@ function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
 	//Adds filter compactibility to locateNewArea() function.
 	var url = "";
+	var result = "";
 	for (var fltr in activeFilter) {
-		url += locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
+		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
+		if (result) {
+			url += result
+		} else {
+			console.log("Filter '" + filter[fltr].name + "' doesn't need to be queried to OSM Server");
+		}
 		url = url.replace(");(", "") //Removes the delimiter between Overpass union syntax, because we want to have just one 'union' tag. Combines two (or more 'union's (we're in a loop)) into one.
+		fltr++;
 	}
-	loadPOIS(url=url);
+	loadPOIS("", url);
 }
 function parseOpening_hours(value) {
 	//Parsing opening hours syntax of OSM.
@@ -179,7 +187,6 @@ function loadPOIS(e, url) {
 	} else {
 		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + url + "out body center;";
 	}
-	console.log(url);
 	//Connect to OSM server
 	$.get(url, function (osmDataAsJson) {
 		//Convert to GEOjson, a special format for handling with coordinate details (POI's).
