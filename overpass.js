@@ -18,20 +18,15 @@ function checkboxes2overpass(bounds, actFilter) {
 	var andquery = "(";
 	for (var id in actFilter) {
 		var value = filter[id].query;
-		if (value.indexOf(";") > -1) {
-			andquery += "node"
-			for (var item in value.split(";")) {
-				andquery += "[" + item + "]";
-			}
-			andquery += "(" + bounds + ");way";
-			for (var item in value.split(";")) {
-				andquery += "[" + item + "]";
-			}
-			andquery += "(" + bounds + "););";
-			} else {
-				andquery += "node[" + value + "](" + bounds + ");";
-			andquery += "way[" + value + "](" + bounds + ");";
-			}
+		andquery += "node"
+		for (var i in value) {
+			andquery += "[" + value[i] + "]";
+		}
+		andquery += "(" + bounds + ");way";
+		for (var i in value) {
+			andquery += "[" + value[i] + "]";
+		}
+			andquery += "(" + bounds + ");";
 	}
 	return andquery + ");";
 }
