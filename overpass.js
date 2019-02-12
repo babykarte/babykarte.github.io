@@ -176,6 +176,7 @@ function buildOverpassApiUrlFromCheckboxes(overpassQuery) {
 function loadPOIS(e, url) {
 	//Main function of POI loading.
 	//Handles connection to OSM Overpass server and parses the response into beautiful looking details view for each POI
+	document.getElementById("query-button").setAttribute("disabled", true);
 	if (!url) {
 		//No url was specified, because none of the filter functions called it.
 		url = buildOverpassApiUrlFromCheckboxes();
@@ -187,13 +188,14 @@ function loadPOIS(e, url) {
 		//Convert to GEOjson, a special format for handling with coordinate details (POI's).
 		var resultAsGeojson = osmtogeojson(osmDataAsJson);
 		for (var poi in resultAsGeojson.features) {
+			var marker, group;
 			var poi = resultAsGeojson.features[poi];
 			//creates a new Marker() Object and groups into the layers given by our filters.
-			var marker = groupIntoLayers(poi);
+			marker = groupIntoLayers(poi);
 			//Analysing, filtering and preparing for display of the OSM keys
 			
 			//and then finally add then to Popup
-			marker.bindPopup(poi.properties.tags["name"] + "<br/> " + poi.properties.tags["leisure"]);
+			marker.bindPopup(poi.properties.tags["name"] + "<br/>" + poi.properties.tags["leisure"] + "<br/><b>Gruppe:</b>" + marker.name);
 			//Show marker on map
 			marker.addTo(map);
 		}
@@ -229,3 +231,4 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 map.locate({setView: true});
 //load POIs
 document.getElementById("query-button").onclick = loadPOIS;
+document.getElementById("query-button").setAttribute("disabled", true);
