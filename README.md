@@ -16,7 +16,9 @@ ToDo: Liste erstellen.
 
 ### Wie wird mit Nutzungsdaten umgegangen
 Die Babykarte nutzt folgende Drittanbieter. Ihre Funktion ist ebenso beschrieben. Die Babykarte selber wertet keine Nutzerdaten aus. Sie leitet die Eingaben des Nutzers lediglich nur weiter.
----
+
+
+
 ![Suchfeld](searchfield.png)
 Bei der Verwendung der Suche zur Suche nach einem Ort sendet die Babykarte nach dem 3. Buchstaben die Sucheingabe an Komoot, welcher eine Suche nach Orten auf der Weltkarte ermöglicht. Wie Komoot mit den gesendeten Daten umgeht erfährst Du in deren [Privacy Policy](https://www.komoot.de/privacy).
 
