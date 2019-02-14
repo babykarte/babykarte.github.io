@@ -38,8 +38,6 @@ function geocode() {
 	if(searchword.length > 3) {
 		$.getJSON("https://photon.komoot.de/api/", {
 			"q": searchword,
-			"lat": saved_lat,
-			"lon": saved_lon,
 			"limit": 5,
 			"lang": languageOfUser
 		}, function(data) {

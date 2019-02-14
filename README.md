@@ -19,14 +19,14 @@ Die Babykarte nutzt folgende Drittanbieter. Ihre Funktion ist ebenso beschrieben
 
 
 
-![Suchfeld](searchfield.png)
-Bei der Verwendung der Suche zur Suche nach einem Ort sendet die Babykarte nach dem 3. Buchstaben die Sucheingabe an Komoot, welcher eine Suche nach Orten auf der Weltkarte ermöglicht. Wie Komoot mit den gesendeten Daten umgeht erfährst Du in deren [Privacy Policy](https://www.komoot.de/privacy).
+![Suchfeld](searchfield.png)<br/>
+Bei der Verwendung der Suche zur Suche nach einem Ort sendet die Babykarte nach dem 3. Buchstaben die Sucheingabe an Komoot sowie Deine Systemsprache, welcher eine Suche nach Orten auf der Weltkarte ermöglicht. Wie Komoot mit den gesendeten Daten umgeht erfährst Du in deren [Privacy Policy](https://www.komoot.de/privacy).
 
-Beim Besuch der Babykarte fragt Dein Browser diverse Dateien bei fremden Servern ab. Diese Server sind Cacheserver von zwei unterschiedlichen Anbietern. Der erste ist Google und deren Datenschutzerklärung ist [hier einsehbar](https://policies.google.com/privacy#infocollect). Der zweite nennt sich DigitalOcean und hat ebenso eine eigene [Privacy Policy](https://www.digitalocean.com/legal/privacy-policy/).
+Beim Besuch der Babykarte fragt Dein Browser diverse Dateien bei fremden Servern ab. Diese Server sind Cacheserver von zwei unterschiedlichen Anbietern. Der erste ist Google und deren Datenschutzerklärung ist [hier einsehbar](https://policies.google.com/privacy#infocollect). Der zweite nennt sich DigitalOcean und hat ebenso eine eigene [Privacy Policy](https://www.digitalocean.com/legal/privacy-policy/). Hierbei sendet Dein Browser Daten an die Server, diesen Vorgang kann die Babykarte nicht beeinflussen.
 
 Die Babykarte nutzt zur Darstellung der Karte und anderen Daten wie z.B. Adresse-, Öffnungszeiten- und Name des Geschäftes/der Einrichtung Kartenmaterial und andere Daten der OpenStreetMap Community. Die OpenStreetMap Foundation hostet diese Daten auf ihren eigenen Servern. Auch diese haben eine eigene [Privacy Policy]( https://wiki.osmfoundation.org/wiki/Privacy_Policy#Data_we_receive_automatically). Die OSM Server erhalten von der Babykarte folgende Informationen: Welche Filter ausgewählt wurden und die Koordinaten des Kartenausschnittes. Desweiteren sendet Dein Browser beim Kontaktieren der OpenStreetMap-Server noch weitere Daten wie z.B. Name des Browsers, Name des Betriebssystems etc. Auf dieses Verhalten Deines Browsers hat die Kaffeekarte keinen Einfluss.
 
-**Uns ist es technisch nicht möglich Dir Auskünfte über Deine Daten zu erteilen. Wir sammeln Deine Daten nicht und geben dies auch nicht in Auftrag. Wir wissen nichts über Dich als Nutzer der Babykarte.**
+**Uns ist es technisch nicht möglich Dir Auskünfte über Deine Daten zu erteilen. Wir sammeln Deine Daten nicht und geben die Sammlung dieser auch nicht in Auftrag. Wir wissen nichts über Dich als Nutzer der Babykarte.**
 
 ### Beschreibung der Nutzerdaten
 Die Babykarte selber wertet keine Nutzerdaten aus. Sie leitet die Eingaben des Nutzers lediglich nur weiter.
