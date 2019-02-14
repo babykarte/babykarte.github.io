@@ -2,11 +2,11 @@ function locationFound(e) {
 	//Clicks on the button, so we jump to the coordinates of the user.
 	document.getElementById('query-button').click();
 	//Fires the notification that Babykarte shows the location of the user.
-	showGlobalPopup("Dein Standort.");
+	showGlobalPopup(langRef[languageOfUser].LOCATING_SUCCESS);
 }
 function locationError(e) {
 	//Fires the notification that Babykarte shows NOT the location of the user, because it has no permission to do so.
-	showGlobalPopup("Standort nicht ermittelbar.");
+	showGlobalPopup(langRef[languageOfUser].LOCATING_FAILURE);
 }
 function checkboxes2overpass(bounds, actFilter) {
 	if (!bounds) {
@@ -48,6 +48,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	var south_old = filter[fltr].coordinates.current.south;
 	var west_old = filter[fltr].coordinates.current.west;
 	if (north_new - north_old >= accuracy && west_old - west_new >= accuracy) {
+		//Possible bug
 		south_new = north_old;
 		east_new = west_old;
 		if (north_new > maxNorth && maxWest > west_new) {
@@ -96,6 +97,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 			maxSouth = south_new;
 		}
 	} else if (south_old - south_new >= accuracy && west_old - west_new >= accuracy) {
+		//Possible bug
 		north_new = south_old;
 		east_new = west_old;
 		if (maxSouth > south_new && maxWest > west_new) {
@@ -105,6 +107,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 			maxWest = west_new;
 		}
 	} else if (west_old - west_new >= accuracy) {
+		//Possible no bug but on watchlist
 		east_new = west_old;
 		if (maxWest > west_new) {
 			loadingAllowed = true;
@@ -123,6 +126,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 		filter[fltr].coordinates.max.west = maxWest;
 		filter[fltr].coordinates.max.north = maxNorth;
 		filter[fltr].coordinates.max.east = maxEast;
+		console.log(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new));
 		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
@@ -133,11 +137,22 @@ function locateNewAreaBasedOnFilter() {
 	var url = "";
 	var result = "";
 	for (var fltr in activeFilter) {
+		if (!filter[fltr].usedBefore) {
+			filter[fltr].usedBefore = true;
+			filter[fltr].coordinates.current.south = map.getBounds().getSouth();
+			filter[fltr].coordinates.current.west = map.getBounds().getWest();
+			filter[fltr].coordinates.current.north = map.getBounds().getNorth();
+			filter[fltr].coordinates.current.east = map.getBounds().getEast();
+			filter[fltr].coordinates.max.south = map.getBounds().getSouth();
+			filter[fltr].coordinates.max.west = map.getBounds().getWest();
+			filter[fltr].coordinates.max.north = map.getBounds().getNorth();
+			filter[fltr].coordinates.max.east = map.getBounds().getEast();
+		}
 		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
 		if (result) {
 			url += result
 		} else {
-			console.log("Filter '" + filter[fltr].name + "' doesn't need to be queried to OSM Server");
+			console.log("Filter '" + langRef[languageOfUser].filtername[fltr] + "' doesn't need to be queried to OSM Server");
 		}
 		url = url.replace(");(", "") //Removes the delimiter between Overpass union syntax, because we want to have just one 'union' tag. Combines two (or more 'union's (we're in a loop)) into one.
 		fltr++;
@@ -147,7 +162,7 @@ function locateNewAreaBasedOnFilter() {
 function parseOpening_hours(value) {
 	//Parsing opening hours syntax of OSM.
 	// var toTranslate = {"<OSM expression>": "<human expression, will be shown to user instead of <OSM expression>>", ...}
-	var toTranslate = {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"};
+	var toTranslate = langRef[languageOfUser].opening_hours;
 	var syntaxToHTML = {"; " : "<br/>", ";" : "<br/>",  "," : ", ", "-" : " - "}
 	//Translates by replacing <OSM expression>'s with the respective <human expression>'s.
 	for (var item in toTranslate) {

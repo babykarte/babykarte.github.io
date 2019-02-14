@@ -1,8 +1,6 @@
-'use strict';
-var supported_languages = ["de", "en", "it", "fr"]
 var saved_lat = 48.160474925320834;
 var saved_lon = 11.4992094039917;
-var languageOfUser, message;
+var message;
 function toggleFilterList() {
 	var obj = document.getElementsByClassName("layermenu")[0]
 	if (obj.style.height != "auto") {
@@ -35,25 +33,6 @@ function jumpto(lat, lon, locname="") {
 	$('#query-button').click();
 	showGlobalPopup(locname);
 }
-function languageOfUser() {
-	languageOfUser = navigator.language.toLowerCase();
-	if (languageOfUser.indexOf("-") > -1) {
-		languageOfUser = languageOfUser.split("-");
-		languageOfUser = languageOfUser[0]
-		var supported = false;
-		var index;
-		for (index in supported_languages) {
-			if (supported_languages[index] == languageOfUser) {
-				supported = true;
-				break
-			}
-		}
-		if (!supported) {
-			//The user's language isn't supported by photon.komoot.de, so we set it to standalone english (most of the time it's en-US despite the logic)
-			languageOfUser = "en";
-		}
-	}
-}
 function geocode() {
 	var searchword = $("#searchfield").val();
 	if(searchword.length > 3) {
@@ -79,9 +58,7 @@ function geocode() {
 		});
 	}
 };
-//choosing language
-languageOfUser();
-// init search
+// Makes the search happen directly after a char is typed in searchfield.
 $("#searchfield").keyup(function() {
 	geocode();
 });
