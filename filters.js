@@ -1,10 +1,24 @@
 var activeFilter = {}; //Dictionary of the current selected filters
 var languageOfUser = navigator.language.toLowerCase();
 var lang_default = "de";
+/*Meaning of the abreviations used in 'langRef' JSON.
+PDV - POI Details view (The view displayed to the user when the user clicks on a POI marker).
+BTN - A 'button' element.
+LNK - A 'a' (hyperlink) element.
+TB - Textbox (or type 'text') element.
+OH - Opening Hours
+MI - More Information
+*/
 var langRef = {
 "de": {
 	"LOCATING_FAILURE": "Standort nicht ermittelbar",
 	"LOCATING_SUCCESS": "Dein Standort.",
+	"PDV_UNKNOWN": "Unbekannt",
+	"PDV_TITLE_HOME": "Allgemein",
+	"PDV_TITLE_BABY": "Babytauglichkeit",
+	"PDV_TITLE_OH": "Öffnungszeiten",
+	"PDV_TITLE_CONTACT": "Kontakt",
+	"PDV_TITLE_MI": "Weitere informationen",
 	"opening_hours": {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"},
 	"filtername": {
 		0: "Kinderärzte",
@@ -25,6 +39,12 @@ var langRef = {
 "en": {
 	"LOCATING_FAILURE": "Did not find your position.",
 	"LOCATING_SUCCESS": "Your position.",
+	"PDV_UNKNOWN": "Unknown",
+	"PDV_TITLE_HOME": "General",
+	"PDV_TITLE_BABY": "Baby friendly",
+	"PDV_TITLE_OH": "Opening hours",
+	"PDV_TITLE_CONTACT": "Contact",
+	"PDV_TITLE_MI": "More information",
 	"BTN_APPLY_FILTERS": "Apply filters",
 	"LNK_PROJECT_SITE": "About & Privacy Policy (german only)",
 	"TB_SEARCHFIELD": "Place",

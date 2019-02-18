@@ -18,9 +18,16 @@ details summary {
 	color:grey;
 	font-weight:bold;
 }
-h3 {
-	display:inline;
-	margin-bottom:0px;
+h1, h2, h3 {
+	display:block;
+	padding:0px;
+	margin:0px;
+}
+h1 {
+	font-size:24px;
+}
+h2 {
+	font-size:14px;
 	color:grey;
 }
 ul {
@@ -48,6 +55,13 @@ section {
 	display:flex;
 	width:100%;
 	height:100%;
+}
+label {
+	display:block;
+	margin-top:5px;
+}
+.tabcontent {
+	display:none;
 }
 .layermenu {
 	z-index:1;
@@ -77,6 +91,9 @@ section {
 	border-bottom:1px solid rgb(13, 107, 186, 0.6);
 	background-color:rgba(35, 159, 255,0.6);
 }
+.pdv-icon {
+	margin:5px;
+}
 #menubutton {
 	display:none;
 	margin-top:12px; 
@@ -105,6 +122,14 @@ section {
 	position:relative;
 	top:0px;
 	background-color:white;
+}
+#progressbar {
+	display:none;
+	width:100%;
+	height:5px;
+	z-index:8;
+	position:fixed;
+	background-color:rgba(51, 153, 102, 0.7);
 }
 @media only screen and (max-width:800px) {
 section {

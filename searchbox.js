@@ -9,6 +9,16 @@ function toggleFilterList() {
 		obj.style.height = "50px";
 	}
 }
+function progressbar(value=false) {
+	var elem = document.getElementById("progressbar");
+	if (!value) {
+		elem.style.width = "0%";
+		elem.style.display = "none";
+	} else {
+		elem.style.width = String(value) + "%";
+		elem.style.display = "block";
+	}
+}
 function showGlobalPopup(m) {
 	message = m
 	setTimeout(function() {

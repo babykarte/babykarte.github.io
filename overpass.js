@@ -3,10 +3,12 @@ function locationFound(e) {
 	document.getElementById('query-button').click();
 	//Fires the notification that Babykarte shows the location of the user.
 	showGlobalPopup(langRef[languageOfUser].LOCATING_SUCCESS);
+	progressbar();
 }
 function locationError(e) {
 	//Fires the notification that Babykarte shows NOT the location of the user, because it has no permission to do so.
 	showGlobalPopup(langRef[languageOfUser].LOCATING_FAILURE);
+	progressbar();
 }
 function checkboxes2overpass(bounds, actFilter) {
 	if (!bounds) {
@@ -188,7 +190,33 @@ function buildOverpassApiUrlFromCheckboxes(overpassQuery) {
 	var resultUrl = baseUrl + query;
 	return resultUrl;
 }
+function addrTrigger(poi, marker) {
+	marker.on("click", function() {
+		if (marker.popupContent.indexOf("%data_address%") > -1) {
+			$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.properties.type)[0].toUpperCase() + "&osm_id=" + String(poi.properties.id), function(data, status, xhr, trash) {
+				var address = data["address"];
+				var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"];
+				var housenumber = address["housenumber"] || address["house_number"] || "";
+				var postcode = address["postcode"] || "";
+				var city = address["city"] || address["town"] || address["county"] || address["state"] || "Kommune unbekannt"
+				marker.popupContent = marker.popupContent.replace("%data_address%", street + " " + housenumber + "<br/>" + postcode + " " + city)
+				marker.bindPopup(marker.popupContent);
+				marker.openPopup();
+			});
+		}
+	});
+	return "%data_address%";
+}
+function toggleTab(id) {
+	var tab = document.getElementById(id);
+	var tabs = document.getElementsByClassName("tabcontent");
+	for (var item = 0;item < tabs.length;item++) {
+		tabs[item].style.display = "none";
+	}
+	tab.style.display = "block";
+}
 function loadPOIS(e, url) {
+	progressbar(50);
 	//Main function of POI loading.
 	//Handles connection to OSM Overpass server and parses the response into beautiful looking details view for each POI
 	document.getElementById("query-button").setAttribute("disabled", true);
@@ -203,16 +231,40 @@ function loadPOIS(e, url) {
 		//Convert to GEOjson, a special format for handling with coordinate details (POI's).
 		var resultAsGeojson = osmtogeojson(osmDataAsJson);
 		for (var poi in resultAsGeojson.features) {
-			var marker, group;
+			var marker;
+			var popupContent = "";
 			var poi = resultAsGeojson.features[poi];
+			var classId = String(poi.properties.type)[0].toUpperCase() + String(poi.properties.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
+			var details_data = {"home": {"elements": {"<h1>%s</h1>": String(poi.properties.tags["name"]) || String(langRef[languageOfUser].PDV_UNKNOWN), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "", "title": String(langRef[languageOfUser].PDV_TITLE_HOME)},
+			"baby": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_BABY},
+			"opening_hours": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_OH},
+			"contact": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_CONTACT},
+			"furtherInfos": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_MI}
+			};
+			for (var entry in details_data) {
+				popupContent += "<img class='pdv-icon' onclick='toggleTab(\"" + classId + entry + "\")' src='" + details_data[entry].symbol + "' alt='" + details_data[entry].title + "' title='" + details_data[entry].title + "' />"
+			}
+			for (var entry in details_data) {
+				popupContent += "<div class='tabcontent' id='" + classId + entry + "'>";
+				for (var elem in details_data[entry].elements) {
+					if (typeof(details_data[entry].elements[elem]) == "function") {
+						popupContent += elem.replace("%s", details_data[entry].elements[elem](poi, marker))
+					} else {
+						popupContent += elem.replace("%s", details_data[entry].elements[elem])
+					}
+				}
+				popupContent += "</div>";
+			}
 			//Analysing, filtering and preparing for display of the OSM keys
 			
 			//and then finally add then to Popup
-			marker.bindPopup(poi.properties.tags["name"] + "<br/>" + poi.properties.tags["leisure"] + "<br/><b>Gruppe:</b>" + marker.name);
+			marker.popupContent = popupContent + "<a target=\"_blank\" title=\"Bei OSM registrierte Nutzer können diese POI direkt bearbeiten. Veraltete Informationen raus nehmen und neue hinzufügen.\" href=\"https://www.openstreetmap.org/edit?" + String(poi.properties.type) + "=" + String(poi.properties.id) + "\">Mit OSM editieren</a>&nbsp;&nbsp;<a target=\"_blank\" title=\"Eine falsche Information entdeckt? Informiere mithilfe dieses Linkes die OSM Community.\" href=\"https://www.openstreetmap.org/note/new#map=15/" + poi.geometry.coordinates[1] + "/" + poi.geometry.coordinates[0] + "&layers=N\">Falschinformation melden</a>";;
+			marker.bindPopup(marker.popupContent);
 			//Show marker on map
 			marker.addTo(map);
+			progressbar();
 		}
 	});
 }
@@ -227,6 +279,7 @@ function getStateFromHash() {
 	}
 }
 //init map
+progressbar(30);
 var map = L.map('map')
 map.options.maxZoom = 19;
 map.options.minZoom = 10;
@@ -244,6 +297,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 map.locate({setView: true});
+progressbar(50);
 //load POIs
 document.getElementById("query-button").onclick = loadPOIS;
 document.getElementById("query-button").setAttribute("disabled", true);
