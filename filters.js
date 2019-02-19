@@ -5,7 +5,7 @@ var lang_default = "de";
 PDV - POI Details view (The view displayed to the user when the user clicks on a POI marker).
 BTN - A 'button' element.
 LNK - A 'a' (hyperlink) element.
-TB - Textbox (or type 'text') element.
+TB - Textbox (or input type 'text') element.
 OH - Opening Hours
 MI - More Information
 */
@@ -19,6 +19,7 @@ var langRef = {
 	"PDV_TITLE_OH": "Öffnungszeiten",
 	"PDV_TITLE_CONTACT": "Kontakt",
 	"PDV_TITLE_MI": "Weitere informationen",
+	"PDV_OH_UNKNOWN": "Keine Öffnungszeiten angegeben",
 	"opening_hours": {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"},
 	"filtername": {
 		0: "Kinderärzte",
@@ -45,6 +46,7 @@ var langRef = {
 	"PDV_TITLE_OH": "Opening hours",
 	"PDV_TITLE_CONTACT": "Contact",
 	"PDV_TITLE_MI": "More information",
+	"PDV_OH_UNKNOWN": "No opening hours available",
 	"BTN_APPLY_FILTERS": "Apply filters",
 	"LNK_PROJECT_SITE": "About & Privacy Policy (german only)",
 	"TB_SEARCHFIELD": "Place",
@@ -122,13 +124,13 @@ function setFilter(id) {
 	if (filter[id].active) {
 		//The filter is currently active, deactivate it because the user unchecked it.
 		filter[id].active = false;
-		toggleLayers(id, 0) //Removes the POIs belonging to the filter from the map.
-		delete activeFilter[id];
+		//toggleLayers(id, 0) //Removes the POIs belonging to the filter from the map.
+		//delete activeFilter[id];
 	} else {
 		//The filter is deactivated, activate it because the user checked it.
 		filter[id].active = true;
-		activeFilter[id] = true;
-		toggleLayers(id, 1) //Adds the POIs belonging to the filter from the map.
+		//activeFilter[id] = true;
+		//toggleLayers(id, 1) //Adds the POIs belonging to the filter to the map.
 	}
 }
 function initFilters() {

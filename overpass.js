@@ -139,6 +139,7 @@ function locateNewAreaBasedOnFilter() {
 	var url = "";
 	var result = "";
 	for (var fltr in activeFilter) {
+		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
 		if (!filter[fltr].usedBefore) {
 			filter[fltr].usedBefore = true;
 			filter[fltr].coordinates.current.south = map.getBounds().getSouth();
@@ -150,7 +151,6 @@ function locateNewAreaBasedOnFilter() {
 			filter[fltr].coordinates.max.north = map.getBounds().getNorth();
 			filter[fltr].coordinates.max.east = map.getBounds().getEast();
 		}
-		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
 		if (result) {
 			url += result
 		} else {
@@ -159,7 +159,10 @@ function locateNewAreaBasedOnFilter() {
 		url = url.replace(");(", "") //Removes the delimiter between Overpass union syntax, because we want to have just one 'union' tag. Combines two (or more 'union's (we're in a loop)) into one.
 		fltr++;
 	}
-	loadPOIS("", url);
+	return url
+}
+function onMapMove() {
+	loadPOIS("", locateNewAreaBasedOnFilter());
 }
 function parseOpening_hours(value) {
 	if (!value) {
@@ -178,20 +181,6 @@ function parseOpening_hours(value) {
 		value = value.replace(new RegExp(item, "g"), "<b>" + syntaxToHTML[item] + "</b>");
 	}
    	return value
-}
-function buildOverpassApiUrlFromCheckboxes(overpassQuery) {
-	//Wrapper araund checkboxes2overpass() function to support filters.
-	/*south_old = map.getBounds().getSouth();
-	west_old = map.getBounds().getWest();
-	north_old = map.getBounds().getNorth();
-	east_old = map.getBounds().getSouth();*/
-	if (!overpassQuery) {
-		overpassQuery = checkboxes2overpass();
-	}
-	var query = "?data=[out:json][timeout:15];" + overpassQuery + "out body center;";
-	var baseUrl = "https://overpass-api.de/api/interpreter";
-	var resultUrl = baseUrl + query;
-	return resultUrl;
 }
 function addrTrigger(poi, marker) {
 	marker.on("click", function() {
@@ -229,13 +218,30 @@ function toggleTab(bla, id) {
 	tab.style.display = "block";
 }
 function loadPOIS(e, url) {
+	for (var entry in filter) {
+		if (filter[entry].active) {
+			activeFilter[entry] = true;
+			toggleLayers(entry, 1) //Adds the POIs belonging to the filter to the map.
+		} else {
+			if (activeFilter[entry]) {
+				delete activeFilter[entry];
+				toggleLayers(entry, 0) //Removes the POIs belonging to the filter from the map.
+			}
+		}
+		entry += 1;
+	}
 	progressbar(50);
 	//Main function of POI loading.
 	//Handles connection to OSM Overpass server and parses the response into beautiful looking details view for each POI
 	document.getElementById("query-button").setAttribute("disabled", true);
 	if (!url) {
 		//No url was specified, because none of the filter functions called it.
-		url = buildOverpassApiUrlFromCheckboxes();
+		var result = locateNewAreaBasedOnFilter();
+		if (!result) {
+			progressbar();
+			return 0;
+		}
+		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + result + "out body center;";
 	} else {
 		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + url + "out body center;";
 	}
@@ -277,8 +283,8 @@ function loadPOIS(e, url) {
 			marker.bindPopup(marker.popupContent);
 			//Show marker on map
 			marker.addTo(map);
-			progressbar();
 		}
+		progressbar();
 	});
 }
 function getStateFromHash() {
@@ -303,7 +309,7 @@ getStateFromHash();
 map.on("locationfound", locationFound);
 map.on("locationerror", locationError);
 map.on("click", function(e) {location.hash = String(map.getZoom()) + "&" + String(e.latlng.lat) + "&" + String(e.latlng.lng);})
-map.on("moveend", locateNewAreaBasedOnFilter);
+map.on("moveend", onMapMove);
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
