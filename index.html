@@ -8,6 +8,7 @@
     <link rel='stylesheet' href='/style.css' />
   </head>
   <body>
+  	<div id='progressbar'></div>
   	<div class='info' id='infoPopup' style='display:none;'></div>
   	<section>
   	<div class='layermenu'>
@@ -19,9 +20,10 @@
 		</div>
 		<div id='filtersGround'></div>
 		<input id='query-button' type='button' value='Filter anwenden'><br/>
-        <a href='https://github.com/Discostu36/Baby-Karte/blob/master/README.md' target='_blank;' style='color:#0078a8;'>Über das Projekt</a>
+        <a href='https://github.com/Discostu36/Baby-Karte/blob/master/README.md' target='_blank;' id='linkToProject' style='color:#0078a8;'>Über das Projekt & Datenschutzerklärung</a>
     </div>
-    <div id='map'></div>
+    <div id='map'>
+    </div>
 	</section>
     <script src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js'></script> <!--https://policies.google.com/privacy#infocollect-->
     <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script> <!--https://www.digitalocean.com/legal/privacy-policy/-->

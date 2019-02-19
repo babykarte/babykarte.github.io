@@ -237,9 +237,9 @@ function loadPOIS(e, url) {
 			var classId = String(poi.properties.type)[0].toUpperCase() + String(poi.properties.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
-			var details_data = {"home": {"elements": {"<h1>%s</h1>": String(poi.properties.tags["name"]) || String(langRef[languageOfUser].PDV_UNKNOWN), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "", "title": String(langRef[languageOfUser].PDV_TITLE_HOME)},
-			"baby": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_BABY},
-			"opening_hours": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_OH},
+			var details_data = {"home": {"elements": {"<h1>%s</h1>": String(poi.properties.tags["name"]) || String(langRef[languageOfUser].PDV_UNKNOWN), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home2.svg", "title": String(langRef[languageOfUser].PDV_TITLE_HOME)},
+			"baby": {"elements": {}, "symbol": "/baby.svg", "title": langRef[languageOfUser].PDV_TITLE_BABY},
+			"opening_hours": {"elements": {}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH},
 			"contact": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_CONTACT},
 			"furtherInfos": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_MI}
 			};
