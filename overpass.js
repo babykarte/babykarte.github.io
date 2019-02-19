@@ -162,6 +162,9 @@ function locateNewAreaBasedOnFilter() {
 	loadPOIS("", url);
 }
 function parseOpening_hours(value) {
+	if (!value) {
+		return value;
+	}
 	//Parsing opening hours syntax of OSM.
 	// var toTranslate = {"<OSM expression>": "<human expression, will be shown to user instead of <OSM expression>>", ...}
 	var toTranslate = langRef[languageOfUser].opening_hours;
@@ -207,11 +210,21 @@ function addrTrigger(poi, marker) {
 	});
 	return "%data_address%";
 }
-function toggleTab(id) {
+function toggleTab(bla, id) {
 	var tab = document.getElementById(id);
+	if (!bla) {
+		tab.setAttribute("active", true);
+		return 0;
+	}
 	var tabs = document.getElementsByClassName("tabcontent");
+	var icons = document.getElementsByClassName("pdv-icon");
 	for (var item = 0;item < tabs.length;item++) {
 		tabs[item].style.display = "none";
+		if (bla.id.endsWith(icons[item].id)) {
+			icons[item].setAttribute("active", true);
+		} else {
+			icons[item].removeAttribute("active");
+		}
 	}
 	tab.style.display = "block";
 }
@@ -237,22 +250,22 @@ function loadPOIS(e, url) {
 			var classId = String(poi.properties.type)[0].toUpperCase() + String(poi.properties.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
-			var details_data = {"home": {"elements": {"<h1>%s</h1>": String(poi.properties.tags["name"]) || String(langRef[languageOfUser].PDV_UNKNOWN), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home2.svg", "title": String(langRef[languageOfUser].PDV_TITLE_HOME)},
+			var details_data = {"home": {"elements": {"<h1>%s</h1>": poi.properties.tags["name"] || langRef[languageOfUser].PDV_UNKNOWN, "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[languageOfUser].PDV_TITLE_HOME},
 			"baby": {"elements": {}, "symbol": "/baby.svg", "title": langRef[languageOfUser].PDV_TITLE_BABY},
-			"opening_hours": {"elements": {}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH},
-			"contact": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_CONTACT},
-			"furtherInfos": {"elements": {}, "symbol": "", "title": langRef[languageOfUser].PDV_TITLE_MI}
+			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.properties.tags["opening_hours"]) || langRef[languageOfUser].PDV_OH_UNKNOWN}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH},
+			"contact": {"elements": {}, "symbol": "/contact.svg", "title": langRef[languageOfUser].PDV_TITLE_CONTACT},
+			"furtherInfos": {"elements": {}, "symbol": "/moreInfo.svg", "title": langRef[languageOfUser].PDV_TITLE_MI}
 			};
 			for (var entry in details_data) {
-				popupContent += "<img class='pdv-icon' onclick='toggleTab(\"" + classId + entry + "\")' src='" + details_data[entry].symbol + "' alt='" + details_data[entry].title + "' title='" + details_data[entry].title + "' />"
+				popupContent += "<img class='pdv-icon' id='icon" + classId + entry + "' onclick='toggleTab(this, \"" + classId + entry + "\")' src='" + details_data[entry].symbol + "' alt='" + details_data[entry].title + "' title='" + details_data[entry].title + "' />";
 			}
 			for (var entry in details_data) {
 				popupContent += "<div class='tabcontent' id='" + classId + entry + "'>";
 				for (var elem in details_data[entry].elements) {
 					if (typeof(details_data[entry].elements[elem]) == "function") {
-						popupContent += elem.replace("%s", details_data[entry].elements[elem](poi, marker))
+						popupContent += elem.replace("%s", details_data[entry].elements[elem](poi, marker));
 					} else {
-						popupContent += elem.replace("%s", details_data[entry].elements[elem])
+						popupContent += elem.replace("%s", details_data[entry].elements[elem]);
 					}
 				}
 				popupContent += "</div>";
@@ -260,7 +273,7 @@ function loadPOIS(e, url) {
 			//Analysing, filtering and preparing for display of the OSM keys
 			
 			//and then finally add then to Popup
-			marker.popupContent = popupContent + "<a target=\"_blank\" title=\"Bei OSM registrierte Nutzer können diese POI direkt bearbeiten. Veraltete Informationen raus nehmen und neue hinzufügen.\" href=\"https://www.openstreetmap.org/edit?" + String(poi.properties.type) + "=" + String(poi.properties.id) + "\">Mit OSM editieren</a>&nbsp;&nbsp;<a target=\"_blank\" title=\"Eine falsche Information entdeckt? Informiere mithilfe dieses Linkes die OSM Community.\" href=\"https://www.openstreetmap.org/note/new#map=15/" + poi.geometry.coordinates[1] + "/" + poi.geometry.coordinates[0] + "&layers=N\">Falschinformation melden</a>";;
+			marker.popupContent = popupContent + "<hr/><a target=\"_blank\" title=\"Bei OSM registrierte Nutzer können diese POI direkt bearbeiten. Veraltete Informationen raus nehmen und neue hinzufügen.\" href=\"https://www.openstreetmap.org/edit?" + String(poi.properties.type) + "=" + String(poi.properties.id) + "\">Mit OSM editieren</a>&nbsp;&nbsp;<a target=\"_blank\" title=\"Eine falsche Information entdeckt? Informiere mithilfe dieses Linkes die OSM Community.\" href=\"https://www.openstreetmap.org/note/new#map=15/" + poi.geometry.coordinates[1] + "/" + poi.geometry.coordinates[0] + "&layers=N\">Falschinformation melden</a>";;
 			marker.bindPopup(marker.popupContent);
 			//Show marker on map
 			marker.addTo(map);

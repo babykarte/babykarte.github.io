@@ -99,6 +99,10 @@ label {
 .pdv-icon:hover {
 	background-color:#d6e0f5;
 }
+.pdv-icon[active] {
+	/*background-color:#c6ebc6;*/
+	border-bottom:4px solid #42bd42;
+}
 #menubutton {
 	display:none;
 	margin-top:12px; 
