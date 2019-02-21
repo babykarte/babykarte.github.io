@@ -22,11 +22,11 @@ function checkboxes2overpass(bounds, actFilter) {
 		var value = filter[id].query;
 		andquery += "node"
 		for (var i in value) {
-			andquery += "[" + value[i] + "]";
+			andquery += value[i];
 		}
 		andquery += "(" + bounds + ");way";
 		for (var i in value) {
-			andquery += "[" + value[i] + "]";
+			andquery += value[i];
 		}
 			andquery += "(" + bounds + ");";
 	}
