@@ -252,34 +252,52 @@ function loadPOIS(e, url) {
 		for (var poi in resultAsGeojson.features) {
 			var marker;
 			var popupContent = "";
+			var popupContent_header = ""
 			var poi = resultAsGeojson.features[poi];
 			var classId = String(poi.properties.type)[0].toUpperCase() + String(poi.properties.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
-			var details_data = {"home": {"elements": {"<h1>%s</h1>": poi.properties.tags["name"] || langRef[languageOfUser].PDV_UNKNOWN, "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[languageOfUser].PDV_TITLE_HOME},
-			"baby": {"elements": {}, "symbol": "/baby.svg", "title": langRef[languageOfUser].PDV_TITLE_BABY},
-			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.properties.tags["opening_hours"]) || langRef[languageOfUser].PDV_OH_UNKNOWN}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH},
-			"contact": {"elements": {}, "symbol": "/contact.svg", "title": langRef[languageOfUser].PDV_TITLE_CONTACT},
-			"furtherInfos": {"elements": {}, "symbol": "/moreInfo.svg", "title": langRef[languageOfUser].PDV_TITLE_MI}
+			console.log(marker.name);
+			var details_data = {"home": {"elements": {"<h1>%s</h1>": ((poi.properties.tags["name"] == undefined) ? ((poi.properties.tags["amenity"] == "toilet") ? langRef[languageOfUser].TOILET : langRef[languageOfUser].PDV_UNKNOWN) : poi.properties.tags["name"]), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[languageOfUser].PDV_TITLE_HOME, "active": true},
+			"baby": {"elements": {"<b>%s</b>": ((poi.properties.tags["diaper"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_YES : ((poi.properties.tags["diaper"] == "bench") ? langRef[languageOfUser].PDV_DIAPER_BENCH : ((poi.properties.tags["diaper"] == "room") ? langRef[languageOfUser].PDV_DIAPER_ROOM : langRef[languageOfUser].PDV_DIAPER_NO))) || "", "<br/>%s": ((poi.properties.tags["diaper:male"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_MALE : ((poi.properties.tags["diaper:female"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_FEMALE : ((poi.properties.tags["diaper:unisex"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_UNISEX : ""))), "<br/>%s": ((poi.properties.tags["diaper:fee"] == "yes") ? "<span style='color:red;'>" + langRef[languageOfUser].PDV_DIAPER_FEE + "</span>": ((poi.properties.tags["diaper:fee"] == "no") ? "<span style='color:darkgreen;'>" + langRef[languageOfUser].PDV_DIAPER_FEE_NO + "</span>" : ""))}, "symbol": "/baby.svg", "title": langRef[languageOfUser].PDV_TITLE_BABY, "active": true},
+			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.properties.tags["opening_hours"]) || ""}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH, "active": true},
+			"contact": {"elements": {"<a href='%s'>WWW</a>": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || poi.properties.tags["contact:facebook"] || "", "Tel: <a href='%s'>Call</a>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "", "<a href='%s'>%s</a>": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || ""}, "symbol": "/contact.svg", "title": langRef[languageOfUser].PDV_TITLE_CONTACT, "active": true},
+			"furtherInfos": {"elements": {"<a target=\"_blank\" href='%s</a>": "https://www.openstreetmap.org/" + String(poi.properties.type).toLowerCase() + "/" + String(poi.properties.id) + "'>" + langRef[languageOfUser].LNK_OSM_VIEW}, "symbol": "/moreInfo.svg", "title": langRef[languageOfUser].PDV_TITLE_MI, "active": true}
 			};
 			for (var entry in details_data) {
-				popupContent += "<img class='pdv-icon' id='icon" + classId + entry + "' onclick='toggleTab(this, \"" + classId + entry + "\")' src='" + details_data[entry].symbol + "' alt='" + details_data[entry].title + "' title='" + details_data[entry].title + "' />";
-			}
-			for (var entry in details_data) {
+				var tabContent = ""
 				popupContent += "<div class='tabcontent' id='" + classId + entry + "'>";
 				for (var elem in details_data[entry].elements) {
+					var tmp = "";
+					var result = "";
 					if (typeof(details_data[entry].elements[elem]) == "function") {
-						popupContent += elem.replace("%s", details_data[entry].elements[elem](poi, marker));
+						result = details_data[entry].elements[elem](poi, marker)
 					} else {
-						popupContent += elem.replace("%s", details_data[entry].elements[elem]);
+						result = details_data[entry].elements[elem]
+					}
+					if (result != "") {
+						tabContent += elem.replace("%s", result);
 					}
 				}
+				
+				if (tabContent == "") {
+					details_data[entry].active = false;
+				} else {
+					popupContent += tabContent;
+				}
 				popupContent += "</div>";
+			}
+			for (var entry in details_data) {
+				var disabled = "";
+				if (!details_data[entry].active) {
+					disabled = "disabled";
+				}
+				popupContent_header += "<img class='pdv-icon' id='icon" + classId + entry + "' onclick='toggleTab(this, \"" + classId + entry + "\")' src='" + details_data[entry].symbol + "' alt='" + details_data[entry].title + "' title='" + details_data[entry].title + "' " + disabled + " />";
 			}
 			//Analysing, filtering and preparing for display of the OSM keys
 			
 			//and then finally add then to Popup
-			marker.popupContent = popupContent + "<hr/><a target=\"_blank\" title=\"Bei OSM registrierte Nutzer können diese POI direkt bearbeiten. Veraltete Informationen raus nehmen und neue hinzufügen.\" href=\"https://www.openstreetmap.org/edit?" + String(poi.properties.type) + "=" + String(poi.properties.id) + "\">Mit OSM editieren</a>&nbsp;&nbsp;<a target=\"_blank\" title=\"Eine falsche Information entdeckt? Informiere mithilfe dieses Linkes die OSM Community.\" href=\"https://www.openstreetmap.org/note/new#map=15/" + poi.geometry.coordinates[1] + "/" + poi.geometry.coordinates[0] + "&layers=N\">Falschinformation melden</a>";;
+			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.properties.type) + "=" + String(poi.properties.id) + "\">" + langRef[languageOfUser].LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=15/" + poi.geometry.coordinates[1] + "/" + poi.geometry.coordinates[0] + "&layers=N\">" + langRef[languageOfUser].LNK_OSM_REPORT + "</a>";;
 			marker.bindPopup(marker.popupContent);
 			//Show marker on map
 			marker.addTo(map);

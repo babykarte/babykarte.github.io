@@ -13,13 +13,24 @@ var langRef = {
 "de": {
 	"LOCATING_FAILURE": "Standort nicht ermittelbar",
 	"LOCATING_SUCCESS": "Dein Standort.",
+	"LNK_OSM_EDIT": "Mit OSM editieren",
+	"LNK_OSM_REPORT": "Falschinformationen melden",
+	"LNK_OSM_VIEW": "POI in OpenStreetMap ansehen",
 	"PDV_UNKNOWN": "Unbekannt",
 	"PDV_TITLE_HOME": "Allgemein",
 	"PDV_TITLE_BABY": "Babytauglichkeit",
 	"PDV_TITLE_OH": "Öffnungszeiten",
 	"PDV_TITLE_CONTACT": "Kontakt",
 	"PDV_TITLE_MI": "Weitere informationen",
-	"PDV_OH_UNKNOWN": "Keine Öffnungszeiten angegeben",
+	"PDV_DIAPER_YES": "Wickeltisch vorhanden",
+	"PDV_DIAPER_BENCH": "Kein Wickeltisch, aber Bank auf der Toilette",
+	"PDV_DIAPER_ROOM": "Wickelraum",
+	"PDV_DIAPER_MALE": "Wickeltisch in der Herrentoilette",
+	"PDV_DIAPER_FEMALE": "Wickeltisch in der Damentoilette",
+	"PDV_DIAPER_UNISEX": "Wickeltisch in der Unisextoilette",
+	"PDV_DIAPER_FEE": "Kostenpflichtiger Wickeltisch",
+	"PDV_DIAPER_FEE_NO": "Kostenloser Wickeltisch",
+	"TOILET": "Toiletten",
 	"opening_hours": {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"},
 	"filtername": {
 		0: "Kinderärzte",
@@ -42,13 +53,25 @@ var langRef = {
 "en": {
 	"LOCATING_FAILURE": "Did not find your position.",
 	"LOCATING_SUCCESS": "Your position.",
+	"LNK_OSM_EDIT": "Edit via OSM",
+	"LNK_OSM_REPORT": "Report wrong information",
+	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
 	"PDV_UNKNOWN": "Unknown",
 	"PDV_TITLE_HOME": "General",
 	"PDV_TITLE_BABY": "Baby friendly",
 	"PDV_TITLE_OH": "Opening hours",
 	"PDV_TITLE_CONTACT": "Contact",
 	"PDV_TITLE_MI": "More information",
-	"PDV_OH_UNKNOWN": "No opening hours available",
+	"PDV_DIAPER": "Wickeltisch(e):",
+	"PDV_DIAPER_YES": "Diaper available",
+	"PDV_DIAPER_BENCH": "No diaper, but bench in the restroom",
+	"PDV_DIAPER_ROOM": "Baby changing room",
+	"PDV_DIAPER_MALE": "Diaper in the men's toilet",
+	"PDV_DIAPER_FEMALE": "Diaper in the women's toilet",
+	"PDV_DIAPER_UNISEX": "Diaper in the Unisex toilet",
+	"PDV_DIAPER_FEE": "Diaper fee",
+	"PDV_DIAPER_FEE_NO": "Free diaper",
+	"TOILET": "Toilets",
 	"BTN_APPLY_FILTERS": "Apply filters",
 	"LNK_PROJECT_SITE": "About & Privacy Policy (german only)",
 	"TB_SEARCHFIELD": "Place",
@@ -164,17 +187,27 @@ function groupIntoLayers(poi) {
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var qry in query) { //Gets throw all the queries the filter has.
 			qry = query[qry]; //Instead of its array position it gets the query itself.
-			var name = qry.split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
-			var value = name[1].replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").split("|"); //Removes chars Overpass needs. They don't help here.
+			var name = qry.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
+			var value = name[1].replace("\"", "").replace("\"", "").split("|"); //Removes chars Overpass needs. They don't help here.
 			name = name[0].replace("\"", "").replace("\"", ""); //Removes chars Overpass needs. They don't help here.
 			for (var vle in value) {
-				console.log(value[vle]);
-				if (poi.properties.tags[name] == value[vle]) { //Has the POI the same attribute like the filter we're checking against.
-					matches += 1; //Yes
-					break;
+				if (value[vle].indexOf("!") > -1) {
+					console.log("if NOT then true");
+					if (poi.properties.tags[name] != value[vle]) { //Has the POI not the same attribute like the filter we're checking against.
+						matches += 1; //Yes
+						break;
+					}
+				} else {
+					console.log("if then true");
+					console.log(poi.properties.tags[name] + " | " + value[vle])
+					if (poi.properties.tags[name] == value[vle]) { //Has the POI the same attribute like the filter we're checking against.
+						matches += 1; //Yes
+						break;
+					}
 				}
 			}
 		}
+		console.log(query.length + " | " + matches);
 		if (query.length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
 			filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
 			marker.name = langRef[languageOfUser].filtername[fltr];
