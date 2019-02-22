@@ -261,7 +261,7 @@ function loadPOIS(e, url) {
 			var details_data = {"home": {"elements": {"<h1>%s</h1>": ((poi.properties.tags["name"] == undefined) ? ((poi.properties.tags["amenity"] == "toilet") ? langRef[languageOfUser].TOILET : langRef[languageOfUser].PDV_UNKNOWN) : poi.properties.tags["name"]), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[languageOfUser].PDV_TITLE_HOME, "active": true},
 			"baby": {"elements": {"<b>%s</b>": ((poi.properties.tags["diaper"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_YES : ((poi.properties.tags["diaper"] == "bench") ? langRef[languageOfUser].PDV_DIAPER_BENCH : ((poi.properties.tags["diaper"] == "room") ? langRef[languageOfUser].PDV_DIAPER_ROOM : langRef[languageOfUser].PDV_DIAPER_NO))) || "", "<br/>%s": ((poi.properties.tags["diaper:male"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_MALE : ((poi.properties.tags["diaper:female"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_FEMALE : ((poi.properties.tags["diaper:unisex"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_UNISEX : ""))), "<br/>%s": ((poi.properties.tags["diaper:fee"] == "yes") ? "<span style='color:red;'>" + langRef[languageOfUser].PDV_DIAPER_FEE + "</span>": ((poi.properties.tags["diaper:fee"] == "no") ? "<span style='color:darkgreen;'>" + langRef[languageOfUser].PDV_DIAPER_FEE_NO + "</span>" : ""))}, "symbol": "/baby.svg", "title": langRef[languageOfUser].PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.properties.tags["opening_hours"]) || ""}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH, "active": true},
-			"contact": {"elements": {"<a href='%s'>WWW</a>": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || poi.properties.tags["contact:facebook"] || "", "Tel: <a href='%s'>Call</a>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "", "<a href='%s'>%s</a>": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || ""}, "symbol": "/contact.svg", "title": langRef[languageOfUser].PDV_TITLE_CONTACT, "active": true},
+			"contact": {"elements": {"<a target=\"_blank\" href='%s'><img class='small-icon' src='/www.svg' /></a>": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || poi.properties.tags["contact:facebook"] || "", "<a href='tel:%s'><img class='small-icon' src='/call.svg' /></a>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "", "<a href='mailto:%s'><img class='small-icon' src='/email.png' /></a>": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || ""}, "symbol": "/contact.svg", "title": langRef[languageOfUser].PDV_TITLE_CONTACT, "active": true},
 			"furtherInfos": {"elements": {"<a target=\"_blank\" href='%s</a>": "https://www.openstreetmap.org/" + String(poi.properties.type).toLowerCase() + "/" + String(poi.properties.id) + "'>" + langRef[languageOfUser].LNK_OSM_VIEW}, "symbol": "/moreInfo.svg", "title": langRef[languageOfUser].PDV_TITLE_MI, "active": true}
 			};
 			for (var entry in details_data) {
@@ -290,14 +290,14 @@ function loadPOIS(e, url) {
 			for (var entry in details_data) {
 				var disabled = "";
 				if (!details_data[entry].active) {
-					disabled = "disabled";
+					disabled = "style='background-color:#d9d9d9;'";
 				}
 				popupContent_header += "<img class='pdv-icon' id='icon" + classId + entry + "' onclick='toggleTab(this, \"" + classId + entry + "\")' src='" + details_data[entry].symbol + "' alt='" + details_data[entry].title + "' title='" + details_data[entry].title + "' " + disabled + " />";
 			}
 			//Analysing, filtering and preparing for display of the OSM keys
 			
 			//and then finally add then to Popup
-			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.properties.type) + "=" + String(poi.properties.id) + "\">" + langRef[languageOfUser].LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=15/" + poi.geometry.coordinates[1] + "/" + poi.geometry.coordinates[0] + "&layers=N\">" + langRef[languageOfUser].LNK_OSM_REPORT + "</a>";;
+			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.properties.type) + "=" + String(poi.properties.id) + "\">" + langRef[languageOfUser].LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.geometry.coordinates[1] + "/" + poi.geometry.coordinates[0] + "&layers=N\">" + langRef[languageOfUser].LNK_OSM_REPORT + "</a>";;
 			marker.bindPopup(marker.popupContent);
 			//Show marker on map
 			marker.addTo(map);
