@@ -1,12 +1,22 @@
 var saved_lat = 48.160474925320834;
 var saved_lon = 11.4992094039917;
+var mobile = false;
 var message;
-function toggleFilterList() {
+function mobileTrue() {mobile = true;}
+function toggleFilterList(value=false) {
 	var obj = document.getElementsByClassName("layermenu")[0]
+	if (value == true) {
+		obj.style.height = "auto";
+	}
 	if (obj.style.height != "auto") {
 		obj.style.height = "auto";
 	} else {
-		obj.style.height = "50px";
+		obj.style.height = "68px";
+	}
+}
+function hideFilterListOnMobile() {
+	if (mobile) {
+		toggleFilterList(true);
 	}
 }
 function progressbar(value=false) {

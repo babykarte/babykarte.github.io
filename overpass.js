@@ -128,7 +128,6 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 		filter[fltr].coordinates.max.west = maxWest;
 		filter[fltr].coordinates.max.north = maxNorth;
 		filter[fltr].coordinates.max.east = maxEast;
-		console.log(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new));
 		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
@@ -218,6 +217,7 @@ function toggleTab(bla, id) {
 	tab.style.display = "block";
 }
 function loadPOIS(e, url) {
+	hideFilterListOnMobile();
 	for (var entry in filter) {
 		if (filter[entry].active) {
 			activeFilter[entry] = true;
@@ -257,7 +257,6 @@ function loadPOIS(e, url) {
 			var classId = String(poi.properties.type)[0].toUpperCase() + String(poi.properties.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
-			console.log(marker.name);
 			var details_data = {"home": {"elements": {"<h1>%s</h1>": ((poi.properties.tags["name"] == undefined) ? ((poi.properties.tags["amenity"] == "toilet") ? langRef[languageOfUser].TOILET : langRef[languageOfUser].PDV_UNKNOWN) : poi.properties.tags["name"]), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[languageOfUser].PDV_TITLE_HOME, "active": true},
 			"baby": {"elements": {"<b>%s</b>": ((poi.properties.tags["diaper"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_YES : ((poi.properties.tags["diaper"] == "bench") ? langRef[languageOfUser].PDV_DIAPER_BENCH : ((poi.properties.tags["diaper"] == "room") ? langRef[languageOfUser].PDV_DIAPER_ROOM : langRef[languageOfUser].PDV_DIAPER_NO))) || "", "<br/>%s": ((poi.properties.tags["diaper:male"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_MALE : ((poi.properties.tags["diaper:female"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_FEMALE : ((poi.properties.tags["diaper:unisex"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_UNISEX : ""))), "<br/>%s": ((poi.properties.tags["diaper:fee"] == "yes") ? "<span style='color:red;'>" + langRef[languageOfUser].PDV_DIAPER_FEE + "</span>": ((poi.properties.tags["diaper:fee"] == "no") ? "<span style='color:darkgreen;'>" + langRef[languageOfUser].PDV_DIAPER_FEE_NO + "</span>" : ""))}, "symbol": "/baby.svg", "title": langRef[languageOfUser].PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.properties.tags["opening_hours"]) || ""}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH, "active": true},

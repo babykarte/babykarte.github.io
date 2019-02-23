@@ -31,6 +31,9 @@ var langRef = {
 	"PDV_DIAPER_FEE": "Kostenpflichtiger Wickeltisch",
 	"PDV_DIAPER_FEE_NO": "Kostenloser Wickeltisch",
 	"TOILET": "Toiletten",
+	"BTN_APPLY_FILTERS": "Filter anwenden",
+	"LNK_PROJECT_SITE": "Über das Projekt & Datenschutzerklärung",
+	"TB_SEARCHFIELD": "Ort",
 	"opening_hours": {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"},
 	"filtername": {
 		0: "Kinderärzte",
@@ -165,6 +168,7 @@ function setFilter(id) {
 function initFilters() {
 	//Creates the list of the filters for the user so he/she can (un)check.
 	var oac = document.getElementById("filtersGround");
+	oac.innerHTML = "";
 	for (var id in filter) { //Go throw the list of our filters.
 		var fltr = filter[id];
 		var label = document.createElement("label"); //Creates the surrounding container of checkbox and human readable name.
@@ -192,14 +196,11 @@ function groupIntoLayers(poi) {
 			name = name[0].replace("\"", "").replace("\"", ""); //Removes chars Overpass needs. They don't help here.
 			for (var vle in value) {
 				if (value[vle].indexOf("!") > -1) {
-					console.log("if NOT then true");
 					if (poi.properties.tags[name] != value[vle]) { //Has the POI not the same attribute like the filter we're checking against.
 						matches += 1; //Yes
 						break;
 					}
 				} else {
-					console.log("if then true");
-					console.log(poi.properties.tags[name] + " | " + value[vle])
 					if (poi.properties.tags[name] == value[vle]) { //Has the POI the same attribute like the filter we're checking against.
 						matches += 1; //Yes
 						break;
@@ -207,7 +208,6 @@ function groupIntoLayers(poi) {
 				}
 			}
 		}
-		console.log(query.length + " | " + matches);
 		if (query.length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
 			filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
 			marker.name = langRef[languageOfUser].filtername[fltr];
@@ -216,11 +216,13 @@ function groupIntoLayers(poi) {
 	}
 	return marker;
 }
-initFilters();
-document.body.onload = function() {
-	if (languageOfUser != "de") {
-		document.getElementById("query-button").value = langRef[languageOfUser].BTN_APPLY_FILTERS;
-		document.getElementById("linkToProject").innerHTML = langRef[languageOfUser].LNK_PROJECT_SITE;
-		document.getElementById("searchfield").placeholder = langRef[languageOfUser].TB_SEARCHFIELD;
+function setLang(e, lang) {
+	if (lang != undefined) {
+		languageOfUser = lang;
 	}
-};
+	document.getElementById("query-button").value = langRef[languageOfUser].BTN_APPLY_FILTERS;
+	document.getElementById("linkToProject").innerHTML = langRef[languageOfUser].LNK_PROJECT_SITE;
+	document.getElementById("searchfield").placeholder = langRef[languageOfUser].TB_SEARCHFIELD;
+	initFilters();
+}
+document.body.onload = setLang;

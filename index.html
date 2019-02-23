@@ -12,9 +12,12 @@
   	<div class='info' id='infoPopup' style='display:none;'></div>
   	<section>
   	<div class='layermenu'>
+  		<div class='lang-select'>
+  			<a href='#' onclick='setLang(this, "en")'>EN</a> <a href='#' onclick='setLang(this, "de")'>DE</a>
+  		</div>
      	<div id='searchgroup'>
      		<div style='display:flex;'>
-     			<img id='menubutton' src='/menu.svg' onclick='toggleFilterList()' alt='Menü'></img> <input type='text' onclick='geocode()' placeholder='Stadt' id='searchfield' />
+     			<img id='menubtn' src='/menu.svg' onclick='toggleFilterList();mobileTrue();' alt='Menü'></img> <input type='text' onclick='geocode()' placeholder='Ort' id='searchfield' />
      		</div>
 			<div id='autocomplete'></div>
 		</div>
