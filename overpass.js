@@ -263,7 +263,7 @@ function loadPOIS(e, url) {
 			var details_data = {"home": {"elements": {"<h1>%s</h1>": ((poi.properties.tags["name"] == undefined) ? ((poi.properties.tags["amenity"] == "toilet") ? langRef[languageOfUser].TOILET : langRef[languageOfUser].PDV_UNNAME) : poi.properties.tags["name"]), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[languageOfUser].PDV_TITLE_HOME, "active": true, default: true},
 			"baby": {"elements": {"<b>%s</b>": ((poi.properties.tags["diaper"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_YES : ((poi.properties.tags["diaper"] == "bench") ? langRef[languageOfUser].PDV_DIAPER_BENCH : ((poi.properties.tags["diaper"] == "room") ? langRef[languageOfUser].PDV_DIAPER_ROOM : langRef[languageOfUser].PDV_DIAPER_NO))) || "", "<br/>%s": ((poi.properties.tags["diaper:male"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_MALE : ((poi.properties.tags["diaper:female"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_FEMALE : ((poi.properties.tags["diaper:unisex"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_UNISEX : ""))), "<br/>%s": ((poi.properties.tags["diaper:fee"] == "yes") ? "<span style='color:red;'>" + langRef[languageOfUser].PDV_DIAPER_FEE + "</span>": ((poi.properties.tags["diaper:fee"] == "no") ? "<span style='color:darkgreen;'>" + langRef[languageOfUser].PDV_DIAPER_FEE_NO + "</span>" : ""))}, "symbol": "/baby.svg", "title": langRef[languageOfUser].PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.properties.tags["opening_hours"]) || ""}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH, "active": true},
-			"contact": {"elements": {"<a target=\"_blank\" href='%s'><img class='small-icon' src='/www.svg' /></a>": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || poi.properties.tags["contact:facebook"] || "", "<a href='tel:%s'><img class='small-icon' src='/call.svg' /></a>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "", "<a href='mailto:%s'><img class='small-icon' src='/email.png' /></a>": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || ""}, "symbol": "/contact.svg", "title": langRef[languageOfUser].PDV_TITLE_CONTACT, "active": true},
+			"contact": {"elements": {"<a target=\"_blank\" href='%s'><img class='small-icon' src='/www.svg' /></a>": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || "","%s<br/><!--Keep note as workatound for a bug-->": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || "", "<a href='tel:%s'><img class='small-icon' src='/call.svg' /></a>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "","%s<br/>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "", "<a href='mailto:%s'><img class='small-icon' src='/email.png' /></a>": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || "", "%s": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || ""}, "symbol": "/contact.svg", "title": langRef[languageOfUser].PDV_TITLE_CONTACT, "active": true},
 			"furtherInfos": {"elements": {"<a target=\"_blank\" href='%s</a>": "https://www.openstreetmap.org/" + String(poi.properties.type).toLowerCase() + "/" + String(poi.properties.id) + "'>" + langRef[languageOfUser].LNK_OSM_VIEW, "<br/><a href='%s</a>": "geo:" + poi.geometry.coordinates[1] + "," + poi.geometry.coordinates[0] + "'>" + langRef[languageOfUser].LNK_OPEN_WITH}, "symbol": "/moreInfo.svg", "title": langRef[languageOfUser].PDV_TITLE_MI, "active": true}
 			};
 			for (var entry in details_data) {
@@ -277,9 +277,9 @@ function loadPOIS(e, url) {
 					var tmp = "";
 					var result = "";
 					if (typeof(details_data[entry].elements[elem]) == "function") {
-						result = details_data[entry].elements[elem](poi, marker)
+						result = details_data[entry].elements[elem](poi, marker);
 					} else {
-						result = details_data[entry].elements[elem]
+						result = details_data[entry].elements[elem];
 					}
 					if (result != "") {
 						tabContent += elem.replace("%s", result);
