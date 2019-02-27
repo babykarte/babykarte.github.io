@@ -16,7 +16,8 @@ var langRef = {
 	"LNK_OSM_EDIT": "Mit OSM editieren",
 	"LNK_OSM_REPORT": "Falschinformationen melden",
 	"LNK_OSM_VIEW": "POI in OpenStreetMap ansehen",
-	"PDV_UNKNOWN": "Unbekannt",
+	"LNK_OPEN_WITH": "Mit App öffnen",
+	"PDV_UNNAME": "Kein Name",
 	"PDV_TITLE_HOME": "Allgemein",
 	"PDV_TITLE_BABY": "Babytauglichkeit",
 	"PDV_TITLE_OH": "Öffnungszeiten",
@@ -59,7 +60,8 @@ var langRef = {
 	"LNK_OSM_EDIT": "Edit via OSM",
 	"LNK_OSM_REPORT": "Report wrong information",
 	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
-	"PDV_UNKNOWN": "Unknown",
+	"LNK_OPEN_WITH": "Mit App öffnen",
+	"PDV_UNNAME": "No Name",
 	"PDV_TITLE_HOME": "General",
 	"PDV_TITLE_BABY": "Baby friendly",
 	"PDV_TITLE_OH": "Opening hours",
@@ -115,21 +117,21 @@ if (languageOfUser.indexOf("-") > -1) {
 	}
 }
 var filter = { //The filters, the query they trigger, their names and technical descriptions as dictionary (JSON)
-0: {"query": ["[\"healthcare\"=\"doctor\"]", "[\"healthcare:speciality\"=\"paediatrics\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-1: {"query": ["[\"healthcare\"=\"midwife\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-2: {"query": ["[\"leisure\"=\"playground\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-3: {"query": ["[\"leisure\"=\"park\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-4: {"query": ["[\"shop\"=\"baby_goods\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-5: {"query": ["[\"shop\"=\"toys\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-6: {"query": ["[\"shop\"=\"clothes\"]", "\"clothes\"=\"babies|children\""], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-7: {"query": ["[\"amenity\"~\"kindergarten|childcare\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-8: {"query": ["[\"tourism\"=\"zoo\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-9: {"query": ["[\"amenity\"=\"theatre\"]", "\"theatre:genre\"=puppet\""], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-10: {"query": ["[\"attraction\"=\"animal\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-11: {"query": ["[\"amenity\"=\"toilets\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-12: {"query": ["[\"diaper\"!=\"no\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-13: {"query": ["[\"amenity\"=\"cafe\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-14: {"query": ["[\"amenity\"=\"restaurant\"]"], "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false}
+0: {"query": {"node|way": ["[\"healthcare\"=\"doctor\"]", "[\"healthcare:speciality\"=\"paediatrics\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+2: {"query": {"node|way": ["[\"leisure\"=\"playground\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+3: {"query": {"node|way": ["[\"leisure\"=\"park\"]", "[\"name\"~\"*\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+4: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+5: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+6: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "\"clothes\"=\"babies|children\""]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+7: {"query": {"node|way": ["[\"amenity\"=\"kindergarten\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+8: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+9: {"query": {"node|way": ["[\"amenity\"=\"theatre\"]", "\"theatre:genre\"=puppet\""]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+10: {"query": {"node|way": ["[\"attraction\"=\"animal\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+11: {"query": {"node|way": ["[\"amenity\"=\"toilets\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+12: {"query": {"node|way": ["[\"diaper\"!=\"no\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+13: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+14: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false}
 };
 function toggleLayers(id, toggle) {
 	if (toggle == 0) {
@@ -184,7 +186,7 @@ function initFilters() {
         oac.appendChild(label); //Finally adds the container itself to the filter list and displays it to the user.
 	}
 }
-function groupIntoLayers(poi) {
+function groupIntoLayers_old(poi) {
 	var marker = L.marker([poi.geometry.coordinates[1], poi.geometry.coordinates[0]]) //Creates the marker with the POI coordinates.
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
 		var matches = 0; //Initiates the counter.
@@ -209,6 +211,40 @@ function groupIntoLayers(poi) {
 			}
 		}
 		if (query.length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
+			filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
+			marker.name = langRef[languageOfUser].filtername[fltr];
+			return marker;
+		}
+	}
+	return marker;
+}
+function groupIntoLayers(poi) {
+	var marker = L.marker([poi.geometry.coordinates[1], poi.geometry.coordinates[0]]) //Creates the marker with the POI coordinates.
+	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
+		var length = 0;
+		var matches = 0; //Initiates the counter.
+		var query = filter[fltr].query; //Gets the list of queries the filter has.
+		for (var type in query) { //Gets throw all the queries the filter has.
+			//Bug begins
+			type = query[type]; //Instead of its array position it gets the type itself.
+			length += type.length;
+			for (var vle in type) {
+				var value = type[vle];
+				value = value.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").replace("\"", "").replace("\"", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
+				if (value[0].indexOf("!") > -1) {
+					if (poi.properties.tags[value[0]] != value[1]) { //Has the POI not the same attribute like the filter we're checking against.
+						matches += 1; //Yes
+						break;
+					}
+				} else {
+					if (poi.properties.tags[value[0]] == value[1]) { //Has the POI the same attribute like the filter we're checking against.
+						matches += 1; //Yes
+						break;
+					}
+				}
+			}
+		}
+		if (length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
 			filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
 			marker.name = langRef[languageOfUser].filtername[fltr];
 			return marker;

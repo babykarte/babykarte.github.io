@@ -28,6 +28,10 @@ function checkboxes2overpass(bounds, actFilter) {
 		for (var i in value) {
 			andquery += value[i];
 		}
+		andquery += "(" + bounds + ");relation";
+		for (var i in value) {
+			andquery += value[i];
+		}
 			andquery += "(" + bounds + ");";
 	}
 	return andquery + ");";
@@ -152,8 +156,6 @@ function locateNewAreaBasedOnFilter() {
 		}
 		if (result) {
 			url += result
-		} else {
-			console.log("Filter '" + langRef[languageOfUser].filtername[fltr] + "' doesn't need to be queried to OSM Server");
 		}
 		url = url.replace(");(", "") //Removes the delimiter between Overpass union syntax, because we want to have just one 'union' tag. Combines two (or more 'union's (we're in a loop)) into one.
 		fltr++;
@@ -181,21 +183,22 @@ function parseOpening_hours(value) {
 	}
    	return value
 }
+function addrTrigger_intern(poi, marker) {
+	if (marker.popupContent.indexOf("%data_address%") > -1) {
+		$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.properties.type)[0].toUpperCase() + "&osm_id=" + String(poi.properties.id), function(data, status, xhr, trash) {
+			var address = data["address"];
+			var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"];
+			var housenumber = address["housenumber"] || address["house_number"] || "";
+			var postcode = address["postcode"] || "";
+			var city = address["city"] || address["town"] || address["county"] || address["state"] || "Kommune unbekannt"
+			marker.popupContent = marker.popupContent.replace("%data_address%", street + " " + housenumber + "<br/>" + postcode + " " + city)
+			marker.bindPopup(marker.popupContent);
+			marker.openPopup();
+		});
+	}
+}
 function addrTrigger(poi, marker) {
-	marker.on("click", function() {
-		if (marker.popupContent.indexOf("%data_address%") > -1) {
-			$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.properties.type)[0].toUpperCase() + "&osm_id=" + String(poi.properties.id), function(data, status, xhr, trash) {
-				var address = data["address"];
-				var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"];
-				var housenumber = address["housenumber"] || address["house_number"] || "";
-				var postcode = address["postcode"] || "";
-				var city = address["city"] || address["town"] || address["county"] || address["state"] || "Kommune unbekannt"
-				marker.popupContent = marker.popupContent.replace("%data_address%", street + " " + housenumber + "<br/>" + postcode + " " + city)
-				marker.bindPopup(marker.popupContent);
-				marker.openPopup();
-			});
-		}
-	});
+	marker.on("click", function() {addrTrigger_intern(poi, marker)});
 	return "%data_address%";
 }
 function toggleTab(bla, id) {
@@ -253,19 +256,23 @@ function loadPOIS(e, url) {
 			var marker;
 			var popupContent = "";
 			var popupContent_header = ""
-			var poi = resultAsGeojson.features[poi];
+			poi = resultAsGeojson.features[poi];
 			var classId = String(poi.properties.type)[0].toUpperCase() + String(poi.properties.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
-			var details_data = {"home": {"elements": {"<h1>%s</h1>": ((poi.properties.tags["name"] == undefined) ? ((poi.properties.tags["amenity"] == "toilet") ? langRef[languageOfUser].TOILET : langRef[languageOfUser].PDV_UNKNOWN) : poi.properties.tags["name"]), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[languageOfUser].PDV_TITLE_HOME, "active": true},
+			var details_data = {"home": {"elements": {"<h1>%s</h1>": ((poi.properties.tags["name"] == undefined) ? ((poi.properties.tags["amenity"] == "toilet") ? langRef[languageOfUser].TOILET : langRef[languageOfUser].PDV_UNNAME) : poi.properties.tags["name"]), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[languageOfUser].PDV_TITLE_HOME, "active": true, default: true},
 			"baby": {"elements": {"<b>%s</b>": ((poi.properties.tags["diaper"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_YES : ((poi.properties.tags["diaper"] == "bench") ? langRef[languageOfUser].PDV_DIAPER_BENCH : ((poi.properties.tags["diaper"] == "room") ? langRef[languageOfUser].PDV_DIAPER_ROOM : langRef[languageOfUser].PDV_DIAPER_NO))) || "", "<br/>%s": ((poi.properties.tags["diaper:male"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_MALE : ((poi.properties.tags["diaper:female"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_FEMALE : ((poi.properties.tags["diaper:unisex"] == "yes") ? langRef[languageOfUser].PDV_DIAPER_UNISEX : ""))), "<br/>%s": ((poi.properties.tags["diaper:fee"] == "yes") ? "<span style='color:red;'>" + langRef[languageOfUser].PDV_DIAPER_FEE + "</span>": ((poi.properties.tags["diaper:fee"] == "no") ? "<span style='color:darkgreen;'>" + langRef[languageOfUser].PDV_DIAPER_FEE_NO + "</span>" : ""))}, "symbol": "/baby.svg", "title": langRef[languageOfUser].PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.properties.tags["opening_hours"]) || ""}, "symbol": "/clock.png", "title": langRef[languageOfUser].PDV_TITLE_OH, "active": true},
 			"contact": {"elements": {"<a target=\"_blank\" href='%s'><img class='small-icon' src='/www.svg' /></a>": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || poi.properties.tags["contact:facebook"] || "", "<a href='tel:%s'><img class='small-icon' src='/call.svg' /></a>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "", "<a href='mailto:%s'><img class='small-icon' src='/email.png' /></a>": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || ""}, "symbol": "/contact.svg", "title": langRef[languageOfUser].PDV_TITLE_CONTACT, "active": true},
-			"furtherInfos": {"elements": {"<a target=\"_blank\" href='%s</a>": "https://www.openstreetmap.org/" + String(poi.properties.type).toLowerCase() + "/" + String(poi.properties.id) + "'>" + langRef[languageOfUser].LNK_OSM_VIEW}, "symbol": "/moreInfo.svg", "title": langRef[languageOfUser].PDV_TITLE_MI, "active": true}
+			"furtherInfos": {"elements": {"<a target=\"_blank\" href='%s</a>": "https://www.openstreetmap.org/" + String(poi.properties.type).toLowerCase() + "/" + String(poi.properties.id) + "'>" + langRef[languageOfUser].LNK_OSM_VIEW, "<br/><a href='%s</a>": "geo:" + poi.geometry.coordinates[1] + "," + poi.geometry.coordinates[0] + "'>" + langRef[languageOfUser].LNK_OPEN_WITH}, "symbol": "/moreInfo.svg", "title": langRef[languageOfUser].PDV_TITLE_MI, "active": true}
 			};
 			for (var entry in details_data) {
-				var tabContent = ""
-				popupContent += "<div class='tabcontent' id='" + classId + entry + "'>";
+				var tabContent = "";
+				var defaultOpen = "";
+				if (details_data[entry].default == true) {
+					defaultOpen = "style='display:block;'"
+				}
+				popupContent += "<div class='tabcontent' id='" + classId + entry + "' + " + defaultOpen + ">";
 				for (var elem in details_data[entry].elements) {
 					var tmp = "";
 					var result = "";
@@ -300,6 +307,9 @@ function loadPOIS(e, url) {
 			marker.bindPopup(marker.popupContent);
 			//Show marker on map
 			marker.addTo(map);
+			if (poi.geometry.coordinates[1] == saved_lat && poi.geometry.coordinates[0] == saved_lon) {
+				addrTrigger_intern(poi, marker);
+			}
 		}
 		progressbar();
 	});

@@ -61,7 +61,11 @@ label {
 	margin-top:5px;
 }
 .tabcontent {
+	box-shadow: -10px 0px 5px -2px grey;
+	padding:2px;
+	overflow:auto;
 	display:none;
+	height:100px;
 }
 .layermenu {
 	z-index:1;
