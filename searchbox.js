@@ -46,6 +46,8 @@ function jumpto(lat, lon, locname="") {
 	$("#autocomplete").hide();
 	map.setView([lat, lon]);
 	location.hash = String(map.getZoom()) + "&" + String(lat) + "&" + String(lon);
+	saved_lat = lat;
+	saved_lon = lon;
 	maxSouth = map.getBounds().getSouth();
 	maxWest = map.getBounds().getWest();
 	maxNorth = 0;

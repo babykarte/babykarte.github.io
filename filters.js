@@ -31,8 +31,9 @@ var langRef = {
 	"PDV_DIAPER_UNISEX": "Wickeltisch in der Unisextoilette",
 	"PDV_DIAPER_FEE": "Kostenpflichtiger Wickeltisch",
 	"PDV_DIAPER_FEE_NO": "Kostenloser Wickeltisch",
-	"TOILET": "Toiletten",
+	"TOILET": "WC",
 	"BTN_APPLY_FILTERS": "Filter anwenden",
+	"LNK_IMPRESS": "Impressum",
 	"LNK_PROJECT_SITE": "Über das Projekt & Datenschutzerklärung",
 	"TB_SEARCHFIELD": "Ort",
 	"opening_hours": {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"},
@@ -41,9 +42,9 @@ var langRef = {
 		1: "Hebamme",
 		2: "Spielplätze",
 		3: "Parks",
-		4: "Babysachen einkaufen",
-		5: "Spielsachen einkaufen",
-		6: "Kinderkleidung einkaufen",
+		4: "Geschäfte für Babybedarf",
+		5: "Spielwarenläden",
+		6: "Bekleidungsgeschäfte",
 		7: "Kindergärten",
 		8: "Zoo",
 		9: "Puppentheater",
@@ -52,53 +53,8 @@ var langRef = {
 		12: "Wickelplätze",
 		13: "Cafés",
 		14: "Restaurants"
+		}
 	}
-},
-"en": {
-	"LOCATING_FAILURE": "Did not find your position.",
-	"LOCATING_SUCCESS": "Your position.",
-	"LNK_OSM_EDIT": "Edit via OSM",
-	"LNK_OSM_REPORT": "Report wrong information",
-	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
-	"LNK_OPEN_WITH": "Mit App öffnen",
-	"PDV_UNNAME": "No Name",
-	"PDV_TITLE_HOME": "General",
-	"PDV_TITLE_BABY": "Baby friendly",
-	"PDV_TITLE_OH": "Opening hours",
-	"PDV_TITLE_CONTACT": "Contact",
-	"PDV_TITLE_MI": "More information",
-	"PDV_DIAPER": "Wickeltisch(e):",
-	"PDV_DIAPER_YES": "Diaper available",
-	"PDV_DIAPER_BENCH": "No diaper, but bench in the restroom",
-	"PDV_DIAPER_ROOM": "Baby changing room",
-	"PDV_DIAPER_MALE": "Diaper in the men's toilet",
-	"PDV_DIAPER_FEMALE": "Diaper in the women's toilet",
-	"PDV_DIAPER_UNISEX": "Diaper in the Unisex toilet",
-	"PDV_DIAPER_FEE": "Diaper fee",
-	"PDV_DIAPER_FEE_NO": "Free diaper",
-	"TOILET": "Toilets",
-	"BTN_APPLY_FILTERS": "Apply filters",
-	"LNK_PROJECT_SITE": "About & Privacy Policy (german only)",
-	"TB_SEARCHFIELD": "Place",
-	"opening_hours": {"Mo" : "Monday", "Tu" : "Tuesday", "We" : "Wednesday", "Th" : "Thursday", "Fr" : "Friday", "Sa" : "Saturday", "Su" : "Sunday", "off" : "closed", "Jan" : "January", "Feb" : "February", "Mar" : "March", "Apr" : "April", "May" : "May", "Jun" : "June", "Jul" : "July", "Aug" : "August", "Sep" : "Septembre", "Oct" : "Oktobre", "Nov" : "Novembre", "Dec" : "Decembre", "PH" : "holiday"},
-	"filtername": {
-		0: "Paediatricians",
-		1: "Midwifes",
-		2: "Playgrounds",
-		3: "Parks",
-		4: "Shop: baby goods",
-		5: "Shop: Toys",
-		6: "Shop: children clothes",
-		7: "Kindergarten",
-		8: "Zoo",
-		9: "Puppet theatre",
-		10: "Animal attractions",
-		11: "Toilets",
-		12: "Diapers",
-		13: "Cafés",
-		14: "Restaurants"
-	}
-}
 };
 //determine language of user
 if (languageOfUser.indexOf("-") > -1) {
@@ -252,13 +208,32 @@ function groupIntoLayers(poi) {
 	}
 	return marker;
 }
+function registerLang(lang, json) {
+	langRef[lang] = json;
+}
+function loadLang(e, lang) {
+	if (lang in langRef == false) {
+		var script = document.createElement("script");
+		script.setAttribute("src", "/" + String(lang) + ".js");
+		document.body.appendChild(script);
+	} else {
+		setLang(e, lang);
+	}
+}
 function setLang(e, lang) {
 	if (lang != undefined) {
 		languageOfUser = lang;
 	}
-	document.getElementById("query-button").value = langRef[languageOfUser].BTN_APPLY_FILTERS;
-	document.getElementById("linkToProject").innerHTML = langRef[languageOfUser].LNK_PROJECT_SITE;
-	document.getElementById("searchfield").placeholder = langRef[languageOfUser].TB_SEARCHFIELD;
-	initFilters();
+	if (languageOfUser in langRef) {
+		document.getElementById("query-button").value = langRef[languageOfUser].BTN_APPLY_FILTERS;
+		document.getElementById("linkToProject").innerHTML = langRef[languageOfUser].LNK_PROJECT_SITE;
+		document.getElementById("searchfield").placeholder = langRef[languageOfUser].TB_SEARCHFIELD;
+		document.getElementById("lnk-impress").href = "/impress_" + languageOfUser + ".html";
+		document.getElementById("lnk-impress").innerHTML = langRef[languageOfUser].LNK_IMPRESS;
+		initFilters();
+	} else {
+		alert("Language files couldn't be loaded.");
+	}
 }
-document.body.onload = setLang;
+setLang("", "de");
+//document.body.onload = setLang;
