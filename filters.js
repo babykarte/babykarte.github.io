@@ -1,77 +1,4 @@
 var activeFilter = {}; //Dictionary of the current selected filters
-var languageOfUser = navigator.language.toLowerCase();
-var lang_default = "de";
-/*Meaning of the abreviations used in 'langRef' JSON.
-PDV - POI Details view (The view displayed to the user when the user clicks on a POI marker).
-BTN - A 'button' element.
-LNK - A 'a' (hyperlink) element.
-TB - Textbox (or input type 'text') element.
-OH - Opening Hours
-MI - More Information
-*/
-var langRef = {
-"de": {
-	"LOCATING_FAILURE": "Standort nicht ermittelbar",
-	"LOCATING_SUCCESS": "Dein Standort.",
-	"LNK_OSM_EDIT": "Mit OSM editieren",
-	"LNK_OSM_REPORT": "Falschinformationen melden",
-	"LNK_OSM_VIEW": "POI in OpenStreetMap ansehen",
-	"LNK_OPEN_WITH": "Mit App öffnen",
-	"PDV_UNNAME": "Kein Name",
-	"PDV_TITLE_HOME": "Allgemein",
-	"PDV_TITLE_BABY": "Babytauglichkeit",
-	"PDV_TITLE_OH": "Öffnungszeiten",
-	"PDV_TITLE_CONTACT": "Kontakt",
-	"PDV_TITLE_MI": "Weitere informationen",
-	"PDV_DIAPER_YES": "Wickeltisch vorhanden",
-	"PDV_DIAPER_BENCH": "Kein Wickeltisch, aber Bank auf der Toilette",
-	"PDV_DIAPER_ROOM": "Wickelraum",
-	"PDV_DIAPER_MALE": "Wickeltisch in der Herrentoilette",
-	"PDV_DIAPER_FEMALE": "Wickeltisch in der Damentoilette",
-	"PDV_DIAPER_UNISEX": "Wickeltisch in der Unisextoilette",
-	"PDV_DIAPER_FEE": "Kostenpflichtiger Wickeltisch",
-	"PDV_DIAPER_FEE_NO": "Kostenloser Wickeltisch",
-	"TOILET": "WC",
-	"BTN_APPLY_FILTERS": "Filter anwenden",
-	"LNK_IMPRESS": "Impressum",
-	"LNK_PROJECT_SITE": "Über das Projekt & Datenschutzerklärung",
-	"TB_SEARCHFIELD": "Ort",
-	"opening_hours": {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"},
-	"filtername": {
-		0: "Kinderärzte",
-		1: "Hebamme",
-		2: "Spielplätze",
-		3: "Parks",
-		4: "Geschäfte für Babybedarf",
-		5: "Spielwarenläden",
-		6: "Bekleidungsgeschäfte",
-		7: "Kindergärten",
-		8: "Zoo",
-		9: "Puppentheater",
-		10: "Tierattraktionen",
-		11: "Toiletten",
-		12: "Wickelplätze",
-		13: "Cafés",
-		14: "Restaurants"
-		}
-	}
-};
-//determine language of user
-if (languageOfUser.indexOf("-") > -1) {
-	languageOfUser = languageOfUser.split("-");
-	languageOfUser = languageOfUser[0];
-	var supported = false;
-	for (var lang in langRef) {
-		if (lang == languageOfUser) {
-			supported = true;
-			break;
-		}
-	}
-	if (!supported) {
-		//The user's language isn't supported, so we set it to standalone german.
-		languageOfUser = lang_default;
-	}
-}
 var filter = { //The filters, the query they trigger, their names and technical descriptions as dictionary (JSON)
 0: {"query": {"node|way": ["[\"healthcare\"=\"doctor\"]", "[\"healthcare:speciality\"=\"paediatrics\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
@@ -126,53 +53,24 @@ function setFilter(id) {
 function initFilters() {
 	//Creates the list of the filters for the user so he/she can (un)check.
 	var oac = document.getElementById("filtersGround");
+	if (oac == null) {
+		return 0;
+	}
 	oac.innerHTML = "";
 	for (var id in filter) { //Go throw the list of our filters.
 		var fltr = filter[id];
 		var label = document.createElement("label"); //Creates the surrounding container of checkbox and human readable name.
         var checkbox = document.createElement("input"); //Creates the checkbox itself.
         var span = document.createElement("span"); //Needed to have 'title' attribut supported
-        var text = document.createTextNode(langRef[languageOfUser].filtername[id]); //The text inside the 'span' element.
+        var text = document.createTextNode(langRef[document.body.id][languageOfUser].filtername[id]); //The text inside the 'span' element.
         checkbox.type = "checkbox";
         checkbox.setAttribute("onclick", "setFilter(" + id + ")"); //Add function 'setFilter(id)'.
-        span.setAttribute("title", "Filter: " + langRef[languageOfUser].filtername[id]); //Adds the title
+        span.setAttribute("title", "Filter: " + langRef[document.body.id][languageOfUser].filtername[id]); //Adds the title
         label.appendChild(checkbox); //Assigns the checkbox to the text node.
         span.appendChild(text); //Adds the human readable name of the filter to element 'span'
         label.appendChild(span); //Adds the 'span' element to the surrounding container. 
         oac.appendChild(label); //Finally adds the container itself to the filter list and displays it to the user.
 	}
-}
-function groupIntoLayers_old(poi) {
-	var marker = L.marker([poi.geometry.coordinates[1], poi.geometry.coordinates[0]]) //Creates the marker with the POI coordinates.
-	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
-		var matches = 0; //Initiates the counter.
-		var query = filter[fltr].query; //Gets the list of queries the filter has.
-		for (var qry in query) { //Gets throw all the queries the filter has.
-			qry = query[qry]; //Instead of its array position it gets the query itself.
-			var name = qry.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
-			var value = name[1].replace("\"", "").replace("\"", "").split("|"); //Removes chars Overpass needs. They don't help here.
-			name = name[0].replace("\"", "").replace("\"", ""); //Removes chars Overpass needs. They don't help here.
-			for (var vle in value) {
-				if (value[vle].indexOf("!") > -1) {
-					if (poi.properties.tags[name] != value[vle]) { //Has the POI not the same attribute like the filter we're checking against.
-						matches += 1; //Yes
-						break;
-					}
-				} else {
-					if (poi.properties.tags[name] == value[vle]) { //Has the POI the same attribute like the filter we're checking against.
-						matches += 1; //Yes
-						break;
-					}
-				}
-			}
-		}
-		if (query.length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
-			filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
-			marker.name = langRef[languageOfUser].filtername[fltr];
-			return marker;
-		}
-	}
-	return marker;
 }
 function groupIntoLayers(poi) {
 	var marker = L.marker([poi.geometry.coordinates[1], poi.geometry.coordinates[0]]) //Creates the marker with the POI coordinates.
@@ -181,7 +79,6 @@ function groupIntoLayers(poi) {
 		var matches = 0; //Initiates the counter.
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has.
-			//Bug begins
 			type = query[type]; //Instead of its array position it gets the type itself.
 			length += type.length;
 			for (var vle in type) {
@@ -202,38 +99,10 @@ function groupIntoLayers(poi) {
 		}
 		if (length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
 			filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
-			marker.name = langRef[languageOfUser].filtername[fltr];
+			marker.name = langRef[document.body.id][languageOfUser].filtername[fltr];
 			return marker;
 		}
 	}
 	return marker;
 }
-function registerLang(lang, json) {
-	langRef[lang] = json;
-}
-function loadLang(e, lang) {
-	if (lang in langRef == false) {
-		var script = document.createElement("script");
-		script.setAttribute("src", "/" + String(lang) + ".js");
-		document.body.appendChild(script);
-	} else {
-		setLang(e, lang);
-	}
-}
-function setLang(e, lang) {
-	if (lang != undefined) {
-		languageOfUser = lang;
-	}
-	if (languageOfUser in langRef) {
-		document.getElementById("query-button").value = langRef[languageOfUser].BTN_APPLY_FILTERS;
-		document.getElementById("linkToProject").innerHTML = langRef[languageOfUser].LNK_PROJECT_SITE;
-		document.getElementById("searchfield").placeholder = langRef[languageOfUser].TB_SEARCHFIELD;
-		document.getElementById("lnk-impress").href = "/impress_" + languageOfUser + ".html";
-		document.getElementById("lnk-impress").innerHTML = langRef[languageOfUser].LNK_IMPRESS;
-		initFilters();
-	} else {
-		alert("Language files couldn't be loaded.");
-	}
-}
-setLang("", "de");
-//document.body.onload = setLang;
+loadLang("", languageOfUser);

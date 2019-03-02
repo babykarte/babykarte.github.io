@@ -7,13 +7,13 @@
     <link rel='stylesheet' href='https://unpkg.com/leaflet@1.0.3/dist/leaflet.css' /> <!--https://policies.google.com/privacy#infocollect-->
     <link rel='stylesheet' href='/style.css' />
   </head>
-  <body>
+  <body id='site-map'>
   	<div id='progressbar'></div>
-  	<div class='info' id='infoPopup' style='display:none;'></div>
+  	<div class='info'><div id='infoPopup'></div></div>
   	<section>
   	<div class='layermenu'>
   		<div class='lang-select'>
-  			<a href='#' onclick='loadLang(this, "en");'><img class='small-icon' alt='EN' src='/en.svg' /></a> <a href='#' onclick='loadLang(this, "de");'><img class='small-icon' alt='DE' src='/de.svg' /></a><a href="impress_de.html" id='lnk-impress' style="float: right">Impressum</a>
+  			<a href='#' onclick='loadLang(this, "en");'><img class='small-icon' alt='EN' src='/en.svg' /></a> <a href='#' onclick='loadLang(this, "de");'><img class='small-icon' alt='DE' src='/de.svg' /></a><a href="impressum.html" id='lnk-impress' style="float: right">Impressum</a>
   		</div>
      	<div id='searchgroup'>
      		<div style='display:flex;'>
@@ -31,6 +31,7 @@
     <script src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js'></script> <!--https://policies.google.com/privacy#infocollect-->
     <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script> <!--https://www.digitalocean.com/legal/privacy-policy/-->
     <script src='https://unpkg.com/osmtogeojson@2.2.12/osmtogeojson.js'></script> <!--https://policies.google.com/privacy#infocollect-->
+    <script src='/lang.js'></script>
     <script src='/filters.js'></script>
     <script src='/searchbox.js'></script>
     <script src='/overpass.js'></script>

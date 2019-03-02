@@ -1,4 +1,4 @@
-var refEn = {
+var refEn = {"site-map": {
 	"LOCATING_FAILURE": "Did not find your position.",
 	"LOCATING_SUCCESS": "Your position.",
 	"LNK_OSM_EDIT": "Edit via OSM",
@@ -20,6 +20,11 @@ var refEn = {
 	"PDV_DIAPER_UNISEX": "Diaper in the unisex toilet",
 	"PDV_DIAPER_FEE": "Fee for diaper changing table",
 	"PDV_DIAPER_FEE_NO": "No fee for diaper changing table",
+	"PDV_HIGHCHAIR_YES": "Highchair available",
+	"PDV_HIGHCHAIR_NO": "Highchair not available",
+	"PDV_HIGHCHAIR_COUNT": "highchairs available",
+	"PDV_KIDSAREA_YES": "Children's corner available",
+	"PDV_KIDSAREA_NO": "Children's corner not available",
 	"TOILET": "Toilet",
 	"BTN_APPLY_FILTERS": "Apply filters",
 	"LNK_IMPRESS": "Impress",
@@ -43,6 +48,14 @@ var refEn = {
 		13: "Cafés",
 		14: "Restaurants"
 	}
-};
+},
+"site-impress" : {
+	"IMPRESS_TITLE": "Impress",
+	"IMPRESS_SUBTITLE": "Details according to § 5 TMG:",
+	"IMPRESS_COUNTRY": "Germany",
+	"IMPRESS_CONTACT": "Contact",
+	"IMPRESS_NOTE": "All data from this site are coming from OpenStreetMap. The Babykarte just uses the data. We do not guarantee for the correctness of it. Throw the provided links you can convey annotations to wrong or missing data to OpenStreetMap. You can also correct wrong ones or add further information by yourself."
+	}
+}
 registerLang("en", refEn);
 setLang("", "en");

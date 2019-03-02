@@ -33,9 +33,9 @@ function showGlobalPopup(m) {
 	message = m
 	setTimeout(function() {
 		document.getElementById("infoPopup").innerHTML = message;
-		document.getElementById("infoPopup").style.display = "block";
+		document.getElementsByClassName("info")[0].style.display = "block";
 		setTimeout(function() {
-			document.getElementById("infoPopup").style.display = "none";
+			document.getElementsByClassName("info")[0].style.display = "none";
 		}, 3000);
 		}, 1000);
 }
