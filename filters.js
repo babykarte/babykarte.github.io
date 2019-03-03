@@ -3,7 +3,7 @@ var filter = { //The filters, the query they trigger, their names and technical 
 0: {"query": {"node|way": ["[\"healthcare\"=\"doctor\"]", "[\"healthcare:speciality\"=\"paediatrics\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 2: {"query": {"node|way": ["[\"leisure\"=\"playground\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-3: {"query": {"node|way": ["[\"leisure\"=\"park\"]", "[\"name\"~\"*\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+3: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"name\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 4: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 5: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 6: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "\"clothes\"=\"babies|children\""]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
@@ -73,26 +73,28 @@ function initFilters() {
 	}
 }
 function groupIntoLayers(poi) {
-	var marker = L.marker([poi.geometry.coordinates[1], poi.geometry.coordinates[0]]) //Creates the marker with the POI coordinates.
+	var marker = L.marker([poi.lat, poi.lon]) //Creates the marker with the POI coordinates.
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
 		var length = 0;
 		var matches = 0; //Initiates the counter.
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has.
-			type = query[type]; //Instead of its array position it gets the type itself.
+			type = query[type]; //Instead of its array position it gets the content of the type.
 			length += type.length;
 			for (var vle in type) {
 				var value = type[vle];
 				value = value.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").replace("\"", "").replace("\"", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
-				if (value[0].indexOf("!") > -1) {
-					if (poi.properties.tags[value[0]] != value[1]) { //Has the POI not the same attribute like the filter we're checking against.
+				if (value.length == 1) {
+					if (poi.tags[value] != undefined) {
 						matches += 1; //Yes
-						break;
+					}
+				} else if (value[0].indexOf("!") > -1) {
+					if (poi.tags[value[0]] != value[1]) { //Has the POI not the same attribute like the filter we're checking against.
+						matches += 1; //Yes
 					}
 				} else {
-					if (poi.properties.tags[value[0]] == value[1]) { //Has the POI the same attribute like the filter we're checking against.
+					if (poi.tags[value[0]] == value[1]) { //Has the POI the same attribute like the filter we're checking against.
 						matches += 1; //Yes
-						break;
 					}
 				}
 			}

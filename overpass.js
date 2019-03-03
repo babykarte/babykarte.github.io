@@ -19,20 +19,17 @@ function checkboxes2overpass(bounds, actFilter) {
 	}
 	var andquery = "(";
 	for (var id in actFilter) {
-		var value = filter[id].query;
-		andquery += "node"
-		for (var i in value) {
-			andquery += value[i];
+		for (var value in filter[id].query) {
+			var content = filter[id].query[value];
+			value = value.split("|");
+			for (var type in value) {
+				andquery += value[type];
+				for (var i in content) {
+					andquery += content[i];
+				}
+				andquery += "(" + bounds + ");"
+			}
 		}
-		andquery += "(" + bounds + ");way";
-		for (var i in value) {
-			andquery += value[i];
-		}
-		andquery += "(" + bounds + ");relation";
-		for (var i in value) {
-			andquery += value[i];
-		}
-			andquery += "(" + bounds + ");";
 	}
 	return andquery + ");";
 }
@@ -185,7 +182,7 @@ function parseOpening_hours(value) {
 }
 function addrTrigger_intern(poi, marker) {
 	if (marker.popupContent.indexOf("%data_address%") > -1) {
-		$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.properties.type)[0].toUpperCase() + "&osm_id=" + String(poi.properties.id), function(data, status, xhr, trash) {
+		$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.type)[0].toUpperCase() + "&osm_id=" + String(poi.id), function(data, status, xhr, trash) {
 			var address = data["address"];
 			var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"];
 			var housenumber = address["housenumber"] || address["house_number"] || "";
@@ -250,21 +247,24 @@ function loadPOIS(e, url) {
 	}
 	//Connect to OSM server
 	$.get(url, function (osmDataAsJson) {
-		//Convert to GEOjson, a special format for handling with coordinate details (POI's).
-		var resultAsGeojson = osmtogeojson(osmDataAsJson);
-		for (var poi in resultAsGeojson.features) {
+		//Go throw all elements (ways, relations, nodes) sent by Overpass
+		for (var poi in osmDataAsJson.elements) {
 			var marker;
 			var popupContent = "";
 			var popupContent_header = ""
-			poi = resultAsGeojson.features[poi];
-			var classId = String(poi.properties.type)[0].toUpperCase() + String(poi.properties.id);
+			poi = osmDataAsJson.elements[poi];
+			if (poi.center != undefined) {
+				poi.lat = poi.center.lat;
+				poi.lon = poi.center.lon;
+			}
+			var classId = String(poi.type)[0].toUpperCase() + String(poi.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
-			var details_data = {"home": {"elements": {"<h1>%s</h1>": ((poi.properties.tags["name"] == undefined) ? ((poi.properties.tags["amenity"] == "toilets") ? langRef[document.body.id][languageOfUser].TOILET : langRef[document.body.id][languageOfUser].PDV_UNNAME) : poi.properties.tags["name"]), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_HOME, "active": true, default: true},
-			"baby": {"elements": {"<b>%s</b><br/>": ((poi.properties.tags["diaper"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_YES : ((poi.properties.tags["diaper"] == "bench") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_BENCH : ((poi.properties.tags["diaper"] == "room") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_ROOM : langRef[document.body.id][languageOfUser].PDV_DIAPER_NO))) || "", "<br/>%s": ((poi.properties.tags["diaper:male"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_MALE : ((poi.properties.tags["diaper:female"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_FEMALE : ((poi.properties.tags["diaper:unisex"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_UNISEX : ""))), "<br/>%s": ((poi.properties.tags["diaper:fee"] == "yes") ? "<span style='color:red;'>" + langRef[document.body.id][languageOfUser].PDV_DIAPER_FEE + "</span>": ((poi.properties.tags["diaper:fee"] == "no") ? "<span style='color:darkgreen;'>" + langRef[document.body.id][languageOfUser].PDV_DIAPER_FEE_NO + "</span>" : "")), "%s<br/>": ((poi.properties.tags["highchair"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_HIGHCHAIR_YES : ((poi.properties.tags["highchair"] == "no") ? langRef[document.body.id][languageOfUser].PDV_HIGHCHAIR_NO : ((poi.properties.tags["highchair"]) > 0) ? poi.properties.tags["highchair"] + " " + langRef[document.body.id][languageOfUser].PDV_HIGHCHAIR_COUNT : "")), "%s<br/>": ((roperties.tags["kids_area"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_KIDSAREA_YES : langRef[document.body.id][languageOfUser].PDV_KIDSAREA_NO)}, "symbol": "/baby.svg", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_BABY, "active": true},
-			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.properties.tags["opening_hours"]) || ""}, "symbol": "/clock.png", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_OH, "active": true},
-			"contact": {"elements": {"<a target=\"_blank\" href='%s'><img class='small-icon' src='/www.svg' /></a>": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || "","%s<br/><!--Keep note as workatound for a bug-->": poi.properties.tags["website"] || poi.properties.tags["contact:website"] || "", "<a href='tel:%s'><img class='small-icon' src='/call.svg' /></a>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "","%s<br/>": poi.properties.tags["phone"] || poi.properties.tags["contact:phone"] || "", "<a href='mailto:%s'><img class='small-icon' src='/email.png' /></a>": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || "", "%s": poi.properties.tags["email"] || poi.properties.tags["contact:email"] || "", "<a target='\"_blank\" href='%s'>Facebook</a>": ((poi.properties.tags["facebook"] != undefined) ? ((poi.properties.tags["facebook"].indexOf("/") > -1) ? poi.properties.tags["facebook"] : ((poi.properties.tags["facebook"] == -1) ? "https://www.facebook.com/" + poi.properties.tags["facebook"] : undefined)) : ((poi.properties.tags["contact:facebook"] != undefined) ? ((poi.properties.tags["contact:facebook"].indexOf("/") > -1) ? poi.properties.tags["contact:facebook"] : ((poi.properties.tags["contact:facebook"] == -1) ? "https://www.facebook.com/" + poi.properties.tags["contact:facebook"] : "")) : ""))}, "symbol": "/contact.svg", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_CONTACT, "active": true},
-			"furtherInfos": {"elements": {"<a target=\"_blank\" href='%s</a>": "https://www.openstreetmap.org/" + String(poi.properties.type).toLowerCase() + "/" + String(poi.properties.id) + "'>" + langRef[document.body.id][languageOfUser].LNK_OSM_VIEW, "<br/><a href='%s</a>": "geo:" + poi.geometry.coordinates[1] + "," + poi.geometry.coordinates[0] + "'>" + langRef[document.body.id][languageOfUser].LNK_OPEN_WITH}, "symbol": "/moreInfo.svg", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_MI, "active": true}
+			var details_data = {"home": {"elements": {"<h1>%s</h1>": ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? langRef[document.body.id][languageOfUser].TOILET : langRef[document.body.id][languageOfUser].PDV_UNNAME) : poi.tags["name"]), "<h2>%s</h2>": String(marker.name), "%s": addrTrigger}, "symbol": "/home.svg", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_HOME, "active": true, default: true},
+			"baby": {"elements": {"<b>%s</b><br/>": ((poi.tags["diaper"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_YES : ((poi.tags["diaper"] == "bench") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_BENCH : ((poi.tags["diaper"] == "room") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_ROOM : langRef[document.body.id][languageOfUser].PDV_DIAPER_NO))) || "", "<br/>%s": ((poi.tags["diaper:male"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_MALE : ((poi.tags["diaper:female"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_FEMALE : ((poi.tags["diaper:unisex"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_DIAPER_UNISEX : ""))), "<br/>%s": ((poi.tags["diaper:fee"] == "yes") ? "<span style='color:red;'>" + langRef[document.body.id][languageOfUser].PDV_DIAPER_FEE + "</span>": ((poi.tags["diaper:fee"] == "no") ? "<span style='color:darkgreen;'>" + langRef[document.body.id][languageOfUser].PDV_DIAPER_FEE_NO + "</span>" : "")), "%s<br/>": ((poi.tags["highchair"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_HIGHCHAIR_YES : ((poi.tags["highchair"] == "no") ? langRef[document.body.id][languageOfUser].PDV_HIGHCHAIR_NO : ((poi.tags["highchair"]) > 0) ? poi.tags["highchair"] + " " + langRef[document.body.id][languageOfUser].PDV_HIGHCHAIR_COUNT : "")), "%s<br/>": ((poi.tags["kids_area"] == "yes") ? langRef[document.body.id][languageOfUser].PDV_KIDSAREA_YES : ((poi.tags["kids_area"] == "no") ? langRef[document.body.id][languageOfUser].PDV_KIDSAREA_NO : ""))}, "symbol": "/baby.svg", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_BABY, "active": true},
+			"opening_hours": {"elements": {"%s": parseOpening_hours(poi.tags["opening_hours"]) || ""}, "symbol": "/clock.png", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_OH, "active": true},
+			"contact": {"elements": {"<a target=\"_blank\" href='%s'><img class='small-icon' src='/www.svg' /></a>": poi.tags["website"] || poi.tags["contact:website"] || "","%s<br/><!--Keep note as workatound for a bug-->": poi.tags["website"] || poi.tags["contact:website"] || "", "<a href='tel:%s'><img class='small-icon' src='/call.svg' /></a>": poi.tags["phone"] || poi.tags["contact:phone"] || "","%s<br/>": poi.tags["phone"] || poi.tags["contact:phone"] || "", "<a href='mailto:%s'><img class='small-icon' src='/email.png' /></a>": poi.tags["email"] || poi.tags["contact:email"] || "", "%s": poi.tags["email"] || poi.tags["contact:email"] || "", "<a target='\"_blank\" href='%s'>Facebook</a>": ((poi.tags["facebook"] != undefined) ? ((poi.tags["facebook"].indexOf("/") > -1) ? poi.tags["facebook"] : ((poi.tags["facebook"] == -1) ? "https://www.facebook.com/" + poi.tags["facebook"] : undefined)) : ((poi.tags["contact:facebook"] != undefined) ? ((poi.tags["contact:facebook"].indexOf("/") > -1) ? poi.tags["contact:facebook"] : ((poi.tags["contact:facebook"] == -1) ? "https://www.facebook.com/" + poi.tags["contact:facebook"] : "")) : ""))}, "symbol": "/contact.svg", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_CONTACT, "active": true},
+			"furtherInfos": {"elements": {"<a target=\"_blank\" href='%s</a>": "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) + "'>" + langRef[document.body.id][languageOfUser].LNK_OSM_VIEW, "<br/><a href='%s</a>": "geo:" + poi.lat + "," + poi.lon + "'>" + langRef[document.body.id][languageOfUser].LNK_OPEN_WITH}, "symbol": "/moreInfo.svg", "title": langRef[document.body.id][languageOfUser].PDV_TITLE_MI, "active": true}
 			};
 			for (var entry in details_data) {
 				var tabContent = "";
@@ -303,11 +303,11 @@ function loadPOIS(e, url) {
 			//Analysing, filtering and preparing for display of the OSM keys
 			
 			//and then finally add then to Popup
-			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.properties.type) + "=" + String(poi.properties.id) + "\">" + langRef[document.body.id][languageOfUser].LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.geometry.coordinates[1] + "/" + poi.geometry.coordinates[0] + "&layers=N\">" + langRef[document.body.id][languageOfUser].LNK_OSM_REPORT + "</a>";;
+			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + langRef[document.body.id][languageOfUser].LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + langRef[document.body.id][languageOfUser].LNK_OSM_REPORT + "</a>";;
 			marker.bindPopup(marker.popupContent);
 			//Show marker on map
 			marker.addTo(map);
-			if (poi.geometry.coordinates[1] == saved_lat && poi.geometry.coordinates[0] == saved_lon) {
+			if (poi.lat == saved_lat && poi.lon == saved_lon) {
 				addrTrigger_intern(poi, marker);
 			}
 		}
