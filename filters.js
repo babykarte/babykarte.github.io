@@ -12,7 +12,7 @@ var filter = { //The filters, the query they trigger, their names and technical 
 9: {"query": {"node|way": ["[\"amenity\"=\"theatre\"]", "\"theatre:genre\"=puppet\""]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 10: {"query": {"node|way": ["[\"attraction\"=\"animal\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 11: {"query": {"node|way": ["[\"amenity\"=\"toilets\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-12: {"query": {"node|way": ["[\"diaper\"!=\"no\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+12: {"query": {"node|way": ["[\"diaper\"!=\"no\"]", "[\"access\"=\"yes|customers\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 13: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 14: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false}
 };
@@ -84,17 +84,20 @@ function groupIntoLayers(poi) {
 			for (var vle in type) {
 				var value = type[vle];
 				value = value.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").replace("\"", "").replace("\"", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
-				if (value.length == 1) {
-					if (poi.tags[value] != undefined) {
-						matches += 1; //Yes
-					}
-				} else if (value[0].indexOf("!") > -1) {
-					if (poi.tags[value[0]] != value[1]) { //Has the POI not the same attribute like the filter we're checking against.
-						matches += 1; //Yes
-					}
-				} else {
-					if (poi.tags[value[0]] == value[1]) { //Has the POI the same attribute like the filter we're checking against.
-						matches += 1; //Yes
+				var item = value[1].split("|");
+				for (var i in item) {
+					if (value.length == 1) {
+						if (poi.tags[value] != undefined) {
+							matches += 1; //Yes
+						}
+					} else if (value[0].indexOf("!") > -1) {
+						if (poi.tags[value[0]] != item[i]) { //Has the POI not the same attribute like the filter we're checking against.
+							matches += 1; //Yes
+						}
+					} else {
+						if (poi.tags[value[0]] == item[i]) { //Has the POI the same attribute like the filter we're checking against.
+							matches += 1; //Yes
+						}
 					}
 				}
 			}

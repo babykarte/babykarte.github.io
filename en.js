@@ -4,7 +4,7 @@ var refEn = {"site-map": {
 	"LNK_OSM_EDIT": "Edit via OSM",
 	"LNK_OSM_REPORT": "Report wrong information",
 	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
-	"LNK_OPEN_WITH": "Mit App öffnen",
+	"LNK_OPEN_WITH": "Open with App",
 	"PDV_UNNAME": "No Name",
 	"PDV_TITLE_HOME": "General",
 	"PDV_TITLE_BABY": "Baby friendly",
