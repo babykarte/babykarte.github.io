@@ -42,7 +42,8 @@ var langRef = {"site-map": {
 	"TOILET": "WC",
 	"BTN_APPLY_FILTERS": "Filter anwenden",
 	"LNK_IMPRESS": "Impressum",
-	"LNK_PROJECT_SITE": "Über das Projekt & Datenschutzerklärung",
+	"LNK_PP_SITE": "Datenschutzerklärung (v.1)",
+	"LNK_PP_SITE_URL": "/privacypolicy-de.html",
 	"TB_SEARCHFIELD": "Ort",
 	"IMPRESS_SUBTITLE": "Angaben gemäß $ 5 TMG:",
 	"IMPRESS_COUNTRY": "Deutschland",
@@ -99,14 +100,15 @@ function setLang(e, lang) {
 	if (languageOfUser in langRef[document.body.id]) {
 		var data = {
 		0: ((document.getElementById("query-button") != null) ? document.getElementById("query-button").value = langRef[document.body.id][languageOfUser].BTN_APPLY_FILTERS : ""),
-		1: ((document.getElementById("linkToProject") != null) ? document.getElementById("linkToProject").innerHTML = langRef[document.body.id][languageOfUser].LNK_PROJECT_SITE : ""),
-		2: ((document.getElementById("searchfield") != null) ? document.getElementById("searchfield").placeholder = langRef[document.body.id][languageOfUser].TB_SEARCHFIELD : ""),
-		3: ((document.getElementById("lnk-impress") != null) ? document.getElementById("lnk-impress").innerHTML = langRef[document.body.id][languageOfUser].LNK_IMPRESS : ""),
-		4: ((document.getElementById("title") != null) ? document.getElementById("title").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_TITLE : ""),
-		5: ((document.getElementById("subtitle") != null) ? document.getElementById("subtitle").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_SUBTITLE : ""),
-		6: ((document.getElementById("country") != null) ? document.getElementById("country").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_COUNTRY : ""),
-		7: ((document.getElementById("contact") != null) ? document.getElementById("contact").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_CONTACT : ""),
-		8: ((document.getElementById("note") != null) ? document.getElementById("note").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_NOTE : ""),
+		1: ((document.getElementById("linkToPP") != null) ? document.getElementById("linkToPP").innerHTML = langRef[document.body.id][languageOfUser].LNK_PP_SITE : ""),
+		2: ((document.getElementById("linkToPP") != null) ? document.getElementById("linkToPP").href = langRef[document.body.id][languageOfUser].LNK_PP_SITE_URL : ""),
+		3: ((document.getElementById("searchfield") != null) ? document.getElementById("searchfield").placeholder = langRef[document.body.id][languageOfUser].TB_SEARCHFIELD : ""),
+		4: ((document.getElementById("lnk-impress") != null) ? document.getElementById("lnk-impress").innerHTML = langRef[document.body.id][languageOfUser].LNK_IMPRESS : ""),
+		5: ((document.getElementById("title") != null) ? document.getElementById("title").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_TITLE : ""),
+		6: ((document.getElementById("subtitle") != null) ? document.getElementById("subtitle").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_SUBTITLE : ""),
+		7: ((document.getElementById("country") != null) ? document.getElementById("country").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_COUNTRY : ""),
+		8: ((document.getElementById("contact") != null) ? document.getElementById("contact").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_CONTACT : ""),
+		9: ((document.getElementById("note") != null) ? document.getElementById("note").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_NOTE : ""),
 		};
 		initFilters();
 	} else {

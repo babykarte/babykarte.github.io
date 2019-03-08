@@ -32,7 +32,8 @@ var refEn = {"site-map": {
 	"TOILET": "Toilet",
 	"BTN_APPLY_FILTERS": "Apply filters",
 	"LNK_IMPRESS": "Impress",
-	"LNK_PROJECT_SITE": "About & Privacy Policy (german only)",
+	"LNK_PP_SITE": "Privacy Policy (v.1)",
+	"LNK_PP_SITE_URL": "/privacypolicy-en.html",
 	"TB_SEARCHFIELD": "Place",
 	"opening_hours": {"Mo" : "Monday", "Tu" : "Tuesday", "We" : "Wednesday", "Th" : "Thursday", "Fr" : "Friday", "Sa" : "Saturday", "Su" : "Sunday", "off" : "closed", "Jan" : "January", "Feb" : "February", "Mar" : "March", "Apr" : "April", "May" : "May", "Jun" : "June", "Jul" : "July", "Aug" : "August", "Sep" : "Septembre", "Oct" : "Oktobre", "Nov" : "Novembre", "Dec" : "Decembre", "PH" : "holiday"},
 	"filtername": {

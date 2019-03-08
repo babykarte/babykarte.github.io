@@ -30,26 +30,26 @@ h2 {
 	font-size:14px;
 	color:grey;
 }
-ul {
+#autocomplete ul {
 	list-style-type:none;
 	margin:0px;
 	padding:0px;
 	color:#142a52;
+}
+#autocomplete li {
+	list-style-type:none;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+#autocomplete li:hover {
+	cursor:pointer;
+	background-color:#c6ebc6;
 }
 input[type=button] {
 	margin:10px;
 }
 input[type=checkbox] {
 	margin-top:5px;
-}
-li {
-	list-style-type:none;
-	padding-top:5px;
-	padding-bottom:5px;
-}
-li:hover {
-	cursor:pointer;
-	background-color:#c6ebc6;
 }
 section {
 	display:flex;
@@ -74,17 +74,6 @@ label {
 	padding-left:5px;
 	padding-right:4px;
 }
-/*.specialbtn {
-	text-decoration:none;
-	background-color:rgba(51, 102, 255, 0.1);
-	border:2px solid #2a8db7;
-	border-radius:5px;
-	padding:5px;
-	margin-right:10px;
-	margin-top:5px;
-	font-size:14px;
-	display:inline-block;
-}*/
 .info {
 	display:none;
 	font-size:22px;
@@ -161,9 +150,6 @@ label {
 section {
 	display:block;
 }
-/*.searchImg {
-	display:block;
-}*/
 .layermenu {
 	width:100%;
 	height:68px;
