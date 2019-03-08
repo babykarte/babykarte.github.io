@@ -181,11 +181,15 @@ function addrTrigger_intern(poi, marker) {
 	if (marker.popupContent.indexOf("%data_address%") > -1) {
 		$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.type)[0].toUpperCase() + "&osm_id=" + String(poi.id), function(data, status, xhr, trash) {
 			var address = data["address"];
-			var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"];
-			var housenumber = address["housenumber"] || address["house_number"] || "";
-			var postcode = address["postcode"] || "";
-			var city = address["city"] || address["town"] || address["county"] || address["state"] || "Kommune unbekannt"
-			marker.popupContent = marker.popupContent.replace("%data_address%", street + " " + housenumber + "<br/>" + postcode + " " + city)
+			if (address) {
+				var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"];
+				var housenumber = address["housenumber"] || address["house_number"] || "";
+				var postcode = address["postcode"] || "";
+				var city = address["city"] || address["town"] || address["county"] || address["state"] || "Kommune unbekannt"
+				marker.popupContent = marker.popupContent.replace("%data_address%", street + " " + housenumber + "<br/>" + postcode + " " + city);
+			} else {
+				marker.popupContent = marker.popupContent.replace("%data_address%", "<i><span style='color:red;'>" + langRef[document.body.id][languageOfUser].PDV_ADDRESS_UNKNOWN + "</span></i>");
+			}
 			marker.bindPopup(marker.popupContent);
 			marker.openPopup();
 		});
