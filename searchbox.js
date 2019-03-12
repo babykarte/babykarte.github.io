@@ -44,16 +44,21 @@ function jumpto(lat, lon, locname="") {
 		$("#searchfield").value = locname;
 	}
 	$("#autocomplete").hide();
+	map.on("moveend", function() {});
 	map.setView([lat, lon]);
 	location.hash = String(map.getZoom()) + "&" + String(lat) + "&" + String(lon);
 	saved_lat = lat;
 	saved_lon = lon;
-	maxSouth = map.getBounds().getSouth();
-	maxWest = map.getBounds().getWest();
-	maxNorth = 0;
-	maxEast = 0;
-	$('#query-button').click();
+	for (var id in activeFilter) {
+		//Resets all filters
+		toggleLayers(id, 0);
+		filter[id].layers = [];
+		setCoordinates(id);
+	}
+	map.on("moveend", onMapMove);
+	onMapMove();
 	showGlobalPopup(locname);
+	//$('#query-button').click();
 }
 function geocode() {
 	var searchword = $("#searchfield").val();

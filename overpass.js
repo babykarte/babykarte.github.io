@@ -1,6 +1,6 @@
 function locationFound(e) {
 	//Clicks on the button, so we jump to the coordinates of the user.
-	document.getElementById('query-button').click();
+	//document.getElementById('query-button').click();
 	//Fires the notification that Babykarte shows the location of the user.
 	showGlobalPopup(langRef[document.body.id][languageOfUser].LOCATING_SUCCESS);
 	progressbar();
@@ -130,6 +130,17 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	}
 	return false;
 }
+function setCoordinates(fltr) {
+	filter[fltr].usedBefore = true;
+	filter[fltr].coordinates.current.south = map.getBounds().getSouth();
+	filter[fltr].coordinates.current.west = map.getBounds().getWest();
+	filter[fltr].coordinates.current.north = map.getBounds().getNorth();
+	filter[fltr].coordinates.current.east = map.getBounds().getEast();
+	filter[fltr].coordinates.max.south = map.getBounds().getSouth();
+	filter[fltr].coordinates.max.west = map.getBounds().getWest();
+	filter[fltr].coordinates.max.north = map.getBounds().getNorth();
+	filter[fltr].coordinates.max.east = map.getBounds().getEast();
+}
 function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
 	//Adds filter compactibility to locateNewArea() function.
@@ -139,14 +150,7 @@ function locateNewAreaBasedOnFilter() {
 		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
 		if (!filter[fltr].usedBefore) {
 			filter[fltr].usedBefore = true;
-			filter[fltr].coordinates.current.south = map.getBounds().getSouth();
-			filter[fltr].coordinates.current.west = map.getBounds().getWest();
-			filter[fltr].coordinates.current.north = map.getBounds().getNorth();
-			filter[fltr].coordinates.current.east = map.getBounds().getEast();
-			filter[fltr].coordinates.max.south = map.getBounds().getSouth();
-			filter[fltr].coordinates.max.west = map.getBounds().getWest();
-			filter[fltr].coordinates.max.north = map.getBounds().getNorth();
-			filter[fltr].coordinates.max.east = map.getBounds().getEast();
+			setCoordinates(fltr);
 		}
 		if (result) {
 			url += result
@@ -331,8 +335,6 @@ var map = L.map('map')
 map.options.maxZoom = 19;
 map.options.minZoom = 10;
 map.setView([saved_lat, saved_lon], 15);
-maxSouth = map.getBounds().getSouth();
-maxWest = map.getBounds().getWest();
 getStateFromHash();
 map.on("locationfound", locationFound);
 map.on("locationerror", locationError);
