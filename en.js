@@ -1,7 +1,7 @@
 var refEn = {"site-map": {
 	"LOCATING_FAILURE": "Did not find your position.",
 	"LOCATING_SUCCESS": "Your position.",
-	"LNK_OSM_EDIT": "Edit via OSM",
+	"LNK_OSM_EDIT": "Edit in OSM",
 	"LNK_OSM_REPORT": "Report wrong information",
 	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
 	"LNK_OPEN_WITH": "Open with App",
@@ -12,7 +12,7 @@ var refEn = {"site-map": {
 	"PDV_TITLE_OH": "Opening hours",
 	"PDV_TITLE_CONTACT": "Contact",
 	"PDV_TITLE_MI": "More information",
-	"PDV_DIAPER": "Wickeltisch(e):",
+	"PDV_DIAPER": "Diaper changing table(s):",
 	"PDV_DIAPER_YES": "Diaper changing table available",
 	"PDV_DIAPER_BENCH": "No diaper changing table, but bench in the restroom",
 	"PDV_DIAPER_ROOM": "Baby changing room",
@@ -30,12 +30,12 @@ var refEn = {"site-map": {
 	"PDV_HIGHCHAIR_COUNT": "highchairs available",
 	"PDV_KIDSAREA_YES": "Children's corner available",
 	"PDV_KIDSAREA_NO": "Children's corner not available",
-	"PDV_STROLLER_YES": "POI is stroller friendly",
-	"PDV_STROLLER_LIMITED": "POI is partially stroller friendly",
-	"PDV_STROLLER_NO": "POI isn't stroller friendly",
+	"PDV_STROLLER_YES": "Location is stroller friendly",
+	"PDV_STROLLER_LIMITED": "Location is partially stroller friendly",
+	"PDV_STROLLER_NO": "Location isn't stroller friendly",
 	"TOILET": "Toilet",
 	"BTN_APPLY_FILTERS": "Apply filters",
-	"LNK_IMPRESS": "Impress",
+	"LNK_IMPRESS": "About",
 	"LNK_PP_SITE": "Privacy Policy (v.1)",
 	"LNK_PP_SITE_URL": "/privacypolicy-en.html",
 	"TB_SEARCHFIELD": "Place",
@@ -60,11 +60,11 @@ var refEn = {"site-map": {
 	}
 },
 "site-impress" : {
-	"IMPRESS_TITLE": "Impress",
-	"IMPRESS_SUBTITLE": "Details according to § 5 TMG:",
+	"IMPRESS_TITLE": "About",
+	"IMPRESS_SUBTITLE": "Responsible for this website",
 	"IMPRESS_COUNTRY": "Germany",
 	"IMPRESS_CONTACT": "Contact",
-	"IMPRESS_NOTE": "All data from this site are coming from OpenStreetMap. The Babykarte just uses the data. We do not guarantee for the correctness of it. Throw the provided links you can convey annotations to wrong or missing data to OpenStreetMap. You can also correct wrong ones or add further information by yourself."
+	"IMPRESS_NOTE": "All data available on this website is coming from OpenStreetMap. Babykarte just uses the data. We do not guarantee for the correctness of it. Through the provided links you can convey annotations to wrong or missing data to OpenStreetMap. You can also correct wrong ones or add further information by yourself."
 	}
 }
 registerLang("en", refEn);
