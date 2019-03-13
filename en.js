@@ -1,6 +1,7 @@
 var refEn = {"site-map": {
-	"LOCATING_FAILURE": "Did not find your position.",
-	"LOCATING_SUCCESS": "Your position.",
+	"LOCATING_FAILURE": "Did not find your position",
+	"LOCATING_SUCCESS": "Your position",
+	"LOADING_FAILURE": "An error occurred, zoom in and try again please",
 	"LNK_OSM_EDIT": "Edit via OSM",
 	"LNK_OSM_REPORT": "Report wrong information",
 	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
@@ -38,6 +39,8 @@ var refEn = {"site-map": {
 	"LNK_IMPRESS": "Impress",
 	"LNK_PP_SITE": "Privacy Policy (v.1)",
 	"LNK_PP_SITE_URL": "/privacypolicy-en.html",
+	"LNK_GITHUB": "On Github",
+	"LNK_OSMWIKI": "OSM Wiki",
 	"TB_SEARCHFIELD": "Place",
 	"opening_hours": {"Mo" : "Monday", "Tu" : "Tuesday", "We" : "Wednesday", "Th" : "Thursday", "Fr" : "Friday", "Sa" : "Saturday", "Su" : "Sunday", "off" : "closed", "Jan" : "January", "Feb" : "February", "Mar" : "March", "Apr" : "April", "May" : "May", "Jun" : "June", "Jul" : "July", "Aug" : "August", "Sep" : "Septembre", "Oct" : "Oktobre", "Nov" : "Novembre", "Dec" : "Decembre", "PH" : "holiday"},
 	"filtername": {

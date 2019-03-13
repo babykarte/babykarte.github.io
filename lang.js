@@ -11,7 +11,8 @@ MI - More Information
 var langRef = {"site-map": {
 "de": {
 	"LOCATING_FAILURE": "Standort nicht ermittelbar",
-	"LOCATING_SUCCESS": "Dein Standort.",
+	"LOCATING_SUCCESS": "Dein Standort",
+	"LOADING_FAILURE": "Ein Fehlerist aufgetreten, bitte reinzoomen und erneut versuchen",
 	"LNK_OSM_EDIT": "Mit OSM editieren",
 	"LNK_OSM_REPORT": "Falschinformationen melden",
 	"LNK_OSM_VIEW": "POI in OpenStreetMap ansehen",
@@ -44,6 +45,8 @@ var langRef = {"site-map": {
 	"LNK_IMPRESS": "Impressum",
 	"LNK_PP_SITE": "Datenschutzerklärung (v.1)",
 	"LNK_PP_SITE_URL": "/privacypolicy-de.html",
+	"LNK_GITHUB": "Auf Github",
+	"LNK_OSMWIKI": "OSM Wiki",
 	"TB_SEARCHFIELD": "Ort",
 	"IMPRESS_SUBTITLE": "Angaben gemäß $ 5 TMG:",
 	"IMPRESS_COUNTRY": "Deutschland",
@@ -109,6 +112,8 @@ function setLang(e, lang) {
 		7: ((document.getElementById("country") != null) ? document.getElementById("country").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_COUNTRY : ""),
 		8: ((document.getElementById("contact") != null) ? document.getElementById("contact").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_CONTACT : ""),
 		9: ((document.getElementById("note") != null) ? document.getElementById("note").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_NOTE : ""),
+		10: ((document.getElementById("linkToGitHub") != null) ? document.getElementById("linkToGitHub").innerHTML = langRef[document.body.id][languageOfUser].LNK_GITHUB : ""),
+		11: ((document.getElementById("linkToOSMWiki") != null) ? document.getElementById("linkToOSMWiki").innerHTML = langRef[document.body.id][languageOfUser].LNK_OSMWIKI : "")
 		};
 		initFilters();
 	} else {

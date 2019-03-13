@@ -51,7 +51,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	var south_old = filter[fltr].coordinates.current.south;
 	var west_old = filter[fltr].coordinates.current.west;
 	if (north_new - north_old >= accuracy && west_old - west_new >= accuracy) {
-		south_new = north_old;
+		south_new = north_old; //Bug
 		east_new = west_old;
 		if (north_new > maxNorth && maxWest > west_new) {
 			loadingAllowed = true;
@@ -126,16 +126,19 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 		filter[fltr].coordinates.max.west = maxWest;
 		filter[fltr].coordinates.max.north = maxNorth;
 		filter[fltr].coordinates.max.east = maxEast;
+		if (south_new == 0) {
+			south_new = map.getBounds().getSouth();
+		}
 		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
 }
 function setCoordinates(fltr) {
 	filter[fltr].usedBefore = true;
-	filter[fltr].coordinates.current.south = map.getBounds().getSouth();
+	/*filter[fltr].coordinates.current.south = map.getBounds().getSouth();
 	filter[fltr].coordinates.current.west = map.getBounds().getWest();
 	filter[fltr].coordinates.current.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.current.east = map.getBounds().getEast();
+	filter[fltr].coordinates.current.east = map.getBounds().getEast();*/
 	filter[fltr].coordinates.max.south = map.getBounds().getSouth();
 	filter[fltr].coordinates.max.west = map.getBounds().getWest();
 	filter[fltr].coordinates.max.north = map.getBounds().getNorth();
@@ -223,22 +226,9 @@ function toggleTab(bla, id) {
 }
 function loadPOIS(e, url) {
 	hideFilterListOnMobile();
-	for (var entry in filter) {
-		if (filter[entry].active) {
-			activeFilter[entry] = true;
-			toggleLayers(entry, 1) //Adds the POIs belonging to the filter to the map.
-		} else {
-			if (activeFilter[entry]) {
-				delete activeFilter[entry];
-				toggleLayers(entry, 0) //Removes the POIs belonging to the filter from the map.
-			}
-		}
-		entry += 1;
-	}
 	progressbar(50);
 	//Main function of POI loading.
 	//Handles connection to OSM Overpass server and parses the response into beautiful looking details view for each POI
-	document.getElementById("query-button").setAttribute("disabled", true);
 	if (!url) {
 		//No url was specified, because none of the filter functions called it.
 		var result = locateNewAreaBasedOnFilter();
@@ -317,6 +307,10 @@ function loadPOIS(e, url) {
 			}
 		}
 		progressbar();
+	}).fail(function() {
+		document.getElementById("query-button").removeAttribute("disabled");
+		showGlobalPopup(langRef[document.body.id][languageOfUser].LOADING_FAILURE);
+		progressbar();
 	});
 }
 function getStateFromHash() {
@@ -348,5 +342,5 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 map.locate({setView: true});
 progressbar(50);
 //load POIs
-document.getElementById("query-button").onclick = loadPOIS;
+document.getElementById("query-button").onclick = function() {activateFilters();document.getElementById("query-button").setAttribute("disabled", true);loadPOIS("")};
 document.getElementById("query-button").setAttribute("disabled", true);

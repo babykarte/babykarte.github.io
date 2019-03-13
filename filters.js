@@ -7,16 +7,17 @@ var filter = { //The filters, the query they trigger, their names and technical 
 4: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"name\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 5: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 6: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "\"clothes\"=\"babies|children\""]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"=\"babies|children\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 8: {"query": {"node|way": ["[\"amenity\"=\"kindergarten\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-10: {"query": {"node|way": ["[\"amenity\"=\"theatre\"]", "\"theatre:genre\"=puppet\""]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+10: {"query": {"node|way": ["[\"amenity\"=\"theatre\"]", "[\"theatre:genre\"=puppet\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 11: {"query": {"node|way": ["[\"attraction\"=\"animal\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 12: {"query": {"node|way": ["[\"amenity\"=\"toilets\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
-13: {"query": {"node|way": ["[\"diaper\"!=\"no\"]", "[\"access\"=\"yes|customers\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
+13: {"query": {"node|way": ["[\"diaper\"!=\"no\"]", "[\"diaper:access\"=\"public\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 14: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 15: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false}
 };
+var greyMarker = L.icon({iconUrl: "marker.svg", iconSize: [38, 95], popupAnchor: [1, -23]});
 function toggleLayers(id, toggle) {
 	if (toggle == 0) {
 		//Removes the filter from the map.
@@ -34,6 +35,21 @@ function toggleLayers(id, toggle) {
 				filter[id].layers[layer].addTo(map);
 			}
 		}
+	}
+}
+function activateFilters() {
+	hideFilterListOnMobile();
+	for (var entry in filter) {
+		if (filter[entry].active) {
+			activeFilter[entry] = true;
+			toggleLayers(entry, 1) //Adds the POIs belonging to the filter to the map.
+		} else {
+			if (activeFilter[entry]) {
+				delete activeFilter[entry];
+				toggleLayers(entry, 0) //Removes the POIs belonging to the filter from the map.
+			}
+		}
+		entry += 1;
 	}
 }
 function setFilter(id) {
@@ -74,7 +90,7 @@ function initFilters() {
 	}
 }
 function groupIntoLayers(poi) {
-	var marker = L.marker([poi.lat, poi.lon]) //Creates the marker with the POI coordinates.
+	var marker = L.marker([poi.lat, poi.lon], {icon: greyMarker}) //Creates the marker with the POI coordinates.
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
 		var length = 0;
 		var matches = 0; //Initiates the counter.
@@ -83,9 +99,14 @@ function groupIntoLayers(poi) {
 			type = query[type]; //Instead of its array position it gets the content of the type.
 			length += type.length;
 			for (var vle in type) {
+				var item = "";
 				var value = type[vle];
 				value = value.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").replace("\"", "").replace("\"", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
-				var item = value[1].split("|");
+				if (value.length == 2) {
+					item = value[1].split("|");
+				} else {
+					item = value[0].split("|");
+				}
 				for (var i in item) {
 					if (value.length == 1) {
 						if (poi.tags[value] != undefined) {
