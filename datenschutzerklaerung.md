@@ -1,7 +1,14 @@
 # Datenschutzerklärung
 
 ## Wie wird mit Nutzungsdaten umgegangen
-Die Babykarte nutzt folgende Drittanbieter. Ihre Funktion ist ebenso beschrieben. Die Babykarte selber wertet keine Nutzerdaten aus. Sie leitet die Eingaben des Nutzers lediglich nur weiter.
+Der Schutz Deiner Daten ist uns sehr wichtig. Deshalb speichert die Babykarte keinerlei Daten über ihre Nutzer. Insbesondere werden keine Cookies gespeichert oder Statistiken über Besucher erstellt.
+
+Die Babykarte ist weder ein Kartendienst noch eine Datenbank, sondern lediglich ein Portal. Alle Eingaben, die der Nutzer vornimmt, werden an Drittanbieter weitergeleitet. Von diesen werden dann die entsprechenden Daten zurückgesendet und angezeigt. Dies führt dazu, dass diese Drittanbieter einige personenbezogene Daten erhalten.
+
+Folgend wird aufgelistet, welche Drittanbieter dies sind, für welche Funktion sie benötigt werden und wo ihre Datenschutzerklärung zu finden ist.
+
+### Genutzte Drittanbieter
+Diese Website liegt auf den Servern von GitHub, damit sie über einen Browser aufgerufen werden kann. Dadurch erhält GitHub einige Daten über die Besucher dieser Website, wie z.B. IP-Adresse, Betriebssystem oder Browser. Wie GitHub mit den gesammelten Daten umgeht, steht in ihrer [Datenschutzerklärung](https://help.github.com/en/articles/github-privacy-statement). 
 
 Bei der Verwendung der Suche zur Suche nach einem Ort sendet die Babykarte nach dem 3. Buchstaben die Sucheingabe an Komoot sowie Deine Systemsprache, welcher eine Suche nach Orten auf der Weltkarte ermöglicht. Wie Komoot mit den gesendeten Daten umgeht erfährst Du in deren [Privacy Policy](https://www.komoot.de/privacy).
 
@@ -10,6 +17,23 @@ Beim Besuch der Babykarte fragt Dein Browser diverse Dateien bei fremden Servern
 Die Babykarte nutzt zur Darstellung der Karte und anderen Daten wie z.B. Adresse-, Öffnungszeiten- und Name des Geschäftes/der Einrichtung Kartenmaterial und andere Daten der OpenStreetMap Community. Die OpenStreetMap Foundation hostet diese Daten auf ihren eigenen Servern. Auch diese haben eine eigene [Privacy Policy]( https://wiki.osmfoundation.org/wiki/Privacy_Policy). Die OSM Server erhalten von der Babykarte folgende Informationen: Welche Filter ausgewählt wurden, die Systembrache und die Koordinaten des Kartenausschnittes. Desweiteren sendet Dein Browser beim Kontaktieren der OpenStreetMap-Server noch weitere Daten wie z.B. Name des Browsers, Name des Betriebssystems etc. Auf dieses Verhalten Deines Browsers hat die Babykarte keinen Einfluss.
 
 **Uns ist es technisch nicht möglich Dir Auskünfte über Deine Daten zu erteilen. Wir sammeln Deine Daten nicht und geben die Sammlung dieser auch nicht in Auftrag. Wir wissen nichts über Dich als Nutzer der Babykarte.**
+
+## Hinweis zur verantwortlichen Stelle
+
+Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
+
+Michael Brandtner  
+Weißenburgstraße 3   
+24116 Kiel   
+
+Telefon: 0431 64367480   
+E-Mail: brandtner_michael@yahoo.de
+
+Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z.B. Namen, E-Mail-Adressen o. Ä.) entscheidet.
+
+## Beschwerderecht bei der zuständigen Aufsichtsbehörde 
+
+Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu. Das Beschwerderecht besteht unbeschadet anderweitiger verwaltungsrechtlicher oder gerichtlicher Rechtsbehelfe.
 
 ## Beschreibung der Nutzerdaten
 Die Babykarte selber wertet keine Nutzerdaten aus. Sie leitet die Eingaben des Nutzers lediglich nur weiter.
