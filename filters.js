@@ -17,7 +17,7 @@ var filter = { //The filters, the query they trigger, their names and technical 
 14: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false},
 15: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false}
 };
-var greyMarker = L.icon({iconUrl: "marker.svg", iconSize: [38, 95], popupAnchor: [1, -23]});
+var defaultMarker = L.icon({iconUrl: "marker.svg", iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40]});
 function toggleLayers(id, toggle) {
 	if (toggle == 0) {
 		//Removes the filter from the map.
@@ -90,7 +90,7 @@ function initFilters() {
 	}
 }
 function groupIntoLayers(poi) {
-	var marker = L.marker([poi.lat, poi.lon], {icon: greyMarker}) //Creates the marker with the POI coordinates.
+	var marker = L.marker([poi.lat, poi.lon], {icon: defaultMarker}) //Creates the marker with the POI coordinates.
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
 		var length = 0;
 		var matches = 0; //Initiates the counter.
