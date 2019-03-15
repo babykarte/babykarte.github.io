@@ -1,11 +1,11 @@
 # Privacy Policy
 
 ## How user data will be treated
-We value your privacy. Because of that the Babykarte doesn't save data about her users. No cookies are being saved nor usage statistiks are being saved about the user.
+We value your privacy. Because of that, Babykarte doesn't collect any user data. No cookies are being saved and no usage statistics are being generated.
 
-The Babykarte isn't a map provider nor a database but a portal. All input the user reveal will be transmitted to Third Parties. They sent back the for the Babykarte necessary datas. This causes that Third Parties get some personal information about the users of the Babykarte.
+The Babykarte isn't a map provider or a database but a portal. All user input will be transmitted to third parties who provide the data needed to show the desired information. This causes that third parties receive some personal information about the users of Babykarte.
 
-The following list reveals which Third Parties are in use, what their functions are and where you can find their privacy policy.
+The following list reveals which third parties are in use, what they are used for are and where you can find their privacy policy.
 
 ## Third Parties we use
 This website is located on GitHub Servers so that Babykarte can be reached with a browser. Because of that GitHub receives some data about our users e.g. IP-Address, operating system and which browser is in use. How GitHub threats collected data can be looked up in their [Privacy Policy](https://help.github.com/en/articles/github-privacy-statement). 
@@ -18,18 +18,19 @@ Babykarte uses data from the OpenStreetMap Community for displaying its map and 
 
 **It's not technically possible to provide information about the data collected. We don't collect data by ourselves und we don't task someone else to do it for us. We don't know anything about you. The third Parties might collect data about you.**
 
-## Hinweis zur verantwortlichen Stelle
+## Responsible body
 
 Responsible for data processing on this website:
 		
 		Michael Brandtner
 		Weißenburgstraße 3
 		24116 Kiel
+		Germany
 		
-		Telefon: 0431 64367480
-		E-Mail: brandtner_michael@yahoo.de
+		Phone: +49 431 64367480
+		E-mail: brandtner_michael@yahoo.de
 
-A natural or juristical person is responsible who alone or in a community decides about the purpose and the medium of processing of personal data (e.g. Name, E-Mail address etc.)
+A natural or juristical person is responsible who alone or in a community decides about the purpose and the medium of processing of personal data (e.g. name, E-mail address etc.)
 		
 ## Right to appeal at the appropriate supervisory body
 A victim can report breaks against the GDPR to a supervisory body. The victim can do this at a supervisory body in his/her country, his/her place of work or at the place of the break. The right of appeal is without prejudice to any other administrative or judicial remedies.
@@ -37,7 +38,7 @@ A victim can report breaks against the GDPR to a supervisory body. The victim ca
 ## Description of user data (Definition)
 Babykarte doesn't collect user data, but it redirects it to third parties.
 
-Below you will find a description of data Third Parties process and may store.
+Below you will find a description of data third parties process and may store.
 
 - (Public) IP Address
   -  The address of your router. The router gets its address from your internet provider. It's not the individual address of your computer, smartphone etc. The public IP address can be saved by the websites you visit.
