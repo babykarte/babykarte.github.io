@@ -1,9 +1,14 @@
 # Privacy Policy
 
 ## How user data will be treated
-The Babykarte uses the following third parties, their functions are also described.
-The Babykarte doesn't analyse user data but the third parties might do.
+We value your privacy. Because of that the Babykarte doesn't save data about her users. No cookies are being saved nor usage statistiks are being saved about the user.
 
+The Babykarte isn't a map provider nor a database but a portal. All input the user reveal will be transmitted to Third Parties. They sent back the for the Babykarte necessary datas. This causes that Third Parties get some personal information about the users of the Babykarte.
+
+The following list reveals which Third Parties are in use, what their functions are and where you can find their privacy policy.
+
+## Third Parties we use
+This website is located on GitHub Servers so that Babykarte can be reached with a browser. Because of that GitHub receives some data about our users e.g. IP-Address, operating system and which browser is in use. How GitHub threats collected data can be looked up in their [Privacy Policy](https://help.github.com/en/articles/github-privacy-statement). 
 
 When you use the searchfield to search for a place, Babykarte will send after the third char has been typed your search query to Komoot. Komoot enables searching around the globe and therefore powers the search. How Komoot threats the data it gets from the Babykarte can be read in their [Privacy Policy](https://www.komoot.de/privacy).
 
@@ -12,6 +17,22 @@ When you visit the Babykarte, your browser requests some data from foreign serve
 Babykarte uses data from the OpenStreetMap Community for displaying its map and other data like address, opening hours and other POI data. The OpenStreetMap Foundation hosts these datas on their own servers. Head over their [Privacy Policy]( https://wiki.osmfoundation.org/wiki/Privacy_Policy). They receive the following information from the Babykarte: Which filters are selected, user language and die coordinates of the map. Your browser might send additional data to OpenStreetMap-Server like the browser's name, operating system's name etc.
 
 **It's not technically possible to provide information about the data collected. We don't collect data by ourselves und we don't task someone else to do it for us. We don't know anything about you. The third Parties might collect data about you.**
+
+## Hinweis zur verantwortlichen Stelle
+
+Responsible for data processing on this website:
+		
+		Michael Brandtner
+		Weißenburgstraße 3
+		24116 Kiel
+		
+		Telefon: 0431 64367480
+		E-Mail: brandtner_michael@yahoo.de
+
+A natural or juristical person is responsible who alone or in a community decides about the purpose and the medium of processing of personal data (e.g. Name, E-Mail address etc.)
+		
+## Right to appeal at the appropriate supervisory body
+A victim can report breaks against the GDPR to a supervisory body. The victim can do this at a supervisory body in his/her country, his/her place of work or at the place of the break. The right of appeal is without prejudice to any other administrative or judicial remedies.
 
 ## Description of user data (Definition)
 Babykarte doesn't collect user data, but it redirects it to third parties.
