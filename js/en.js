@@ -3,8 +3,6 @@ var refEn = {"site-map": {
 	"LOCATING_SUCCESS": "Your position",
 	"LOADING_FAILURE": "An error occurred, zoom in and try again please",
 	"LNK_OSM_EDIT": "Edit in OSM",
-	"LOCATING_FAILURE": "Did not find your position.",
-	"LOCATING_SUCCESS": "Your position.",
 	"LNK_OSM_REPORT": "Report wrong information",
 	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
 	"LNK_OPEN_WITH": "Open with App",
@@ -38,7 +36,8 @@ var refEn = {"site-map": {
 	"PDV_STROLLER_NO": "Location isn't stroller friendly",
 	"TOILET": "Toilet",
 	"BTN_APPLY_FILTERS": "Apply filters",
-	"LNK_IMPRESS": "About",
+	"LNK_IMPRESS": "Impress",
+	"LNK_IMPRESS_URL": "/impressum.html#en",
 	"LNK_PP_SITE": "Privacy Policy (v.1)",
 	"LNK_PP_SITE_URL": "/privacypolicy-en.html",
 	"LNK_GITHUB": "On Github",
@@ -71,6 +70,6 @@ var refEn = {"site-map": {
 	"IMPRESS_CONTACT": "Contact",
 	"IMPRESS_NOTE": "All data available on this website is coming from OpenStreetMap. Babykarte just uses the data. We do not guarantee for the correctness of it. Through the provided links you can convey annotations to wrong or missing data to OpenStreetMap. You can also correct wrong ones or add further information by yourself."
 	}
-}
+};
 registerLang("en", refEn);
 setLang("", "en");

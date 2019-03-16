@@ -317,9 +317,16 @@ function getStateFromHash() {
 	var hash = location.hash;
 	if (hash != "") {
 		hash = hash.replace("#", "").split("&");
-		zoomLevel = Number(hash[0]);
-		saved_lat = Number(hash[1]);
-		saved_lon = Number(hash[2]);
+		if (String(Number(hash[0])) == "NaN") {
+			languageOfUser = hash[0];
+			zoomLevel = Number(hash[1]);
+			saved_lat = Number(hash[2]);
+			saved_lon = Number(hash[3]);
+		} else {
+			zoomLevel = Number(hash[0]);
+			saved_lat = Number(hash[1]);
+			saved_lon = Number(hash[2]);
+		}
 		map.setView([saved_lat, saved_lon], zoomLevel);
 	}
 }
@@ -344,3 +351,4 @@ progressbar(50);
 //load POIs
 document.getElementById("query-button").onclick = function() {activateFilters();document.getElementById("query-button").setAttribute("disabled", true);loadPOIS("")};
 document.getElementById("query-button").setAttribute("disabled", true);
+loadLang("", languageOfUser);
