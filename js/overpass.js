@@ -21,6 +21,7 @@ function checkboxes2overpass(bounds, actFilter) {
 	for (var id in actFilter) {
 		for (var value in filter[id].query) {
 			var content = filter[id].query[value];
+			value = value.trim();
 			value = value.split("|");
 			for (var type in value) {
 				andquery += value[type];

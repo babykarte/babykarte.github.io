@@ -31,8 +31,7 @@ var filter = { //The filters, the query they trigger, their names and technical 
 9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.yellowMarker},
 10: {"query": {"node|way": ["[\"amenity\"=\"theatre\"]", "[\"theatre:genre\"=puppet\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.darkyellowMarker},
 11: {"query": {"node|way": ["[\"attraction\"=\"animal\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightyellowMarker},
-12: {"query": {"node|way": ["[\"amenity\"=\"toilets\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.greyMarker},
-13: {"query": {"node|way": ["[\"diaper\"!=\"no\"]", "[\"diaper:access\"=\"public\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightgreyMarker},
+13: {"query": {"node|way": ["[\"amenity\"=\"toilets\"]", "[\"diaper\"]","[\"diaper\"!=\"no\"]"], "node|way ": ["[\"shop\"=\"chemist\"]", "[\"diaper\"]", "[\"diaper\"!=\"no\"]"], "node|way  ": ["[\"diaper:access\"=\"public\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightgreyMarker},
 14: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.violetMarker},
 15: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightvioletMarker}
 };
@@ -110,11 +109,11 @@ function initFilters() {
 function groupIntoLayers(poi) {
 	var marker;
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
-		var length = 0;
-		var matches = 0; //Initiates the counter.
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has.
-			type = query[type]; //Instead of its array position it gets the content of the type.
+			var length = 0;
+			var matches = 0; //Initiates the counter.
+			type = query[type]; //Instead of its query name it gets the content of the type.
 			length += type.length;
 			for (var vle in type) {
 				var item = "";
@@ -141,16 +140,15 @@ function groupIntoLayers(poi) {
 					}
 				}
 			}
+			if (length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
+				marker = L.icon(Object.assign({}, filter[fltr].color, profiles.default));
+				marker = L.marker([poi.lat, poi.lon], {icon: marker});
+				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
+				marker.name = langRef[document.body.id][languageOfUser].filtername[fltr];
+				return marker;
 		}
-		if (length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
-			marker = L.icon(Object.assign({}, filter[fltr].color, profiles.default));
-			marker = L.marker([poi.lat, poi.lon], {icon: marker});
-			filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
-			marker.name = langRef[document.body.id][languageOfUser].filtername[fltr];
-			return marker;
 		}
 	}
 	marker = L.marker([poi.lat, poi.lon], {icon: L.icon(Object.assign({}, profiles.defaultMarker, profiles.default))});
 	return marker;
 }
-loadLang("", languageOfUser);
