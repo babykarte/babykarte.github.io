@@ -5,16 +5,18 @@ We value your privacy. Because of that, Babykarte doesn't collect any user data.
 
 The Babykarte isn't a map provider or a database but a portal. All user input will be transmitted to third parties who provide the data needed to show the desired information. This causes that third parties receive some personal information about the users of Babykarte.
 
-The following list reveals which third parties are in use, what they are used for are and where you can find their privacy policy.
+The following list reveals which third parties are in use, what they are used for and where you can find their privacy policy.
 
 ## Third Parties we use
-This website is located on GitHub Servers so that Babykarte can be reached with a browser. Because of that GitHub receives some data about our users e.g. IP-Address, operating system and which browser is in use. How GitHub threats collected data can be looked up in their [Privacy Policy](https://help.github.com/en/articles/github-privacy-statement). 
+This website is located on GitHub Servers so that Babykarte can be reached with a browser. Because of that GitHub receives some data about our users e.g. IP address, operating system and which browser is in use (see below). How GitHub threats collected data can be looked up in their [Privacy Policy](https://help.github.com/en/articles/github-privacy-statement). 
 
-When you use the searchfield to search for a place, Babykarte will send after the third char has been typed your search query to Komoot. Komoot enables searching around the globe and therefore powers the search. How Komoot threats the data it gets from the Babykarte can be read in their [Privacy Policy](https://www.komoot.de/privacy).
+Komoot is used as the search engine. When you use the searchfield to search for a place, after the third character Babykarte will send the query and your system language to Komoot. How Komoot treats the data it gets from Babykarte can be read in their [Privacy Policy](https://www.komoot.de/privacy).
 
-When you visit the Babykarte, your browser requests some data from foreign servers. These servers are cacheservers powered by two Companies. The first one is Google and  [here](https://policies.google.com/privacy#infocollect) you can find their privacy policy. The second one is DigitalOcean and has also its own [Privacy Policy](https://www.digitalocean.com/legal/privacy-policy/). Your browser might send additionally data which could be used to identify you, Babykarte cannot control which data your browser additionally sends.
+When you visit the Babykarte, your browser requests some data from cacheservers to reduce loading time. These servers are cacheservers powered by two companies. The first one is Google and  [here](https://policies.google.com/privacy#infocollect) you can find their privacy policy. The second one is DigitalOcean and has also its own [Privacy Policy](https://www.digitalocean.com/legal/privacy-policy/). Babykarte cannot control which data your browser sends to these servers.
 
-Babykarte uses data from the OpenStreetMap Community for displaying its map and other data like address, opening hours and other POI data. The OpenStreetMap Foundation hosts these datas on their own servers. Head over their [Privacy Policy]( https://wiki.osmfoundation.org/wiki/Privacy_Policy). They receive the following information from the Babykarte: Which filters are selected, user language and die coordinates of the map. Your browser might send additional data to OpenStreetMap-Server like the browser's name, operating system's name etc.
+Babykarte uses data from the OpenStreetMap Community for displaying its map and other data like address, opening hours and other location data. The OpenStreetMap Foundation hosts this data on their own servers. They also have a [Privacy Policy]( https://wiki.osmfoundation.org/wiki/Privacy_Policy). They receive the following information from the Babykarte: Which filters are selected, user language and the coordinates of the map. Your browser might send additional data to the OpenStreetMap server like the browser's name, operating system's name etc. (see below). Babykarte has no influence on your browser's behavior. 
+
+<!-- Bis hier Korrektur gelesen - MB -->
 
 **It's not technically possible to provide information about the data collected. We don't collect data by ourselves und we don't task someone else to do it for us. We don't know anything about you. The third Parties might collect data about you.**
 
@@ -22,13 +24,13 @@ Babykarte uses data from the OpenStreetMap Community for displaying its map and 
 
 Responsible for data processing on this website:
 		
-		Michael Brandtner
-		Weißenburgstraße 3
-		24116 Kiel
-		Germany
+Michael Brandtner  
+Weißenburgstraße 3  
+24116 Kiel  
+Germany  
 		
-		Phone: +49 431 64367480
-		E-mail: brandtner_michael@yahoo.de
+Phone: +49 431 64367480  
+E-mail: brandtner_michael@yahoo.de  
 
 A natural or juristical person is responsible who alone or in a community decides about the purpose and the medium of processing of personal data (e.g. name, E-mail address etc.)
 		
