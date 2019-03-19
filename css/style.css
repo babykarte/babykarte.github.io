@@ -71,6 +71,7 @@ label {
 	z-index:1;
 	width:33.34%;
 	height:100%;
+	overflow:hidden;
 	padding-left:5px;
 	padding-right:4px;
 }
@@ -151,8 +152,8 @@ section {
 	display:block;
 }
 .layermenu {
+	height:75px;
 	width:100%;
-	height:78px;
 }
 .lang-select {
 	font-size:16px;
@@ -166,7 +167,7 @@ section {
 }
 #map {
 	width:100%;
-	height:calc(100% - 15px);
+	height:calc(100% - 75px);
 }
 #searchfield {
 	margin-right:20px;

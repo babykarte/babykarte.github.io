@@ -11,7 +11,7 @@ function togglemenu(value=false) {
 	if (obj.style.height != "auto") {
 		obj.style.height = "auto";
 	} else {
-		obj.style.height = "78px";
+		obj.style.height = "75px";
 	}
 }
 function hideFilterListOnMobile() {
