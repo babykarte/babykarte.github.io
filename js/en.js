@@ -18,7 +18,7 @@ var refEn = {"site-map": {
 	"PDV_DIAPER_BENCH": "No diaper changing table, but bench in the restroom",
 	"PDV_DIAPER_ROOM": "Baby changing room",
 	"PDV_DIAPER_MALE": "Diaper changing table in the men's room",
-	"PDV_DIAPER_MALE_NO": "Diaper changing table is not in the men's room",
+	"PDV_DIAPER_MALE_NO": "No diaper changing table is in the men's room",
 	"PDV_DIAPER_MALE_UNKNOWN": "",
 	"PDV_DIAPER_FEMALE": "Diaper in the ladies' room",
 	"PDV_DIAPER_FEMALE_NO": "Diaper not in the ladies' room",
@@ -55,12 +55,9 @@ var refEn = {"site-map": {
 		7: "Shops for clothes",
 		8: "Kindergartens",
 		9: "Zoos",
-		10: "Puppet theatres",
-		11: "Animal attractions",
-		12: "Toilets",
-		13: "Diaper tables",
-		14: "Cafés",
-		15: "Restaurants"
+		10: "Diaper tables",
+		11: "Cafés",
+		12: "Restaurants"
 	}
 },
 "site-impress" : {

@@ -1,7 +1,7 @@
 var refDe = {"site-map": {
 	"LOCATING_FAILURE": "Standort nicht ermittelbar",
 	"LOCATING_SUCCESS": "Dein Standort",
-	"LOADING_FAILURE": "Ein Fehlerist aufgetreten, bitte reinzoomen und erneut versuchen",
+	"LOADING_FAILURE": "Ein Fehler ist aufgetreten, bitte reinzoomen und erneut versuchen",
 	"LNK_OSM_EDIT": "Mit OSM editieren",
 	"LNK_OSM_REPORT": "Falschinformationen melden",
 	"LNK_OSM_VIEW": "POI in OpenStreetMap ansehen",
@@ -55,12 +55,9 @@ var refDe = {"site-map": {
 		7: "Bekleidungsgeschäfte",
 		8: "Kindergärten",
 		9: "Zoo",
-		10: "Puppentheater",
-		11: "Tierattraktionen",
-		12: "Toiletten",
-		13: "Wickelplätze",
-		14: "Cafés",
-		15: "Restaurants"
+		10: "Wickelplätze",
+		11: "Cafés",
+		12: "Restaurants"
 	}
 },
 "site-impress" : {
