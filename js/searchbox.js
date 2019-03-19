@@ -4,14 +4,14 @@ var mobile = false;
 var message;
 function mobileTrue() {mobile = true;}
 function togglemenu(value=false) {
-	var obj = document.getElementById("extended");
+	var obj = document.getElementsByClassName("layermenu")[0];
 	if (value == true) {
 		obj.style.height = "auto";
 	}
 	if (obj.style.height != "auto") {
 		obj.style.height = "auto";
 	} else {
-		obj.style.height = "68px";
+		obj.style.height = "78px";
 	}
 }
 function hideFilterListOnMobile() {
