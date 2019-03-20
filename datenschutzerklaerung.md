@@ -1,4 +1,4 @@
-# Datenschutzerklärung
+# Datenschutzerklärung (v. 1)
 
 ## Wie wird mit Nutzungsdaten umgegangen
 Der Schutz Deiner Daten ist uns sehr wichtig. Deshalb speichert die Babykarte keinerlei Daten über ihre Nutzer. Insbesondere werden keine Cookies gespeichert oder Statistiken über Besucher erstellt.
