@@ -1,13 +1,13 @@
 var activeFilter = {}; //Dictionary of the current selected filters
 var profiles = {default: {iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40]}, //Colour profiles for the filters
 "defaultMarker": {iconUrl: "/markers/marker.svg", code: "#004387ff"},
-"redMarker": {iconUrl: "/markers/marker-red.svg", code: "#870000ff"},
+"redMarker": {iconUrl: "/markers/marker-red.svg", code: "#ff0000"},
 "darkredMarker": {iconUrl: "/markers/marker-darkred.svg", code: "#6b1c1cff"},
 "lightredMarker": {iconUrl: "/markers/marker-lightred.svg", code: "#d25151ff"},
-"greenMarker": {iconUrl: "/markers/marker-green.svg", code: "#007c03ff"},
+"greenMarker": {iconUrl: "/markers/marker-green.svg", code: "#00c700"},
 "darkgreenMarker": {iconUrl: "/markers/marker-darkgreen.svg", code: "#19641bff"},
-"blueMarker": {iconUrl: "/markers/marker-blue.svg", code: "#0046a6ff"},
-"darkblueMarker": {iconUrl: "/markers/marker-darkblue.svg", code: "#224c84ff"},
+"blueMarker": {iconUrl: "/markers/marker-blue.svg", code: "#000dff"},
+"darkblueMarker": {iconUrl: "/markers/marker-darkblue.svg", code: "#001369"},
 "lightblueMarker": {iconUrl: "/markers/marker-lightblue.svg", code: "#3274c7ff"},
 "orangeMarker": {iconUrl: "/markers/marker-orange.svg", code: "#d76b00ff"},
 "yellowMarker": {iconUrl: "/markers/marker-yellow.svg", code: "#ddc600ff"},
@@ -16,7 +16,7 @@ var profiles = {default: {iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor:
 "greyMarker": {iconUrl: "/markers/marker-grey.svg", code: "#5c5c5cff"},
 "lightgreyMarker": {iconUrl: "/markers/marker-lightgrey.svg", code: "#a0a0a0ff"},
 "violetMarker": {iconUrl: "/markers/marker-violet.svg", code: "#7a00b7ff"},
-"lightvioletMarker": {iconUrl: "/markers/marker-lightviolet.svg", code: "#bb2cffff"}
+"lightvioletMarker": {iconUrl: "/markers/marker-lightviolet.svg", code: "#dc1369"}
 };
 var filter = { //The filters, the query they trigger, their names and technical descriptions as dictionary (JSON)
 0: {"query": {"node|way": ["[\"healthcare\"=\"doctor\"]", "[\"healthcare:speciality\"=\"paediatrics\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.redMarker},
