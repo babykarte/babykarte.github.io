@@ -11,10 +11,24 @@
   	<div id='progressbar'></div>
   	<div class='info'><div id='infoPopup'></div></div>
   	<section>
-  	<div class='layermenu'>
-  		<div class='lang-select'>
-  			<a href='#' onclick='loadLang(this, "en");'><img class='small-icon' alt='EN' src='/images/en.svg' /></a> <a href='#' onclick='loadLang(this, "de");'><img class='small-icon' alt='DE' src='/images/de.svg' /></a>
-  		</div>
+  	<div class="layermenu">
+  		<div class="lang-select">
+  			<a href="#" onclick="loadLang(this, &quot;en&quot;);"><img class="small-icon" alt="EN" src="/images/en.svg"></a> <a href="#" onclick="loadLang(this, &quot;de&quot;);"><img class="small-icon" alt="DE" src="/images/de.svg"></a>
+  		<a href="/impressum.html#de" id="lnk-impress" target="_blank" style="float:right;margin-right: 12px;margin-top:5px">Impressum</a><a href="/privacypolicy-de.html" id="linkToPP" target="_blank;" style="float:right;margin-right: 10px;margin-top:5px">Datenschutz (v.1)</a></div>
+     	<div id="searchgroup">
+     		<div style="display:flex;">
+     			<img id="menubutton" src="/images/menu.svg" onclick="togglemenu();mobileTrue();" alt="Menü"> <input type="text" onclick="geocode()" placeholder="Ort" id="searchfield">
+     		</div>
+			<div id="autocomplete"></div>
+		</div>
+		<div id="filtersGround"><label><input type="checkbox" onclick="setFilter(0)"><span style="color: rgb(135, 0, 0); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Kinderärzte">Kinderärzte</span></label><label><input type="checkbox" onclick="setFilter(1)"><span style="color: rgb(107, 28, 28); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Hebamme">Hebamme</span></label><label><input type="checkbox" onclick="setFilter(2)"><span style="color: rgb(210, 81, 81); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Geburtshäuser">Geburtshäuser</span></label><label><input type="checkbox" onclick="setFilter(3)"><span style="color: rgb(0, 124, 3); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Spielplätze">Spielplätze</span></label><label><input type="checkbox" onclick="setFilter(4)"><span style="color: rgb(25, 100, 27); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Parks">Parks</span></label><label><input type="checkbox" onclick="setFilter(5)"><span style="color: rgb(0, 70, 166); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Geschäfte für Babybedarf">Geschäfte für Babybedarf</span></label><label><input type="checkbox" onclick="setFilter(6)"><span style="color: rgb(34, 76, 132); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Spielwarenläden">Spielwarenläden</span></label><label><input type="checkbox" onclick="setFilter(7)"><span style="color: rgb(50, 116, 199); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Bekleidungsgeschäfte">Bekleidungsgeschäfte</span></label><label><input type="checkbox" onclick="setFilter(8)"><span style="color: rgb(215, 107, 0); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Kindergärten">Kindergärten</span></label><label><input type="checkbox" onclick="setFilter(9)"><span style="color: rgb(221, 198, 0); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Zoo">Zoo</span></label><label><input type="checkbox" onclick="setFilter(10)"><span style="color: rgb(160, 160, 160); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Wickelplätze">Wickelplätze</span></label><label><input type="checkbox" onclick="setFilter(11)"><span style="color: rgb(122, 0, 183); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Cafés">Cafés</span></label><label><input type="checkbox" onclick="setFilter(12)"><span style="color: rgb(187, 44, 255); font-weight: bold; font-size: 16px;">‧ </span><span title="Filter: Restaurants">Restaurants</span></label></div>
+		<input id="query-button" type="button" value="Filter anwenden" disabled="true"><br>
+		
+        
+        <a href="https://github.com/Discostu36/Babykarte" target="_blank" id="linkToGitHub">Auf Github</a>
+        <a href="https://wiki.openstreetmap.org/wiki/Baby-Karte" target="_blank" id="linkToOSMWiki">OSM Wiki</a>
+        
+    </div>
      	<div id='searchgroup'>
      		<div style='display:flex;'>
      			<img id='menubutton' src='/images/menu.svg' onclick='togglemenu();mobileTrue();' alt='Menü'></img> <input type='text' onclick='geocode()' placeholder='Ort' id='searchfield' />
@@ -24,10 +38,8 @@
 		<div id='filtersGround'></div>
 		<input id='query-button' type='button' value='Filter anwenden'><br/>
 		<a href="/impressum.html" target="_blank" id='lnk-impress'>Impressum</a>
-        <a href='/privacypolicy-de.html' target='_blank;' id='linkToPP'>Datenschutzerklärung (v.1)</a>
         <a href='https://github.com/Discostu36/Babykarte' target='_blank' id='linkToGitHub'>Auf GitHub</a>
         <a href='https://wiki.openstreetmap.org/wiki/Baby-Karte' target='_blank' id='linkToOSMWiki'>OSM Wiki</a>
-        <a href='/privacypolicy-de.html' target='_blank' id='linkToPP'>Datenschutzerklärung (v.1)</a>
     </div>
     <div id='map'>
     </div>
