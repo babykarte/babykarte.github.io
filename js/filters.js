@@ -1,22 +1,22 @@
 var activeFilter = {}; //Dictionary of the current selected filters
 var profiles = {default: {iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40]}, //Colour profiles for the filters
 "defaultMarker": {iconUrl: "/markers/marker.svg", code: "#004387ff"},
-"redMarker": {iconUrl: "/markers/marker-red.svg", code: "#004387ff"},
-"darkredMarker": {iconUrl: "/markers/marker-darkred.svg", code: "#004387ff"},
-"lightredMarker": {iconUrl: "/markers/marker-lightred.svg", code: "#004387ff"},
-"greenMarker": {iconUrl: "/markers/marker-green.svg", code: "#004387ff"},
-"darkgreenMarker": {iconUrl: "/markers/marker-darkgreen.svg", code: "#004387ff"},
-"blueMarker": {iconUrl: "/markers/marker-blue.svg", code: "#004387ff"},
-"darkblueMarker": {iconUrl: "/markers/marker-darkblue.svg", code: "#004387ff"},
-"lightblueMarker": {iconUrl: "/markers/marker-lightblue.svg", code: "#004387ff"},
-"orangeMarker": {iconUrl: "/markers/marker-orange.svg", code: "#004387ff"},
-"yellowMarker": {iconUrl: "/markers/marker-yellow.svg", code: "#004387ff"},
-"darkyellowMarker": {iconUrl: "/markers/marker-darkyellow.svg", code: "#004387ff"},
-"lightyellowMarker": {iconUrl: "/markers/marker-lightyellow.svg", code: "#004387ff"},
-"greyMarker": {iconUrl: "/markers/marker-grey.svg", code: "#004387ff"},
-"lightgreyMarker": {iconUrl: "/markers/marker-lightgrey.svg", code: "#004387ff"},
-"violetMarker": {iconUrl: "/markers/marker-violet.svg", code: "#004387ff"},
-"lightvioletMarker": {iconUrl: "/markers/marker-lightviolet.svg", code: "#004387ff"}
+"redMarker": {iconUrl: "/markers/marker-red.svg", code: "#870000ff"},
+"darkredMarker": {iconUrl: "/markers/marker-darkred.svg", code: "#6b1c1cff"},
+"lightredMarker": {iconUrl: "/markers/marker-lightred.svg", code: "#d25151ff"},
+"greenMarker": {iconUrl: "/markers/marker-green.svg", code: "#007c03ff"},
+"darkgreenMarker": {iconUrl: "/markers/marker-darkgreen.svg", code: "#19641bff"},
+"blueMarker": {iconUrl: "/markers/marker-blue.svg", code: "#0046a6ff"},
+"darkblueMarker": {iconUrl: "/markers/marker-darkblue.svg", code: "#224c84ff"},
+"lightblueMarker": {iconUrl: "/markers/marker-lightblue.svg", code: "#3274c7ff"},
+"orangeMarker": {iconUrl: "/markers/marker-orange.svg", code: "#d76b00ff"},
+"yellowMarker": {iconUrl: "/markers/marker-yellow.svg", code: "#ddc600ff"},
+"darkyellowMarker": {iconUrl: "/markers/marker-darkyellow.svg", code: "#877800ff"},
+"lightyellowMarker": {iconUrl: "/markers/marker-lightyellow.svg", code: "#ffe92cff"},
+"greyMarker": {iconUrl: "/markers/marker-grey.svg", code: "#5c5c5cff"},
+"lightgreyMarker": {iconUrl: "/markers/marker-lightgrey.svg", code: "#a0a0a0ff"},
+"violetMarker": {iconUrl: "/markers/marker-violet.svg", code: "#7a00b7ff"},
+"lightvioletMarker": {iconUrl: "/markers/marker-lightviolet.svg", code: "#bb2cffff"}
 };
 var filter = { //The filters, the query they trigger, their names and technical descriptions as dictionary (JSON)
 0: {"query": {"node|way": ["[\"healthcare\"=\"doctor\"]", "[\"healthcare:speciality\"=\"paediatrics\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.redMarker},
@@ -95,10 +95,16 @@ function initFilters() {
         var checkbox = document.createElement("input"); //Creates the checkbox itself.
         var span = document.createElement("span"); //Needed to have 'title' attribut supported
         var text = document.createTextNode(langRef[document.body.id][languageOfUser].filtername[id]); //The text inside the 'span' element.
+        var color = document.createElement("span");
+        color.style.color = fltr.color.code;
+        color.style.fontWeight = "bold";
+        color.style.fontSize = "16px";
+        color.innerHTML = "&#8231; ";
         checkbox.type = "checkbox";
         checkbox.setAttribute("onclick", "setFilter(" + id + ")"); //Add function 'setFilter(id)'.
         span.setAttribute("title", "Filter: " + langRef[document.body.id][languageOfUser].filtername[id]); //Adds the title
         label.appendChild(checkbox); //Assigns the checkbox to the text node.
+        label.appendChild(color);
         span.appendChild(text); //Adds the human readable name of the filter to element 'span'
         label.appendChild(span); //Adds the 'span' element to the surrounding container. 
         oac.appendChild(label); //Finally adds the container itself to the filter list and displays it to the user.
