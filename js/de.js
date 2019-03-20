@@ -38,7 +38,7 @@ var refDe = {"site-map": {
 	"BTN_APPLY_FILTERS": "Filter anwenden",
 	"LNK_IMPRESS": "Impressum",
 	"LNK_IMPRESS_URL": "/impressum.html#de",
-	"LNK_PP_SITE": "Datenschutzerklärung (v.1)",
+	"LNK_PP_SITE": "Datenschutz (v.1)",
 	"LNK_PP_SITE_URL": "/privacypolicy-de.html",
 	"LNK_GITHUB": "Auf Github",
 	"LNK_OSMWIKI": "OSM Wiki",
