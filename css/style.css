@@ -123,6 +123,7 @@ label {
 	margin-bottom:5px;
 	margin-left:4px;
 	width:95%;
+	-webkit-appearance: none;
 }
 #autocomplete {
 	display:none;
