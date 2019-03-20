@@ -16,7 +16,7 @@ function togglemenu(value=false) {
 }
 function hideFilterListOnMobile() {
 	if (mobile) {
-		toggleFilterList(true);
+		togglemenu(true);
 	}
 }
 function progressbar(value=false) {
