@@ -99,7 +99,7 @@ function initFilters() {
         color.style.color = fltr.color.code;
         color.style.fontWeight = "bold";
         color.style.fontSize = "16px";
-        color.innerHTML = "&#8231;&#8231;&#8231; ";
+        color.innerHTML = "&#9632; ";
         checkbox.type = "checkbox";
         checkbox.setAttribute("onclick", "setFilter(" + id + ")"); //Add function 'setFilter(id)'.
         span.setAttribute("title", "Filter: " + langRef[document.body.id][languageOfUser].filtername[id]); //Adds the title
