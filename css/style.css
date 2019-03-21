@@ -103,6 +103,10 @@ label {
 .pdv-icon[active] {
 	border-bottom:4px solid #42bd42;
 }
+.lang-select {
+	margin-right:5px;
+	padding-left:5px;
+}
 #menubutton {
 	display:none;
 	margin-top:12px; 
@@ -151,8 +155,11 @@ label {
 }
 #lnk-impress, #linkToPP {
 	float:right;
-	margin-right:12px;
-	margin-top:5px
+	margin-top:5px;
+	font-size: 16px;
+}
+#linkToPP {
+	margin-right: 10px;
 }
 @media only screen and (max-width:800px) {
 section {
@@ -164,7 +171,6 @@ section {
 }
 .lang-select {
 	font-size:16px;
-	margin-right:20px;
 }
 #menubutton {
 	display:block;
@@ -177,7 +183,19 @@ section {
 	height:calc(100% - 75px);
 }
 #searchfield {
-	margin-right:20px;
+	margin-right:4px;
 	max-height:10px;
 }
+}
+@media only screen and (min-width:801px) and (max-width:990px) {
+	#lnk-impress, #linkToPP {
+	margin-top:7px;
+	font-size: 11px;
+	}
+	}
+@media only screen and (max-width:330px) {	
+	#lnk-impress, #linkToPP {
+	margin-top:7px;
+	font-size: 11px;
+	}
 }
