@@ -101,7 +101,11 @@ function initFilters() {
         color.style.fontSize = "16px";
         color.innerHTML = "&#9632; ";
         checkbox.type = "checkbox";
+        checkbox.id = "filter" + id;
         checkbox.setAttribute("onclick", "setFilter(" + id + ")"); //Add function 'setFilter(id)'.
+        if (id in activeFilter) {
+        	checkbox.checked = true;
+        }
         span.setAttribute("title", "Filter: " + langRef[document.body.id][languageOfUser].filtername[id]); //Adds the title
         label.appendChild(checkbox); //Assigns the checkbox to the text node.
         label.appendChild(color);
