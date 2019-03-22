@@ -14,7 +14,8 @@ Bei der Verwendung der Suche sendet die Babykarte nach dem 3. Buchstaben die Ein
 
 Beim Besuch der Babykarte fragt Dein Browser diverse Dateien bei Cacheservern ab, um die Ladezeit zu verringern. Diese sind von zwei unterschiedlichen Anbietern. Der erste ist Google und deren Datenschutzerklärung ist [hier einsehbar](https://policies.google.com/privacy#infocollect). Der zweite nennt sich DigitalOcean und hat ebenso eine eigene [Privacy Policy](https://www.digitalocean.com/legal/privacy-policy/). Hierbei sendet Dein Browser Daten an die Server, diesen Vorgang kann die Babykarte nicht beeinflussen.
 
-Die Babykarte nutzt zur Darstellung der Karte und anderen Daten wie z.B. Adresse-, Öffnungszeiten- und Name des Geschäftes/der Einrichtung Kartenmaterial und andere Daten der OpenStreetMap Community. Die OpenStreetMap Foundation hostet diese Daten auf ihren eigenen Servern. Auch diese haben eine eigene [Privacy Policy]( https://wiki.osmfoundation.org/wiki/Privacy_Policy). Die OSM Server erhalten von der Babykarte folgende Informationen: Welche Filter ausgewählt wurden, die Systembrache und die Koordinaten des Kartenausschnittes. Desweiteren sendet Dein Browser beim Kontaktieren der OpenStreetMap-Server noch weitere Daten wie z.B. Name des Browsers, Name des Betriebssystems etc. (siehe unten). Auf dieses Verhalten Deines Browsers hat die Babykarte keinen Einfluss.
+Die Babykarte nutzt zur Darstellung der Karte und anderen Daten wie z.B. Adresse-, Öffnungszeiten- und Name des Geschäftes/der Einrichtung Kartenmaterial und andere Daten der OpenStreetMap Community. Die OpenStreetMap Foundation (St John’s Innovation Centre, Cowley Road, Cambridge, CB4 0WS, Großbritannien) hostet diese Daten auf ihren eigenen Servern. Die OSM Server erhalten von der Babykarte folgende Informationen: Welche Filter ausgewählt wurden, die Systemsprache und die Koordinaten des Kartenausschnitts. Desweiteren sendet Dein Browser beim Kontaktieren der OpenStreetMap-Server noch weitere Daten wie z.B. Name des Browsers, Name des Betriebssystems etc. (siehe unten). Diese Server haben ihren Standort in Großnritannien und anderen Ländern. Sie könnten für das Funktionieren ihrer Dienste Cookies in Deinem Browser speichern. Die Babykarte hat über diese Verbindung und die Verarbeitung der Daten durch die OSMF keinen Einfluss. Weitere Informationen können in ihrer [Privacy Policy](https://wiki.osmfoundation.org/wiki/Privacy_Policy) eingesehen werden.
+
 
 **Uns ist es technisch nicht möglich Dir Auskünfte über Deine Daten zu erteilen. Wir sammeln Deine Daten nicht und geben die Sammlung dieser auch nicht in Auftrag. Wir wissen nichts über Dich als Nutzer der Babykarte.**
 
@@ -59,6 +60,9 @@ Beginn der allgemeinen Behandlung des Themas mit Bezug zu der Babykarte.
   - Die Internetseite, von der die Anfrage an den OSM Server, an komoot etc. kommt. Im Fall der Babykarte wird es immer die zukünftige Internetadresse der Babykarte sein.
 
 ## Andere Definitionen
+
+### Cookies
+Cookies sind kleine Textdateien, die auf Bitten von Webseiten durch deinen Browser auf Deinem Gerät gespeichert werden. Du kannst dieses Verhalten kontrollieren, siehe dazu bitte in der Bedienungsanleitung Deines Browsers nach.
 
 ### Cacheserver
 Ein Cacheserver speichert Dateien, die oft von den Browsern der Nutzer angefragt werden. Dadurch wird die Ladezeit einer Webseite in Deinem Browser verkürzt.

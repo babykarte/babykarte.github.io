@@ -61,6 +61,9 @@ Below you will find a description of data third parties process and may store.
 
 ## Other Definitions
 
+### Cookies
+Cookies are small text files which are saved on your device by your browser by websites order. Read in the user manual of your browser for how you can control this behaviour.
+
 ### Cache server
 A cache server saves files, which are often requested by browsers. This reduces load time. Website developers use cache servers as a storage for files which are often required for web programming and therefore also for users.
 
