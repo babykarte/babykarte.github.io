@@ -20,15 +20,15 @@ Babykarte uses data from the OpenStreetMap Community for displaying its map and 
 
 ## Responsible entity
 
-Responsible for data processing on this website:
+Responsible for data processing on this website:  
 
-Michael Brandtner
-Weißenburgstraße 3
-24116 Kiel
-Germany
+Michael Brandtner  
+Weißenburgstraße 3  
+24116 Kiel  
+Germany  
 
-Phone: +49 431 64367480
-E-mail: brandtner_michael@yahoo.de
+Phone: +49 431 64367480  
+E-mail: brandtner_michael@yahoo.de  
 
 Responsible entity is the natural or legal person who, alone or in concert with others, decides on the purposes and means of processing personal data (such as names, e-mail addresses, etc.).
 
