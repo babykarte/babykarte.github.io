@@ -187,7 +187,7 @@ section {
 	max-height:10px;
 }
 }
-@media only screen and (min-width:801px) and (max-width:990px) {
+@media only screen and (min-width:800px) and (max-width:990px) {
 	#lnk-impress, #linkToPP {
 	margin-top:7px;
 	font-size: 11px;
