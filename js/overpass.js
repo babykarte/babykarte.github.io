@@ -40,19 +40,21 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	//SOUTH: Number decreases when moving to the bottom (South)
 	//WEST: Number decreases when moving to the left (West)
 	//EAST: Number increases when moving to the right (East)
-	var accuracy = 0.001;
-	var clear = 0;
-	var loadingAllowed = false;
+	
+	//Outcommented code with javascripts' multiline comment option /*...*/ is the old algorithm Babykarte has used. It stays here in code deactivated until a solution for the bug described at https://github.com/babykarte/babykarte.github.io/issues/37 can be found.
+	/*var accuracy = 0.001;
+	var clear = 0;*/
+	var loadingAllowed = /*false*/true;
 	var south_new = map.getBounds().getSouth();
 	var west_new = map.getBounds().getWest();
 	var north_new = map.getBounds().getNorth();
 	var east_new = map.getBounds().getEast();
-	var north_old = filter[fltr].coordinates.current.north;
+	/*var north_old = filter[fltr].coordinates.current.north;
 	var east_old = filter[fltr].coordinates.current.east;
 	var south_old = filter[fltr].coordinates.current.south;
 	var west_old = filter[fltr].coordinates.current.west;
 	if (north_new - north_old >= accuracy && west_old - west_new >= accuracy) {
-		south_new = north_old; //Bug
+		south_new = north_old;
 		east_new = west_old;
 		if (north_new > maxNorth && maxWest > west_new) {
 			loadingAllowed = true;
@@ -115,7 +117,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 			east_new = maxWest;
 			maxWest = west_new;
 		}
-	}
+	}*/
 	filter[fltr].coordinates.current.north = north_new;
 	filter[fltr].coordinates.current.south = south_new;
 	filter[fltr].coordinates.current.west = west_new;
@@ -123,13 +125,15 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	if (loadingAllowed) {
 		var dict = {};
 		dict[fltr] = true;
-		filter[fltr].coordinates.max.south = maxSouth;
+		/*filter[fltr].coordinates.max.south = maxSouth;
 		filter[fltr].coordinates.max.west = maxWest;
 		filter[fltr].coordinates.max.north = maxNorth;
-		filter[fltr].coordinates.max.east = maxEast;
+		filter[fltr].coordinates.max.east = maxEast;*/
 		if (south_new == 0) {
 			south_new = map.getBounds().getSouth();
 		}
+		toggleLayers(fltr, 0);
+		filter[fltr].layers = [];
 		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
@@ -139,11 +143,13 @@ function setCoordinates(fltr) {
 	/*filter[fltr].coordinates.current.south = map.getBounds().getSouth();
 	filter[fltr].coordinates.current.west = map.getBounds().getWest();
 	filter[fltr].coordinates.current.north = map.getBounds().getNorth();
+	
+	//Note: The code below is outcommented due to the bug (see the url above)
 	filter[fltr].coordinates.current.east = map.getBounds().getEast();*/
-	filter[fltr].coordinates.max.south = map.getBounds().getSouth();
+	/*filter[fltr].coordinates.max.south = map.getBounds().getSouth();
 	filter[fltr].coordinates.max.west = map.getBounds().getWest();
 	filter[fltr].coordinates.max.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.max.east = map.getBounds().getEast();
+	filter[fltr].coordinates.max.east = map.getBounds().getEast();*/
 }
 function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
