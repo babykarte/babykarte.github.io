@@ -196,10 +196,10 @@ function addrTrigger_intern(poi, marker) {
 		$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.type)[0].toUpperCase() + "&osm_id=" + String(poi.id), function(data, status, xhr, trash) {
 			var address = data["address"];
 			if (address) {
-				var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"];
-				var housenumber = address["housenumber"] || address["house_number"] || "";
-				var postcode = address["postcode"] || "";
-				var city = address["city"] || address["town"] || address["county"] || address["state"] || "Kommune unbekannt"
+				var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"] || langRef[document.body.id][languageOfUser].PDV_STREET_UNKNOWN;
+				var housenumber = address["housenumber"] || address["house_number"] || langRef[document.body.id][languageOfUser].PDV_HOUSENUMBER_UNKNOWN;
+				var postcode = address["postcode"] || langRef[document.body.id][languageOfUser].PDV_ZIPCODE_UNKNOWN;
+				var city = address["city"] || address["town"] || address["county"] || address["state"] || langRef[document.body.id][languageOfUser].PDV_COMMUNE_UNKNOWN;
 				marker.popupContent = marker.popupContent.replace("%data_address%", street + " " + housenumber + "<br/>" + postcode + " " + city);
 			} else {
 				marker.popupContent = marker.popupContent.replace("%data_address%", "<i><span style='color:red;'>" + langRef[document.body.id][languageOfUser].PDV_ADDRESS_UNKNOWN + "</span></i>");
