@@ -97,10 +97,13 @@ label {
 	margin-left:5px;
 	margin-right:10px;
 }
-.pdv-icon:hover {
+.inactive {
+	background-color:rgba(0,0,0, 0.2);'
+}
+.active:hover {
 	background-color:#d6e0f5;
 }
-.pdv-icon[active] {
+.active[active] {
 	border-bottom:4px solid #42bd42;
 }
 .lang-select {

@@ -196,7 +196,7 @@ function addrTrigger_intern(poi, marker) {
 		$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.type)[0].toUpperCase() + "&osm_id=" + String(poi.id), function(data, status, xhr, trash) {
 			var address = data["address"];
 			if (address) {
-				var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"] || langRef[document.body.id][languageOfUser].PDV_STREET_UNKNOWN;
+				var street = address["road"] || address["pedestrian"] || address["street"] || address["footway"] || address["path"] || address["address26"] || langRef[document.body.id][languageOfUser].PDV_STREET_UNKNOWN;
 				var housenumber = address["housenumber"] || address["house_number"] || langRef[document.body.id][languageOfUser].PDV_HOUSENUMBER_UNKNOWN;
 				var postcode = address["postcode"] || langRef[document.body.id][languageOfUser].PDV_ZIPCODE_UNKNOWN;
 				var city = address["city"] || address["town"] || address["county"] || address["state"] || langRef[document.body.id][languageOfUser].PDV_COMMUNE_UNKNOWN;
@@ -295,16 +295,15 @@ function loadPOIS(e, url) {
 				}
 				popupContent += "</div>";
 			}
+			popupContent_header += "<div style='display:flex;'>";
 			for (var entry in details_data) {
-				var disabled = "";
+				var classList = "pdv-icon active";
 				if (!details_data[entry].active) {
-					disabled = "style='background-color:#d9d9d9;'";
+					classList = "pdv-icon inactive";
 				}
-				popupContent_header += "<img class='pdv-icon' id='icon" + classId + entry + "' onclick='toggleTab(this, \"" + classId + entry + "\")' src='" + details_data[entry].symbol + "' alt='" + details_data[entry].title + "' title='" + details_data[entry].title + "' " + disabled + " />";
+				popupContent_header += "<img class='" + classList + "' id='icon" + classId + entry + "' onclick='toggleTab(this, \"" + classId + entry + "\")' src='" + details_data[entry].symbol + "' alt='" + details_data[entry].title + "' title='" + details_data[entry].title + "' />";
 			}
-			//Analysing, filtering and preparing for display of the OSM keys
-			
-			//and then finally add then to Popup
+			popupContent_header += "</div>";
 			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + langRef[document.body.id][languageOfUser].LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + langRef[document.body.id][languageOfUser].LNK_OSM_REPORT + "</a>";;
 			marker.bindPopup(marker.popupContent);
 			//Show marker on map
