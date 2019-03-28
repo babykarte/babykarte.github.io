@@ -135,7 +135,8 @@ label {
 	z-index:5;
 	position:relative;
 	top:0px;
-	background-color:white;
+	background-color:#ecf2f9;
+	box-sizing:border-box;
 }
 #infoPopup {
 	margin:auto;
@@ -174,6 +175,10 @@ section {
 }
 #menubutton {
 	display:block;
+}
+#autocomplete {
+	background-color:white;
+	border-left:5px solid #4080bf;
 }
 #infoPopup {
 	width:200px;
