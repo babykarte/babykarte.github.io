@@ -61,6 +61,23 @@ var refEn = {"site-map": {
 		10: "Changing tables",
 		11: "Cafés",
 		12: "Restaurants"
+	},
+	"filtertranslations": {
+		"[\"healthcare\"=\"doctor\"]": "Doktor",
+		"[\"healthcare\"=\"midwife\"]": "Midwife",
+		"[\"healthcare\"=\"birthing_center\"]": "Birth helping center",
+		"[\"leisure\"=\"playground\"]": "Kids games",
+		"[\"leisure\"=\"park\"]": "Walking",
+		"[\"shop\"=\"baby_goods\"]": "Baby good",
+		"[\"shop\"=\"toys\"]": "Shop for toys",
+		"[\"shop\"=\"clothes\"]": "Baby and children clothes",
+		"[\"amenity\"=\"kindergarten\"]": "Childcare society",
+		"[\"tourism\"=\"zoo\"]": "Kids as food for animals",
+		"[\"amenity\"=\"toilets\"]": "Toilets",
+		"[\"shop\"=\"chemist\"]": "Chemist",
+		"[\"diaper:access\"=\"public\"]": "Diaper changing table available for the public",
+		"[\"amenity\"=\"cafe\"]": "Café",
+		"[\"amenity\"=\"restaurant\"]": "Dinner for one or more..."
 	}
 },
 "site-impress" : {

@@ -116,6 +116,7 @@ function initFilters() {
 }
 function groupIntoLayers(poi) {
 	var marker;
+	var name = ""
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has.
@@ -123,6 +124,7 @@ function groupIntoLayers(poi) {
 			var matches = 0; //Initiates the counter.
 			type = query[type]; //Instead of its query name it gets the content of the type.
 			length += type.length;
+			name = langRef[document.body.id][languageOfUser].filtertranslations[type[0]];
 			for (var vle in type) {
 				var item = "";
 				var value = type[vle];
@@ -152,7 +154,7 @@ function groupIntoLayers(poi) {
 				marker = L.icon(Object.assign({}, filter[fltr].color, profiles.default));
 				marker = L.marker([poi.lat, poi.lon], {icon: marker});
 				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
-				marker.name = langRef[document.body.id][languageOfUser].filtername[fltr];
+				marker.name = name || langRef[document.body.id][languageOfUser].filtername[fltr];
 				return marker;
 		}
 		}

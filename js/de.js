@@ -61,6 +61,23 @@ var refDe = {"site-map": {
 		10: "Wickelplätze",
 		11: "Cafés",
 		12: "Restaurants"
+	},
+	"filtertranslations": {
+		"[\"healthcare\"=\"doctor\"]": "Doktor",
+		"[\"healthcare\"=\"midwife\"]": "Hebamme",
+		"[\"healthcare\"=\"birthing_center\"]": "Geburtscenter",
+		"[\"leisure\"=\"playground\"]": "Spielplatz",
+		"[\"leisure\"=\"park\"]": "Park",
+		"[\"shop\"=\"baby_goods\"]": "Babybedarf",
+		"[\"shop\"=\"toys\"]": "Spielwarenladen",
+		"[\"shop\"=\"clothes\"]": "Bekleidung",
+		"[\"amenity\"=\"kindergarten\"]": "Kindertagesstätte",
+		"[\"tourism\"=\"zoo\"]": "Tierattraktion",
+		"[\"amenity\"=\"toilets\"]": "Toilette",
+		"[\"shop\"=\"chemist\"]": "Drogerie",
+		"[\"diaper:access\"=\"public\"]": "öffentlicher Wickeltisch",
+		"[\"amenity\"=\"cafe\"]": "Café",
+		"[\"amenity\"=\"restaurant\"]": "Vornehm denieren"
 	}
 },
 "site-impress" : {
