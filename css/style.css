@@ -60,6 +60,21 @@ label {
 	display:block;
 	margin-top:5px;
 }
+.custom-leaflet-icon {
+	margin-top:6px !important;
+	margin:5px !important;
+}
+.own-control-style {
+	margin:5px;
+	border-radius:10px;
+	padding:5px;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+.leaflet-bar {
+	margin:0px !important;
+	background-color: rgb(255, 255, 255);
+	border-radius:5px;
+}
 .tabcontent {
 	box-shadow: -10px 0px 5px -2px grey;
 	padding:2px;

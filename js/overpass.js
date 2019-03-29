@@ -336,6 +336,9 @@ function getStateFromHash() {
 		map.setView([saved_lat, saved_lon], zoomLevel);
 	}
 }
+function requestLocation() {
+	map.locate({setView: true});
+}
 //init map
 progressbar(30);
 var map = L.map('map')
@@ -352,7 +355,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
-map.locate({setView: true});
 progressbar(50);
 //load POIs
 document.getElementById("query-button").onclick = function() {activateFilters();document.getElementById("query-button").setAttribute("disabled", true);loadPOIS("")};
