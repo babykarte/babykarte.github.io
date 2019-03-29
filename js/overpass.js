@@ -235,7 +235,7 @@ function loadPOIS(e, url) {
 	hideFilterListOnMobile();
 	progressbar(50);
 	//Main function of POI loading.
-	//Handles connection to OSM Overpass server and parses the response into beautiful looking details view for each POI
+	//Handles connection to OSM Overpass server and parses the response into beautiful looking details views for each POI
 	if (!url) {
 		//No url was specified, because none of the filter functions called it.
 		var result = locateNewAreaBasedOnFilter();
@@ -314,7 +314,6 @@ function loadPOIS(e, url) {
 		}
 		progressbar();
 	}).fail(function() {
-		document.getElementById("query-button").removeAttribute("disabled");
 		showGlobalPopup(langRef[document.body.id][languageOfUser].LOADING_FAILURE);
 		progressbar();
 	});
@@ -356,7 +355,4 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 progressbar(50);
-//load POIs
-document.getElementById("query-button").onclick = function() {activateFilters();document.getElementById("query-button").setAttribute("disabled", true);loadPOIS("")};
-document.getElementById("query-button").setAttribute("disabled", true);
 loadLang("", languageOfUser);

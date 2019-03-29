@@ -1,4 +1,5 @@
 var activeFilter = {}; //Dictionary of the current selected filters
+var timerForFilter;
 var profiles = {default: {iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40]}, //Colour profiles for the filters
 "defaultMarker": {iconUrl: "/markers/marker.svg", code: "#004387ff"},
 "redMarker": {iconUrl: "/markers/marker-red.svg", code: "#ff0000"},
@@ -33,6 +34,10 @@ var filter = { //The filters, the query they trigger, their names and technical 
 11: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.violetMarker},
 12: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightvioletMarker}
 };
+function triggerActivationOfFilters() {
+	clearTimeout(timerForFilter);
+	timerForFilter = setTimeout(activateFilters, 1000);
+}
 function toggleLayers(id, toggle) {
 	if (toggle == 0) {
 		//Removes the filter from the map.
@@ -66,9 +71,9 @@ function activateFilters() {
 		}
 		entry += 1;
 	}
+	loadPOIS("");
 }
 function setFilter(id) {
-	document.getElementById("query-button").removeAttribute("disabled");
 	//Gets called when the user (un)checks a filter.
 	if (filter[id].active) {
 		//The filter is currently active, deactivate it because the user unchecked it.
@@ -81,6 +86,7 @@ function setFilter(id) {
 		//activeFilter[id] = true;
 		//toggleLayers(id, 1) //Adds the POIs belonging to the filter to the map.
 	}
+	triggerActivationOfFilters();
 }
 function initFilters() {
 	//Creates the list of the filters for the user so he/she can (un)check.
