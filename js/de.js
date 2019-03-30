@@ -37,6 +37,8 @@ var refDe = {"site-map": {
 	"PDV_STROLLER_YES": "POI ist kinderwagentauglich",
 	"PDV_STROLLER_LIMITED": "POI ist beschränkt kinderwagentauglich",
 	"PDV_STROLLER_NO": "POI ist nicht kinderwagentauglich",
+	"PDV_OPERATOR": "Betreiber",
+	"PDV_DESCRIPTION": "Beschreibung",
 	"TOILET": "WC",
 	"BTN_APPLY_FILTERS": "Filter anwenden",
 	"LNK_IMPRESS": "Impressum",

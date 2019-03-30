@@ -37,6 +37,8 @@ var refEn = {"site-map": {
 	"PDV_STROLLER_YES": "Location is stroller friendly",
 	"PDV_STROLLER_LIMITED": "Location is partially stroller friendly",
 	"PDV_STROLLER_NO": "Location isn't stroller friendly",
+	"PDV_OPERATOR": "Operator",
+	"PDV_DESCRIPTION": "Description",
 	"TOILET": "Toilet",
 	"BTN_APPLY_FILTERS": "Apply filters",
 	"LNK_IMPRESS": "About",
