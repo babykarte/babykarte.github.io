@@ -120,6 +120,36 @@ function initFilters() {
         oac.appendChild(label); //Finally adds the container itself to the filter list and displays it to the user.
 	}
 }
+function osmExpression(poi, value) {
+	var key, content, result;
+	var regExpression = "";
+	value = value.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").replace("\"", "").replace("\"", "")
+	if (value.indexOf("=") > -1) {
+		value = value.split("=");
+		regExpression = "==";
+	} else if (value.indexOf("~") > -1) {
+		value = value.split("~");
+		regExpression = "~";
+	} else {
+		return ((poi.tags[value]) ? true : false);
+	}
+	if (value[0].endsWith("!")) {
+		regExpression = "!" + regExpression.replace("=", "");
+		value[0] = value[0].replace("!", "");
+	}
+	key = poi.tags[value[0]];
+	content = value[1];
+	if (regExpression.indexOf("~") == -1) {
+		result = eval("((\"" + key + "\" " + regExpression + " \"" + content + "\") ? true : false)");
+		return result;
+	} else {
+		result = eval("((\""+ key + "\".indexOf(new RegExp(\"" + content + "\")) > -1) ? true : false)");
+		if (regExpression.indexOf("!") > -1) {
+			if (result) {result = false} else {result = true}
+			return result;
+		}
+	}
+}
 function groupIntoLayers(poi) {
 	var marker;
 	var name = ""
@@ -134,7 +164,10 @@ function groupIntoLayers(poi) {
 			for (var vle in type) {
 				var item = "";
 				var value = type[vle];
-				value = value.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").replace("\"", "").replace("\"", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
+				if (osmExpression(poi, value)) {
+					matches += 1 //Yes
+				}
+				/*value = value.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").replace("\"", "").replace("\"", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
 				if (value.length == 2) {
 					item = value[1].split("|");
 				} else {
@@ -154,7 +187,7 @@ function groupIntoLayers(poi) {
 							matches += 1; //Yes
 						}
 					}
-				}
+				}*/
 			}
 			if (length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
 				marker = L.icon(Object.assign({}, filter[fltr].color, profiles.default));
