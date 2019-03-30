@@ -1,3 +1,4 @@
+var zoomLevel = "";
 function locationFound(e) {
 	//Clicks on the button, so we jump to the coordinates of the user.
 	//document.getElementById('query-button').click();
@@ -42,14 +43,14 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	//EAST: Number increases when moving to the right (East)
 	
 	//Outcommented code with javascripts' multiline comment option /*...*/ is the old algorithm Babykarte has used. It stays here in code deactivated until a solution for the bug described at https://github.com/babykarte/babykarte.github.io/issues/37 can be found.
-	/*var accuracy = 0.001;
-	var clear = 0;*/
-	var loadingAllowed = /*false*/true;
+	var accuracy = 0.001;
+	var clear = 0;
+	var loadingAllowed = false;
 	var south_new = map.getBounds().getSouth();
 	var west_new = map.getBounds().getWest();
 	var north_new = map.getBounds().getNorth();
 	var east_new = map.getBounds().getEast();
-	/*var north_old = filter[fltr].coordinates.current.north;
+	var north_old = filter[fltr].coordinates.current.north;
 	var east_old = filter[fltr].coordinates.current.east;
 	var south_old = filter[fltr].coordinates.current.south;
 	var west_old = filter[fltr].coordinates.current.west;
@@ -117,7 +118,7 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 			east_new = maxWest;
 			maxWest = west_new;
 		}
-	}*/
+	}
 	filter[fltr].coordinates.current.north = north_new;
 	filter[fltr].coordinates.current.south = south_new;
 	filter[fltr].coordinates.current.west = west_new;
@@ -125,31 +126,29 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 	if (loadingAllowed) {
 		var dict = {};
 		dict[fltr] = true;
-		/*filter[fltr].coordinates.max.south = maxSouth;
+		filter[fltr].coordinates.max.south = maxSouth;
 		filter[fltr].coordinates.max.west = maxWest;
 		filter[fltr].coordinates.max.north = maxNorth;
-		filter[fltr].coordinates.max.east = maxEast;*/
+		filter[fltr].coordinates.max.east = maxEast;
 		if (south_new == 0) {
 			south_new = map.getBounds().getSouth();
 		}
-		toggleLayers(fltr, 0);
-		filter[fltr].layers = [];
+		/*toggleLayers(fltr, 0);
+		filter[fltr].layers = [];*/
 		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
 }
 function setCoordinates(fltr) {
 	filter[fltr].usedBefore = true;
-	/*filter[fltr].coordinates.current.south = map.getBounds().getSouth();
+	filter[fltr].coordinates.current.south = map.getBounds().getSouth();
 	filter[fltr].coordinates.current.west = map.getBounds().getWest();
 	filter[fltr].coordinates.current.north = map.getBounds().getNorth();
-	
-	//Note: The code below is outcommented due to the bug (see the url above)
-	filter[fltr].coordinates.current.east = map.getBounds().getEast();*/
-	/*filter[fltr].coordinates.max.south = map.getBounds().getSouth();
+	filter[fltr].coordinates.current.east = map.getBounds().getEast();
+	filter[fltr].coordinates.max.south = map.getBounds().getSouth();
 	filter[fltr].coordinates.max.west = map.getBounds().getWest();
 	filter[fltr].coordinates.max.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.max.east = map.getBounds().getEast();*/
+	filter[fltr].coordinates.max.east = map.getBounds().getEast();
 }
 function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
@@ -172,6 +171,16 @@ function locateNewAreaBasedOnFilter() {
 }
 function onMapMove() {
 	loadPOIS("", locateNewAreaBasedOnFilter());
+}
+function onMapZoom() {
+	var newZoomLevel = String(map.getZoom());
+	if (zoomLevel > newZoomLevel) {
+		//zoom out
+		for (var fltr in activeFilter) {
+			toggleLayers(fltr, 0);
+			filter[fltr].layers = [];
+		}
+	}
 }
 function parseOpening_hours(value) {
 	if (!value) {
@@ -349,6 +358,7 @@ map.on("locationfound", locationFound);
 map.on("locationerror", locationError);
 map.on("click", function(e) {location.hash = String(map.getZoom()) + "&" + String(e.latlng.lat) + "&" + String(e.latlng.lng);})
 map.on("moveend", onMapMove);
+map.on("zoomend", onMapZoom());
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
