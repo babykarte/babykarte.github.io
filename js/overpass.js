@@ -224,6 +224,10 @@ function addrTrigger(poi, marker) {
 }
 function toggleTab(bla, id) {
 	var tab = document.getElementById(id);
+	var icon = document.getElementById("icon" + id);
+	if (icon.classList.contains("inactive") == true) {
+		return 0;
+	}
 	if (!bla) {
 		tab.setAttribute("active", true);
 		return 0;
