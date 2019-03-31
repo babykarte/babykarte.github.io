@@ -31,9 +31,9 @@
      id="namedview60"
      showgrid="false"
      inkscape:zoom="1.2311224"
-     inkscape:cx="318.38461"
-     inkscape:cy="289.74705"
-     inkscape:window-x="1920"
+     inkscape:cx="156.74349"
+     inkscape:cy="286.49798"
+     inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
@@ -51,7 +51,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -61,7 +61,7 @@
      inkscape:export-xdpi="96"
      inkscape:export-ydpi="96">
     <path
-       style="opacity:1;fill:#00ae91;fill-opacity:0.39607843;fill-rule:nonzero;stroke:#006691;stroke-width:24.42499924;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#00ae91;fill-opacity:0.39607843;fill-rule:nonzero;stroke:#0a2823;stroke-width:24.42499924;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 365.24414 15.753906 A 275.14171 266.36057 0 0 0 90.101562 282.11328 A 275.14171 266.36057 0 0 0 365.24414 548.47461 A 275.14171 266.36057 0 0 0 640.38477 282.11328 A 275.14171 266.36057 0 0 0 365.24414 15.753906 z "
        transform="matrix(0.26458334,0,0,0.26458334,0,145)"
        id="path4485" />
@@ -71,7 +71,7 @@
        height="60.54034"
        width="7.0887899"
        id="rect4620"
-       style="opacity:1;fill:#006691;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.06494796;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#0a2823;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.06494796;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        transform="rotate(-0.0407871)" />
     <rect
        transform="rotate(90.032638)"
@@ -80,14 +80,14 @@
        height="39.9305"
        width="5.5914788"
        id="rect4620-3"
-       style="opacity:1;fill:#006691;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.06500006;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="opacity:1;fill:#0a2823;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.06500006;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
-       style="opacity:1;fill:#e21f1a;fill-opacity:0.63671875;fill-rule:nonzero;stroke:none;stroke-width:4.0250001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#fd0a05;fill-opacity:0.99215686;fill-rule:nonzero;stroke:none;stroke-width:4.0250001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 359.85742 281.95508 L 197.9082 441.13672 A 6.2635496 4.7161963 49.545886 0 0 197.38867 441.5918 A 6.2635496 4.7161963 49.545886 0 0 198.55859 449.53906 A 6.2635496 4.7161963 49.545886 0 0 206.11328 450.54883 A 6.2635496 4.7161963 49.545886 0 0 206.13477 450.52734 L 368.5957 290.8457 L 359.85742 281.95508 z "
        transform="matrix(0.26458334,0,0,0.26458334,0,145)"
        id="rect4620-36" />
     <ellipse
-       style="opacity:1;fill:#006691;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.46244717;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#0a2823;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.46244717;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path896"
        cx="96.441879"
        cy="161.01425"
@@ -101,7 +101,7 @@
        rx="3.5460525"
        ry="2.7992592" />
     <ellipse
-       style="opacity:1;fill:#005476;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.46244812;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#0d584c;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.46244812;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path1297"
        cx="97.258194"
        cy="220.25708"
