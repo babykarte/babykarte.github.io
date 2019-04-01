@@ -58,7 +58,7 @@ var refEn = {"site-map": {
 		5: "Shops for baby goods",
 		6: "Shops for toys",
 		7: "Shops for clothes",
-		8: "Kindergartens",
+		8: "Kindergartens and child care",
 		9: "Zoos",
 		10: "Changing tables",
 		11: "Cafés",
