@@ -34,6 +34,7 @@ var refDe = {"site-map": {
 	"PDV_HIGHCHAIR_COUNT": "Babystühle vorhanden",
 	"PDV_KIDSAREA_YES": "Spielecke vorhanden",
 	"PDV_KIDSAREA_NO": "Spielecke nicht vorhanden",
+	"PDV_KIDSAREA_UNKNOWN" : "Vorhandensein einer Spielecke: Unbekannt",
 	"PDV_STROLLER_YES": "Ort ist kinderwagentauglich",
 	"PDV_STROLLER_LIMITED": "Ort ist beschränkt kinderwagentauglich",
 	"PDV_STROLLER_NO": "Ort ist nicht kinderwagentauglich",

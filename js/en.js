@@ -34,6 +34,7 @@ var refEn = {"site-map": {
 	"PDV_HIGHCHAIR_COUNT": "highchairs available",
 	"PDV_KIDSAREA_YES": "Kids area available",
 	"PDV_KIDSAREA_NO": "Kids area not available",
+	"PDV_KIDSAREA_UNKNOWN" : "Kids area: unknown",
 	"PDV_STROLLER_YES": "Location is stroller friendly",
 	"PDV_STROLLER_LIMITED": "Location is partially stroller friendly",
 	"PDV_STROLLER_NO": "Location isn't stroller friendly",
