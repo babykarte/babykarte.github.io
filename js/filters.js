@@ -143,11 +143,11 @@ function osmExpression(poi, value) {
 		result = eval("((\"" + key + "\" " + regExpression + " \"" + content + "\") ? true : false)");
 		return result;
 	} else {
-		result = eval("((\""+ key + "\".indexOf(new RegExp(\"" + content + "\")) > -1) ? true : false)");
+		result = ((key.match(new RegExp(content)) != null) ? true : false);
 		if (regExpression.indexOf("!") > -1) {
 			if (result) {result = false} else {result = true}
-			return result;
 		}
+		return result;
 	}
 }
 function groupIntoLayers(poi) {
