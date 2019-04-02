@@ -138,6 +138,7 @@ function osmExpression(poi, value) {
 		value[0] = value[0].replace("!", "");
 	}
 	key = poi.tags[value[0]];
+	if (!key) {return false}
 	content = value[1];
 	if (regExpression.indexOf("~") == -1) {
 		result = eval("((\"" + key + "\" " + regExpression + " \"" + content + "\") ? true : false)");
@@ -164,6 +165,7 @@ function groupIntoLayers(poi) {
 			for (var vle in type) {
 				var item = "";
 				var value = type[vle];
+				console.log("| " + value)
 				if (osmExpression(poi, value)) {
 					matches += 1 //Yes
 				}
