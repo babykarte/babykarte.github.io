@@ -59,7 +59,7 @@ var refDe = {"site-map": {
 		5: "Geschäfte für Babybedarf",
 		6: "Spielwarenläden",
 		7: "Bekleidungsgeschäfte",
-		8: "Kindergärten",
+		8: "Kindertagesbetreuung",
 		9: "Zoo",
 		10: "Wickelplätze",
 		11: "Cafés",
