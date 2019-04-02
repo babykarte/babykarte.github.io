@@ -100,7 +100,7 @@ function initFilters() {
 		var label = document.createElement("label"); //Creates the surrounding container of checkbox and human readable name.
         var checkbox = document.createElement("input"); //Creates the checkbox itself.
         var span = document.createElement("span"); //Needed to have 'title' attribut supported
-        var text = document.createTextNode(langRef[document.body.id][languageOfUser].filtername[id]); //The text inside the 'span' element.
+        var text = document.createTextNode(getText().filtername[id]); //The text inside the 'span' element.
         var color = document.createElement("span");
         color.style.color = fltr.color.code;
         color.style.fontWeight = "bold";
@@ -112,7 +112,7 @@ function initFilters() {
         if (id in activeFilter) {
         	checkbox.checked = true;
         }
-        span.setAttribute("title", "Filter: " + langRef[document.body.id][languageOfUser].filtername[id]); //Adds the title
+        span.setAttribute("title", "Filter: " + getText().filtername[id]); //Adds the title
         label.appendChild(checkbox); //Assigns the checkbox to the text node.
         label.appendChild(color);
         span.appendChild(text); //Adds the human readable name of the filter to element 'span'
@@ -160,40 +160,19 @@ function groupIntoLayers(poi) {
 			var matches = 0; //Initiates the counter.
 			type = query[type]; //Instead of its query name it gets the content of the type.
 			length += type.length;
-			name = langRef[document.body.id][languageOfUser].filtertranslations[type[0]];
+			name = getText().filtertranslations[type[0]];
 			for (var vle in type) {
 				var item = "";
 				var value = type[vle];
 				if (osmExpression(poi, value)) {
 					matches += 1 //Yes
 				}
-				/*value = value.replace("\"", "").replace("\"", "").replace("[", "").replace("]", "").replace("\"", "").replace("\"", "").split(new RegExp("[=~]")); //Splits the query into a pair of key, value.
-				if (value.length == 2) {
-					item = value[1].split("|");
-				} else {
-					item = value[0].split("|");
-				}
-				for (var i in item) {
-					if (value.length == 1) {
-						if (poi.tags[value] != undefined) {
-							matches += 1; //Yes
-						}
-					} else if (value[0].indexOf("!") > -1) {
-						if (poi.tags[value[0]] != item[i]) { //Has the POI not the same attribute like the filter we're checking against.
-							matches += 1; //Yes
-						}
-					} else {
-						if (poi.tags[value[0]] == item[i]) { //Has the POI the same attribute like the filter we're checking against.
-							matches += 1; //Yes
-						}
-					}
-				}*/
 			}
 			if (length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
 				marker = L.icon(Object.assign({}, filter[fltr].color, profiles.default));
 				marker = L.marker([poi.lat, poi.lon], {icon: marker});
 				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
-				marker.name = name || langRef[document.body.id][languageOfUser].filtername[fltr];
+				marker.name = name || getText().filtername[fltr];
 				return marker;
 		}
 		}

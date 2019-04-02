@@ -15,6 +15,12 @@ if (languageOfUser.indexOf("-") > -1) {
 	languageOfUser = languageOfUser.split("-");
 	languageOfUser = languageOfUser[0];
 }
+function getText(address=undefined) {
+	if (!address) {
+		return langRef[document.body.id][languageOfUser]
+	}
+	return langRef[document.body.id][languageOfUser][address]
+}
 function getLangFromHash() {
 	var hash = location.hash;
 	if (hash != "") {
@@ -46,23 +52,23 @@ function setLang(e, lang) {
 	}
 	if (languageOfUser in langRef[document.body.id]) {
 		var data = {
-		0: ((document.getElementById("query-button") != null) ? document.getElementById("query-button").value = langRef[document.body.id][languageOfUser].BTN_APPLY_FILTERS : ""),
-		1: ((document.getElementById("linkToPP") != null) ? document.getElementById("linkToPP").innerHTML = langRef[document.body.id][languageOfUser].LNK_PP_SITE : ""),
-		2: ((document.getElementById("linkToPP") != null) ? document.getElementById("linkToPP").href = langRef[document.body.id][languageOfUser].LNK_PP_SITE_URL : ""),
-		3: ((document.getElementById("searchfield") != null) ? document.getElementById("searchfield").placeholder = langRef[document.body.id][languageOfUser].TB_SEARCHFIELD : ""),
-		4: ((document.getElementById("lnk-impress") != null) ? document.getElementById("lnk-impress").innerHTML = langRef[document.body.id][languageOfUser].LNK_IMPRESS : ""),
-		5: ((document.getElementById("lnk-impress") != null) ? document.getElementById("lnk-impress").href = langRef[document.body.id][languageOfUser].LNK_IMPRESS_URL : ""),
-		6: ((document.getElementById("title") != null) ? document.getElementById("title").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_TITLE : ""),
-		7: ((document.getElementById("subtitle") != null) ? document.getElementById("subtitle").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_SUBTITLE : ""),
-		8: ((document.getElementById("country") != null) ? document.getElementById("country").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_COUNTRY : ""),
-		9: ((document.getElementById("contact") != null) ? document.getElementById("contact").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_CONTACT : ""),
-		10: ((document.getElementById("note") != null) ? document.getElementById("note").innerHTML = langRef[document.body.id][languageOfUser].IMPRESS_NOTE : ""),
-		11: ((document.getElementById("linkToGitHub") != null) ? document.getElementById("linkToGitHub").innerHTML = langRef[document.body.id][languageOfUser].LNK_GITHUB : ""),
-		12: ((document.getElementById("linkToOSMWiki") != null) ? document.getElementById("linkToOSMWiki").innerHTML = langRef[document.body.id][languageOfUser].LNK_OSMWIKI : "")
+		0: ((document.getElementById("query-button") != null) ? document.getElementById("query-button").value = getText().BTN_APPLY_FILTERS : ""),
+		1: ((document.getElementById("linkToPP") != null) ? document.getElementById("linkToPP").innerHTML = getText().LNK_PP_SITE : ""),
+		2: ((document.getElementById("linkToPP") != null) ? document.getElementById("linkToPP").href = getText().LNK_PP_SITE_URL : ""),
+		3: ((document.getElementById("searchfield") != null) ? document.getElementById("searchfield").placeholder = getText().TB_SEARCHFIELD : ""),
+		4: ((document.getElementById("lnk-impress") != null) ? document.getElementById("lnk-impress").innerHTML = getText().LNK_IMPRESS : ""),
+		5: ((document.getElementById("lnk-impress") != null) ? document.getElementById("lnk-impress").href = getText().LNK_IMPRESS_URL : ""),
+		6: ((document.getElementById("title") != null) ? document.getElementById("title").innerHTML = getText().IMPRESS_TITLE : ""),
+		7: ((document.getElementById("subtitle") != null) ? document.getElementById("subtitle").innerHTML = getText().IMPRESS_SUBTITLE : ""),
+		8: ((document.getElementById("country") != null) ? document.getElementById("country").innerHTML = getText().IMPRESS_COUNTRY : ""),
+		9: ((document.getElementById("contact") != null) ? document.getElementById("contact").innerHTML = getText().IMPRESS_CONTACT : ""),
+		10: ((document.getElementById("note") != null) ? document.getElementById("note").innerHTML = getText().IMPRESS_NOTE : ""),
+		11: ((document.getElementById("linkToGitHub") != null) ? document.getElementById("linkToGitHub").innerHTML = getText().LNK_GITHUB : ""),
+		12: ((document.getElementById("linkToOSMWiki") != null) ? document.getElementById("linkToOSMWiki").innerHTML = getText().LNK_OSMWIKI : "")
 		};
-		try {
+		//try {
 			initFilters();
-		} catch {}
+		//} catch {}
 	} else {
 		alert("Language datas couldn't be loaded.");
 	}
