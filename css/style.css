@@ -82,6 +82,17 @@ label {
 	display:none;
 	height:100px;
 }
+.tabcontent ul {
+	margin:0px;
+	margin-left:3px;
+	padding-left:10px;
+	list-style-type: circle inside;
+}
+.tabcontent ul ul {
+	color:black;
+	padding-left:10px;
+	margin:0px;
+}
 .layermenu {
 	z-index:1;
 	width:33.34%;
@@ -125,8 +136,13 @@ label {
 	margin-right:5px;
 	padding-left:5px;
 }
+.grid-container {
+	display:grid;
+	grid-template-columns:auto auto;
+	justify-content:start;
+}
 .color-green {
-	color:#6db45b;
+	color:#339933;
 }
 .color-red {
 	color:#ff2526;

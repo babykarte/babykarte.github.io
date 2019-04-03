@@ -30,7 +30,7 @@ var filter = { //The filters, the query they trigger, their names and technical 
 7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightblueMarker},
 8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.orangeMarker},
 9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.yellowMarker},
-10: {"query": {"node|way": ["[\"amenity\"=\"toilets\"]", "[\"diaper\"]","[\"diaper\"!=\"no\"]"], "node|way ": ["[\"shop\"=\"chemist\"]", "[\"diaper\"]", "[\"diaper\"!=\"no\"]"], "node|way  ": ["[\"diaper:access\"=\"public\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightgreyMarker},
+10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightgreyMarker},
 11: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.violetMarker},
 12: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightvioletMarker}
 };
@@ -137,6 +137,7 @@ function osmExpression(poi, value) {
 		regExpression = "!" + regExpression.replace("=", "");
 		value[0] = value[0].replace("!", "");
 	}
+	console.log(poi);
 	key = poi.tags[value[0]];
 	if (!key) {return false}
 	content = value[1];
@@ -165,7 +166,6 @@ function groupIntoLayers(poi) {
 			for (var vle in type) {
 				var item = "";
 				var value = type[vle];
-				console.log("| " + value)
 				if (osmExpression(poi, value)) {
 					matches += 1 //Yes
 				}
