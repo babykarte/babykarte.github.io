@@ -137,7 +137,6 @@ function osmExpression(poi, value) {
 		regExpression = "!" + regExpression.replace("=", "");
 		value[0] = value[0].replace("!", "");
 	}
-	console.log(poi);
 	key = poi.tags[value[0]];
 	if (!key) {return false}
 	content = value[1];

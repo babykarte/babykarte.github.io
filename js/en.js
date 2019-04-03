@@ -75,13 +75,13 @@ var refEn = {"site-map": {
 		"[\"shop\"=\"baby_goods\"]": "Baby goods",
 		"[\"shop\"=\"toys\"]": "Toy store",
 		"[\"shop\"=\"clothes\"]": "Clothes",
-		"[\"amenity\"=\"kindergarten\"]": "Kindergarten",
 		"[\"tourism\"=\"zoo\"]": "Zoo",
 		"[\"amenity\"=\"toilets\"]": "Toilets",
 		"[\"shop\"=\"chemist\"]": "Chemist",
 		"[\"diaper:access\"=\"public\"]": "Public changing table",
 		"[\"amenity\"=\"cafe\"]": "Café",
-		"[\"amenity\"=\"restaurant\"]": "Restaurant"
+		"[\"amenity\"=\"restaurant\"]": "Restaurant",
+		"[\"amenity\"~\"kindergarten|childcare\"]" : "Kindergarten",
 	}
 },
 "site-impress" : {

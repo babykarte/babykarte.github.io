@@ -74,13 +74,14 @@ var refDe = {"site-map": {
 		"[\"shop\"=\"baby_goods\"]": "Babybedarf",
 		"[\"shop\"=\"toys\"]": "Spielwarenladen",
 		"[\"shop\"=\"clothes\"]": "Bekleidung",
-		"[\"amenity\"=\"kindergarten\"]": "Kindertagesstätte",
 		"[\"tourism\"=\"zoo\"]": "Tierpark",
 		"[\"amenity\"=\"toilets\"]": "Toilette",
 		"[\"shop\"=\"chemist\"]": "Drogerie",
 		"[\"diaper:access\"=\"public\"]": "Öffentlicher Wickeltisch",
 		"[\"amenity\"=\"cafe\"]": "Café",
-		"[\"amenity\"=\"restaurant\"]": "Restaurant"
+		"[\"amenity\"=\"restaurant\"]": "Restaurant",
+		"[\"amenity\"~\"kindergarten|childcare\"]" : "Kindertagesstätte",
+		
 	}
 },
 "site-impress" : {
