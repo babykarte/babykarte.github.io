@@ -17,6 +17,7 @@ var refEn = {"site-map": {
 	"PDV_TITLE_CONTACT": "Contact",
 	"PDV_TITLE_MI": "More information",
 	"PDV_DIAPER_YES": "Changing table available",
+	"PDV_DIAPER_NO": "No changing table available",
 	"PDV_DIAPER_UNKNOWN": "Changing table: Unknown",
 	"PDV_DIAPER_ROOM": "Diaper-changing room",
 	"PDV_DIAPER_MALE": "Changing table in the men's room",

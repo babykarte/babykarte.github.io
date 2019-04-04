@@ -17,6 +17,7 @@ var refDe = {"site-map": {
 	"PDV_TITLE_CONTACT": "Kontakt",
 	"PDV_TITLE_MI": "Weitere informationen",
 	"PDV_DIAPER_YES": "Wickeltisch vorhanden",
+	"PDV_DIAPER_NO": "Wickeltisch nicht vorhanden",
 	"PDV_DIAPER_UNKNOWN": "Wickeltisch: Unbekannt",
 	"PDV_DIAPER_ROOM": "Wickelraum",
 	"PDV_DIAPER_MALE": "Wickeltisch in der Herrentoilette",
