@@ -150,6 +150,18 @@ function setCoordinates(fltr) {
 	filter[fltr].coordinates.max.north = map.getBounds().getNorth();
 	filter[fltr].coordinates.max.east = map.getBounds().getEast();
 }
+function resetFilter(fltr) {
+	filter[fltr].usedBefore = true;
+	filter[fltr].coordinates.current.south = 0;
+	filter[fltr].coordinates.current.west = 0;
+	filter[fltr].coordinates.current.north = 0;
+	filter[fltr].coordinates.current.east = 0;
+	filter[fltr].coordinates.max.south = 0;
+	filter[fltr].coordinates.max.west = 0;
+	filter[fltr].coordinates.max.north = 0;
+	filter[fltr].coordinates.max.east = 0;
+	filter[fltr].layers = [];
+}
 function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
 	//Adds filter compactibility to locateNewArea() function.
@@ -157,10 +169,7 @@ function locateNewAreaBasedOnFilter() {
 	var result = "";
 	for (var fltr in activeFilter) {
 		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
-		if (!filter[fltr].usedBefore) {
-			filter[fltr].usedBefore = true;
-			setCoordinates(fltr);
-		}
+		if (!filter[fltr].usedBefore) { setCoordinates(fltr); }
 		if (result) {
 			url += result
 		}
@@ -174,11 +183,14 @@ function onMapMove() {
 }
 function onMapZoom() {
 	var newZoomLevel = String(map.getZoom());
+	console.log(zoomLevel + " ?= " + newZoomLevel);
 	if (zoomLevel > newZoomLevel) {
 		//zoom out
 		for (var fltr in activeFilter) {
 			toggleLayers(fltr, 0);
-			filter[fltr].layers = [];
+			alert("m##");
+			filter[fltr].usedBefore = false;
+			resetFilter(fltr);
 		}
 	}
 }
@@ -245,7 +257,6 @@ function toggleTab(bla, id) {
 	tab.style.display = "block";
 }
 function addrTab(poi, prefix , condition, symbol) {
-	console.log(condition);
 	return "<div class='grid-container'><a target='_blank' href='" + prefix  + eval(condition) + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + eval(condition) + "'>" + eval(condition) + "</a></div>\n";
 }
 function loadPOIS(e, url) {
@@ -364,11 +375,12 @@ map.on("locationfound", locationFound);
 map.on("locationerror", locationError);
 map.on("click", function(e) {location.hash = String(map.getZoom()) + "&" + String(e.latlng.lat) + "&" + String(e.latlng.lng);})
 map.on("moveend", onMapMove);
-map.on("zoomend", onMapZoom());
+map.on("zoomend", onMapZoom);
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 progressbar();
+zoomLevel = String(map.getZoom());
 loadLang("", languageOfUser);
