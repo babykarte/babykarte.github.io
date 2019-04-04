@@ -183,12 +183,10 @@ function onMapMove() {
 }
 function onMapZoom() {
 	var newZoomLevel = String(map.getZoom());
-	console.log(zoomLevel + " ?= " + newZoomLevel);
 	if (zoomLevel > newZoomLevel) {
 		//zoom out
 		for (var fltr in activeFilter) {
 			toggleLayers(fltr, 0);
-			alert("m##");
 			filter[fltr].usedBefore = false;
 			resetFilter(fltr);
 		}
