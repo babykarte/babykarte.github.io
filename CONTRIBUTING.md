@@ -12,5 +12,10 @@ Thank you that you'd like to contribute to Babykarte. This set of guidelines is 
 ## Pull requests
 
 - Before creating a pull request, please have a look at the issues. Maybe your idea has been discussed before.
-- If you'd like to add features to the map (e.g. an additional filter), maybe it's a good idea to first create an issue so that we can discuss if the addition is really fitting to the project
+- If you'd like to add features to the map (e.g. an additional filter), maybe it's a good idea to first create an issue so that we can discuss if the addition is really fitting to the project.
 - Please create pull requests against the `devel` branch, not `master`.
+
+Code contributions must follow the [code style rules](CODESTYLE.md) which is there to avoid technical problems when editing code and to make working with the codebase possible
+
+## Join the development team
+Joining the development is easy and welcome. You become a member of the development team by following and resolving issues (your choice on which to work on). If we notice it that you help to push this project forward on a regular basis, you will be notified via the email address you provided in your GitHub profile. If you prevent your email address from being seen by your profile visitors, then write us before and we'll find a solution. Becoming a member of the development team means for you that you get access granted to upload to our repository when we think we can trust you.
