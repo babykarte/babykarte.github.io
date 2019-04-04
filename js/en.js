@@ -60,7 +60,7 @@ var refEn = {"site-map": {
 		8: "Kindergartens and child care",
 		9: "Zoos",
 		10: "Changing tables",
-		11: "Cafés",
+		11: "Cafes",
 		12: "Restaurants"
 	},
 	"filtertranslations": {
@@ -76,7 +76,7 @@ var refEn = {"site-map": {
 		"[\"amenity\"=\"toilets\"]": "Toilets",
 		"[\"shop\"=\"chemist\"]": "Chemist",
 		"[\"diaper:access\"=\"public\"]": "Public changing table",
-		"[\"amenity\"=\"cafe\"]": "Café",
+		"[\"amenity\"=\"cafe\"]": "Cafe",
 		"[\"amenity\"=\"restaurant\"]": "Restaurant",
 		"[\"amenity\"~\"kindergarten|childcare\"]" : "Kindergarten",
 	}
