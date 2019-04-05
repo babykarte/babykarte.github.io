@@ -94,11 +94,15 @@ label {
 	margin:0px;
 }
 .tabcontent ul details {
-	font-size:14px;
+	font-size:12px;
 }
 .tabcontent ul summary {
 	color:inherit;
 	font-size:12px;
+}
+.tabcontent ul .description {
+	color:black;
+	padding-left: 10px;
 }
 .layermenu {
 	z-index:1;
