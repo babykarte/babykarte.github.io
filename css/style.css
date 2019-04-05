@@ -134,6 +134,9 @@ label {
 	height:15px;
 	width:18px;
 }
+.list-style-none {
+	list-style-type:none;
+}
 .inactive {
 	background-color:rgba(0,0,0, 0.2);
 }
