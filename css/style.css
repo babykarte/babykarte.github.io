@@ -97,6 +97,7 @@ label {
 	font-size:14px;
 }
 .tabcontent ul summary {
+	color:inherit;
 	font-size:12px;
 }
 .layermenu {
