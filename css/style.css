@@ -14,9 +14,9 @@ details {
 	padding-bottom:5px;
 }
 details summary {
-	font-size:14px;
 	color:grey;
 	font-weight:bold;
+	cursor:pointer;
 }
 h1, h2, h3 {
 	display:block;
