@@ -93,6 +93,12 @@ label {
 	padding-left:10px;
 	margin:0px;
 }
+.tabcontent ul details {
+	font-size:14px;
+}
+.tabcontent ul summary {
+	font-size:12px;
+}
 .layermenu {
 	z-index:1;
 	width:33.34%;
@@ -122,6 +128,10 @@ label {
 	margin-top:5px;
 	margin-left:5px;
 	margin-right:10px;
+}
+.text-icon {
+	height:15px;
+	width:18px;
 }
 .inactive {
 	background-color:rgba(0,0,0, 0.2);
