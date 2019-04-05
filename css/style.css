@@ -140,6 +140,7 @@ label {
 }
 .list-style-none {
 	list-style-type:none;
+	margin-left:-10px;
 }
 .inactive {
 	background-color:rgba(0,0,0, 0.2);
