@@ -15,8 +15,8 @@ details {
 }
 details summary {
 	font-size:14px;
-	color:grey;
 	font-weight:bold;
+	cursor: pointer;
 }
 h1, h2, h3 {
 	display:block;
@@ -137,6 +137,7 @@ label {
 .text-icon {
 	height:15px;
 	width:18px;
+	vertical-align:text-bottom;
 }
 .inactive {
 	background-color:rgba(0,0,0, 0.2);
