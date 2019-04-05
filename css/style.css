@@ -14,7 +14,6 @@ details {
 	padding-bottom:5px;
 }
 details summary {
-	font-size:14px;
 	font-weight:bold;
 	cursor: pointer;
 }
@@ -138,6 +137,10 @@ label {
 	height:15px;
 	width:18px;
 	vertical-align:text-bottom;
+}
+.list-style-none {
+	list-style-type:none;
+	margin-left:-10px;
 }
 .inactive {
 	background-color:rgba(0,0,0, 0.2);
