@@ -17,6 +17,8 @@ details summary {
 	color:grey;
 	font-weight:bold;
 	cursor:pointer;
+	font-weight:bold;
+	cursor: pointer;
 }
 h1, h2, h3 {
 	display:block;
@@ -83,26 +85,21 @@ label {
 	height:100px;
 }
 .tabcontent ul {
+	font-weight:bold;
 	margin:0px;
 	margin-left:3px;
 	padding-left:10px;
 	list-style-type: circle inside;
 }
-.tabcontent ul ul {
+.tabcontent details ul {
+	font-weight:initial;
 	color:black;
-	padding-left:10px;
+	padding-left:20px;
 	margin:0px;
-}
-.tabcontent ul details {
 	font-size:12px;
 }
-.tabcontent ul summary {
-	color:inherit;
+.tabcontent details summary {
 	font-size:12px;
-}
-.tabcontent ul .description {
-	color:black;
-	padding-left: 10px;
 }
 .layermenu {
 	z-index:1;
@@ -137,6 +134,7 @@ label {
 .text-icon {
 	height:15px;
 	width:18px;
+	vertical-align:text-bottom;
 }
 .list-style-none {
 	list-style-type:none;

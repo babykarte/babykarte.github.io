@@ -19,7 +19,7 @@ var profiles = {default: {iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor:
 "violetMarker": {iconUrl: "/markers/marker-violet.svg", code: "#7a00b7ff"},
 "lightvioletMarker": {iconUrl: "/markers/marker-lightviolet.svg", code: "#dc1369"}
 };
-var filter = { //The filters, the query they trigger, their names and technical descriptions as dictionary (JSON)
+var filter = { //The filters, the query they trigger, their names and technical description as dictionary (JSON)
 0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.redMarker, "address" : "health paediatrics"},
 1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.darkredMarker, "address" : "health midwife"},
 2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightredMarker, "address" : "health birth"},
