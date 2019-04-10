@@ -58,7 +58,7 @@ var refDe = {"site-map": {
 		6: "Spielwarenläden",
 		7: "Bekleidungsgeschäfte",
 		8: "Kindertagesbetreuung",
-		9: "Zoo",
+		9: "Zoo/Tierpark",
 		10: "Wickelplätze",
 		11: "Cafés",
 		12: "Restaurants"
@@ -72,7 +72,7 @@ var refDe = {"site-map": {
 		"[\"shop\"=\"baby_goods\"]": "Babybedarf",
 		"[\"shop\"=\"toys\"]": "Spielwarenladen",
 		"[\"shop\"=\"clothes\"]": "Bekleidung",
-		"[\"tourism\"=\"zoo\"]": "Tierpark",
+		"[\"tourism\"=\"zoo\"]": "Zoo/Tierpark",
 		"[\"amenity\"=\"toilets\"]": "Toilette",
 		"[\"shop\"=\"chemist\"]": "Drogerie",
 		"[\"diaper:access\"=\"public\"]": "Öffentlicher Wickeltisch",
