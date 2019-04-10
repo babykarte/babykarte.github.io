@@ -49,7 +49,7 @@ var refDe = {"site-map": {
 	"TB_SEARCHFIELD": "Suche",
 	"opening_hours": {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"},
 	"filtername": {
-		0: "Kinderärzte",
+		0: "Kinderärzte/Kinderstationen",
 		1: "Hebammen",
 		2: "Geburtshäuser",
 		3: "Spielplätze",
@@ -65,6 +65,7 @@ var refDe = {"site-map": {
 	},
 	"filtertranslations": {
 		"[\"healthcare\"=\"doctor\"]": "Kinderarzt",
+		"[\"healthcare\"=\"clinic\"]": "Krankenhaus",
 		"[\"healthcare\"=\"midwife\"]": "Hebamme",
 		"[\"healthcare\"=\"birthing_center\"]": "Geburtshaus",
 		"[\"leisure\"=\"playground\"]": "Spielplatz",
