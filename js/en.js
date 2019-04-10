@@ -49,7 +49,7 @@ var refEn = {"site-map": {
 	"TB_SEARCHFIELD": "Search",
 	"opening_hours": {"Mo" : "Monday", "Tu" : "Tuesday", "We" : "Wednesday", "Th" : "Thursday", "Fr" : "Friday", "Sa" : "Saturday", "Su" : "Sunday", "off" : "closed", "Jan" : "January", "Feb" : "February", "Mar" : "March", "Apr" : "April", "May" : "May", "Jun" : "June", "Jul" : "July", "Aug" : "August", "Sep" : "September", "Oct" : "October", "Nov" : "November", "Dec" : "December", "PH" : "holiday"},
 	"filtername": {
-		0: "Paediatricians",
+		0: "Paediatricians / children's wards",
 		1: "Midwifes",
 		2: "Birthing centers",
 		3: "Playgrounds",
@@ -65,6 +65,7 @@ var refEn = {"site-map": {
 	},
 	"filtertranslations": {
 		"[\"healthcare\"=\"doctor\"]": "Pediatrician",
+		"[\"healthcare\"=\"hospital\"]": "Hospital",
 		"[\"healthcare\"=\"midwife\"]": "Midwife",
 		"[\"healthcare\"=\"birthing_center\"]": "Birthing center",
 		"[\"leisure\"=\"playground\"]": "Playground",
