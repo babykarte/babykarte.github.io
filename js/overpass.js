@@ -1,8 +1,8 @@
 var zoomLevel = "";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"}
 var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],
-				"children": {"women" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"men" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
+				"children": {"female" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
+							"male" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
 							"unisex": {"values": ["yes", "no", "room", "bench", undefined, "*"]},
 							"fee" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
 							"description": {"values": [undefined, "*"]}
@@ -285,19 +285,22 @@ function babyTab_intern(poi, tag, values, data) {
 		var title;
 		if (values[i] == "*") {values[i] = poi.tags[tag];}
 		if (poi.tags[tag] == values[i]) {
+			console.log(tag);
 			var langcode = tag.replace("_", "").replace(":", "_");
 			if (values[i] == undefined) {
 				langcode += "_UNKNOWN";
 			} else {
 				langcode += "_" + values[i];
 			}
-			if (tag.endsWith("description")) {
-				title = poi.tags[tag];
-			} else {title = getText("PDV_" + langcode.toUpperCase())}
+			title = getText("PDV_" + langcode.toUpperCase());
 			console.log("PDV_" + langcode.toUpperCase());
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]];
+			} else {
+				if (tag.endsWith("description") && poi.tags[tag] != undefined) {
+					data.title = "\"" + poi.tags[tag] + "\"";
+				}
 			}
 		}
 		i += 1;
