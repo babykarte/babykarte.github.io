@@ -65,7 +65,7 @@ var refDe = {"site-map": {
 	},
 	"filtertranslations": {
 		"[\"healthcare\"=\"doctor\"]": "Kinderarzt",
-		"[\"healthcare\"=\"clinic\"]": "Krankenhaus",
+		"[\"healthcare\"=\"hospital\"]": "Krankenhaus",
 		"[\"healthcare\"=\"midwife\"]": "Hebamme",
 		"[\"healthcare\"=\"birthing_center\"]": "Geburtshaus",
 		"[\"leisure\"=\"playground\"]": "Spielplatz",
