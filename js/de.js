@@ -49,7 +49,7 @@ var refDe = {"site-map": {
 	"TB_SEARCHFIELD": "Suche",
 	"opening_hours": {"Mo" : "Montag", "Tu" : "Dienstag", "We" : "Mittwoch", "Th" : "Donnerstag", "Fr" : "Freitag", "Sa" : "Samstag", "Su" : "Sonntag", "off" : "geschlossen", "Jan" : "Januar", "Feb" : "Februar", "Mar" : "März", "Apr" : "April", "May" : "Mai", "Jun" : "Juni", "Jul" : "Juli", "Aug" : "August", "Sep" : "September", "Oct" : "Oktober", "Nov" : "November", "Dec" : "Dezember", "PH" : "Feiertag"},
 	"filtername": {
-		0: "Kinderärzte",
+		0: "Kinderärzte/Kinderstationen",
 		1: "Hebammen",
 		2: "Geburtshäuser",
 		3: "Spielplätze",
@@ -58,13 +58,14 @@ var refDe = {"site-map": {
 		6: "Spielwarenläden",
 		7: "Bekleidungsgeschäfte",
 		8: "Kindertagesbetreuung",
-		9: "Zoo",
+		9: "Zoo/Tierpark",
 		10: "Wickelplätze",
 		11: "Cafés",
 		12: "Restaurants"
 	},
 	"filtertranslations": {
 		"[\"healthcare\"=\"doctor\"]": "Kinderarzt",
+		"[\"healthcare\"=\"hospital\"]": "Krankenhaus",
 		"[\"healthcare\"=\"midwife\"]": "Hebamme",
 		"[\"healthcare\"=\"birthing_center\"]": "Geburtshaus",
 		"[\"leisure\"=\"playground\"]": "Spielplatz",
@@ -72,7 +73,7 @@ var refDe = {"site-map": {
 		"[\"shop\"=\"baby_goods\"]": "Babybedarf",
 		"[\"shop\"=\"toys\"]": "Spielwarenladen",
 		"[\"shop\"=\"clothes\"]": "Bekleidung",
-		"[\"tourism\"=\"zoo\"]": "Tierpark",
+		"[\"tourism\"=\"zoo\"]": "Zoo/Tierpark",
 		"[\"amenity\"=\"toilets\"]": "Toilette",
 		"[\"shop\"=\"chemist\"]": "Drogerie",
 		"[\"diaper:access\"=\"public\"]": "Öffentlicher Wickeltisch",
