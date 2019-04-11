@@ -62,6 +62,9 @@ function jumpto(lat, lon, locname="") {
 }
 function geocode() {
 	var searchword = $("#searchfield").val();
+	if (searchword.length == 0) {
+		$("#autocomplete").hide();
+	}
 	if(searchword.length > 3) {
 		$.getJSON("https://photon.komoot.de/api/", {
 			"q": searchword,

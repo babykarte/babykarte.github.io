@@ -9,14 +9,12 @@ html, body{
 a {
 	color:#0078a8;
 }
-details {
-	padding-top:5px;
-	padding-bottom:5px;
-}
 details summary {
-	font-size:14px;
 	color:grey;
 	font-weight:bold;
+	cursor:pointer;
+	font-weight:bold;
+	cursor: pointer;
 }
 h1, h2, h3 {
 	display:block;
@@ -60,12 +58,43 @@ label {
 	display:block;
 	margin-top:5px;
 }
+.custom-leaflet-icon {
+	margin-top:6px !important;
+	margin:5px !important;
+}
+.own-control-style {
+	margin:5px;
+	border-radius:10px;
+	padding:5px;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+.leaflet-bar {
+	margin:0px !important;
+	background-color: rgb(255, 255, 255);
+	border-radius:5px;
+}
 .tabcontent {
 	box-shadow: -10px 0px 5px -2px grey;
 	padding:2px;
 	overflow:auto;
 	display:none;
 	height:100px;
+}
+.tabcontent ul {
+	margin:0px;
+	margin-left:3px;
+	padding-left:10px;
+	list-style-type: circle inside;
+}
+.tabcontent details ul {
+	font-weight:initial;
+	color:black;
+	padding-left:20px;
+	margin:0px;
+	font-size:12px;
+}
+.tabcontent details summary {
+	font-size:12px;
 }
 .layermenu {
 	z-index:1;
@@ -97,15 +126,44 @@ label {
 	margin-left:5px;
 	margin-right:10px;
 }
-.pdv-icon:hover {
+.text-icon {
+	height:15px;
+	width:18px;
+	vertical-align:text-bottom;
+}
+.list-style-none {
+	list-style-type:none;
+	margin-left:-10px;
+}
+.inactive {
+	background-color:rgba(0,0,0, 0.2);
+}
+.active:hover {
 	background-color:#d6e0f5;
 }
-.pdv-icon[active] {
+.active[active] {
 	border-bottom:4px solid #42bd42;
 }
 .lang-select {
 	margin-right:5px;
 	padding-left:5px;
+}
+.grid-container {
+	display:grid;
+	grid-template-columns:auto auto;
+	justify-content:start;
+}
+.color-green {
+	color:#339933;
+}
+.color-red {
+	color:#ff2526;
+}
+.color-yellow {
+	color:#e6a400;
+}
+.color-grey {
+	color:#858585;
 }
 #menubutton {
 	display:none;
@@ -135,7 +193,11 @@ label {
 	z-index:5;
 	position:relative;
 	top:0px;
-	background-color:white;
+	background-color:#ecf2f9;
+	box-sizing:border-box;
+}
+#filtersGround {
+	margin-bottom: 25px;
 }
 #infoPopup {
 	margin:auto;
@@ -174,6 +236,10 @@ section {
 }
 #menubutton {
 	display:block;
+}
+#autocomplete {
+	background-color:white;
+	border-left:5px solid #4080bf;
 }
 #infoPopup {
 	width:200px;
