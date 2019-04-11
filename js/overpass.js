@@ -285,7 +285,6 @@ function babyTab_intern(poi, tag, values, data) {
 		var title;
 		if (values[i] == "*") {values[i] = poi.tags[tag];}
 		if (poi.tags[tag] == values[i]) {
-			console.log(tag);
 			var langcode = tag.replace("_", "").replace(":", "_");
 			if (values[i] == undefined) {
 				langcode += "_UNKNOWN";
@@ -293,13 +292,14 @@ function babyTab_intern(poi, tag, values, data) {
 				langcode += "_" + values[i];
 			}
 			title = getText("PDV_" + langcode.toUpperCase());
-			console.log("PDV_" + langcode.toUpperCase());
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]];
 			} else {
 				if (tag.endsWith("description") && poi.tags[tag] != undefined) {
 					data.title = "\"" + poi.tags[tag] + "\"";
+				} else {
+					data.title = "NODISPLAY";
 				}
 			}
 		}
@@ -319,11 +319,11 @@ function babyTab(poi) {
 		for (var child in children) {
 			data[tag].children[child] = {};
 			data[tag].children[child] = babyTab_intern(poi, tag + ":" + child,  babyData[tag].children[child].values, data[tag].children[child])
-			if (Object.keys(data[tag].children[child]).length == 0) {
+			if (data[tag].children[child].title == "NODISPLAY") {
 				delete data[tag].children[child];
 			}
 		}
-		if (Object.keys(data[tag].children).length == 0) {
+		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
 		} else {
 			output += "<details><summary class='" + data[tag].color + "'>" + data[tag].title + "</summary><div>\n%content</div></details>\n";
