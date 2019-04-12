@@ -1,11 +1,14 @@
 <!DOCTYPE html>
+<!--Developer branch-->
 <html>
   <head>
-    <title>Babykarte</title>
-  	<meta charset='utf-8'>
+    <title>Babykarte - Der Stadtplan für Eltern von Babys und Kleinkindern</title>
+    <meta charset='utf-8'>
+    <meta name="description" content="Gibt es hier irgendwo einen Wickeltisch? Welches Café in der Hamburger Innenstadt hat eine Spielecke? Wo ist der nächste Spielplatz? ✔ Die Babykarte weiß es"> 
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
     <link rel='stylesheet' href='https://unpkg.com/leaflet@1.0.3/dist/leaflet.css' /> <!--https://policies.google.com/privacy#infocollect-->
     <link rel='stylesheet' href='/css/style.css' />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
   </head>
   <body id='site-map'>
   	<div id='progressbar'></div>
@@ -20,14 +23,20 @@
      			<img id="menubutton" src="/images/menu.svg" onclick="togglemenu();mobileTrue();" alt="Menü"> <input type="text" onclick="geocode()" placeholder="Ort" id="searchfield">
      		</div>
 		</div>
-		<div id="filtersGround"><label></div>
-		<input id="query-button" type="button" value="Filter anwenden" disabled="true"><br>     
+		<div id="filtersGround"></div>  
         <a href="https://github.com/Discostu36/Babykarte" target="_blank" id="linkToGitHub">Auf Github</a>
         <a href="https://wiki.openstreetmap.org/wiki/Baby-Karte" target="_blank" id="linkToOSMWiki">OSM Wiki</a>
     
     </div>
     <div id="autocomplete"></div>
     <div id='map'>
+    	<div class='leaflet-control-container'>
+			<div class='leaflet-top leaflet-right own-control-style'>
+				<div class='leaflet-bar leaflet-control'>
+					<img class='small-icon custom-leaflet-icon' src='/images/locating.svg' onclick='requestLocation()' />
+				</div>
+			</div>
+		</div>
     </div>
 	</section>
     <script src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js'></script> <!--https://policies.google.com/privacy#infocollect-->
