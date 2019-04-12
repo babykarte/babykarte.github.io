@@ -12,7 +12,13 @@ var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "
 				"stroller": {"values": ["yes", "limited", "no", undefined],
 							"children": {"description": {"values" : [undefined, "*"]}}
 							},
-				"kids_area": {"values": ["yes", "no", undefined]}
+				"kids_area": {"values": ["yes", "no", undefined],
+				"children": {"indoor" :  {"values": ["yes", "no", undefined]},
+							"outdoor": {"values": ["yes", "no", undefined]},
+							"supervised": {"values": ["yes", "no", undefined]},
+							"fee": {"values": ["yes", "no", undefined]}
+							}
+						}
 				}
 function locationFound(e) {
 	//Fires the notification that Babykarte shows the location of the user.
