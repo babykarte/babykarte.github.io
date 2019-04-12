@@ -7,18 +7,15 @@ var refEn = {"site-map": {
 	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
 	"LNK_OPEN_WITH": "Open with App",
 	"PDV_UNNAME": "No Name",
-<<<<<<< HEAD
 	"PDV_ADDRESS_UNKNOWN": "Address not known",
 	"PDV_COMMUNE_UNKNOWN": "Commune not known",
 	"PDV_STREET_UNKNOWN": "Street not known",
 	"PDV_HOUSENUMBER_UNKNOWN": "House number not known",
 	"PDV_ZIPCODE_UNKNOWN": "Zipcode not known",
-=======
 	"PDV_STREET_UNKNOWN": "Street unknown",
 	"PDV_ADDRESS_UNKNOWN": "Address unknown",
 	"PDV_HOUSENUMBER_UNKNOWN": "?",
 	"PDV_COMMUNE_UNKNOWN": "?",
->>>>>>> 88f8a4619614b2a3ff89bc708b7eee868992c6eb
 	"PDV_TITLE_HOME": "General",
 	"PDV_TITLE_BABY": "Baby friendlyness",
 	"PDV_TITLE_OH": "Opening hours",

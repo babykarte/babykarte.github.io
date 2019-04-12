@@ -9,15 +9,12 @@ var refDe = {"site-map": {
 	"PDV_UNNAME": "Kein Name",
 	"PDV_STREET_UNKNOWN": "Straßenname unbekannt",
 	"PDV_ADDRESS_UNKNOWN": "Adresse unbekannt",
-<<<<<<< HEAD
 	"PDV_COMMUNE_UNKNOWN": "Kommune unbekannt",
 	"PDV_STREET_UNKNOWN": "Straße unbekannt",
 	"PDV_HOUSENUMBER_UNKNOWN": "hausnummer unbekannt",
 	"PDV_ZIPCODE_UNKNOWN": "Postleitzahl unbekannt",
-=======
 	"PDV_HOUSENUMBER_UNKNOWN": "?",
 	"PDV_COMMUNE_UNKNOWN": "?",
->>>>>>> 88f8a4619614b2a3ff89bc708b7eee868992c6eb
 	"PDV_TITLE_HOME": "Allgemein",
 	"PDV_TITLE_BABY": "Babytauglichkeit",
 	"PDV_TITLE_OH": "Öffnungszeiten",
