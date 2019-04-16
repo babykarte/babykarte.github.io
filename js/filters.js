@@ -89,36 +89,13 @@ function setFilter(id) {
 	triggerActivationOfFilters();
 }
 function initFilters() {
-	//Creates the list of the filters for the user so he/she can (un)check.
-	var oac = document.getElementById("filtersGround");
-	if (oac == null) {
-		return 0;
-	}
-	oac.innerHTML = "";
-	for (var id in filter) { //Go throw the list of our filters.
+	var output = "";
+	var filtersGround = document.getElementById("filtersGround");
+	for (var id in filter) {
 		var fltr = filter[id];
-		var label = document.createElement("label"); //Creates the surrounding container of checkbox and human readable name.
-        var checkbox = document.createElement("input"); //Creates the checkbox itself.
-        var span = document.createElement("span"); //Needed to have 'title' attribut supported
-        var text = document.createTextNode(getText().filtername[id]); //The text inside the 'span' element.
-        var color = document.createElement("span");
-        color.style.color = fltr.color.code;
-        color.style.fontWeight = "bold";
-        color.style.fontSize = "16px";
-        color.innerHTML = "&#9632; ";
-        checkbox.type = "checkbox";
-        checkbox.id = "filter" + id;
-        checkbox.setAttribute("onclick", "setFilter(" + id + ")"); //Add function 'setFilter(id)'.
-        if (id in activeFilter) {
-        	checkbox.checked = true;
-        }
-        span.setAttribute("title", "Filter: " + getText().filtername[id]); //Adds the title
-        label.appendChild(checkbox); //Assigns the checkbox to the text node.
-        label.appendChild(color);
-        span.appendChild(text); //Adds the human readable name of the filter to element 'span'
-        label.appendChild(span); //Adds the 'span' element to the surrounding container. 
-        oac.appendChild(label); //Finally adds the container itself to the filter list and displays it to the user.
+		output += "<label><input id='filter" + String(id) + "' onclick='setFilter(" + String(id) + ")' type='checkbox'><span style='color:" + fltr.color.code + ";font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().filtername[id]) + "</span></label>"
 	}
+	filtersGround.innerHTML = output;
 }
 function osmExpression(poi, value) {
 	var key, content, result;

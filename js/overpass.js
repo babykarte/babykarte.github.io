@@ -1,5 +1,5 @@
 var zoomLevel = "";
-var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"}
+var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"};
 var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],
 					"children": {"female" : {"values": ["yes", "no", undefined]},
 								"male" : {"values": ["yes", "no", undefined]},
@@ -24,7 +24,7 @@ var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "
 								"male" : {"values": ["yes", "no", undefined]}
 								}
 							}
-				}
+				};
 function locationFound(e) {
 	//Fires the notification that Babykarte shows the location of the user.
 	showGlobalPopup(getText().LOCATING_SUCCESS);
@@ -141,57 +141,45 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 			maxWest = west_new;
 		}
 	}
-	filter[fltr].coordinates.current.north = north_new;
-	filter[fltr].coordinates.current.south = south_new;
-	filter[fltr].coordinates.current.west = west_new;
-	filter[fltr].coordinates.current.east = east_new;
+	setCoordinatesOfFilter(fltr, {"south": south_new, "west": west_new, "north": north_new, "east": east_new}, ["current"]);
 	if (loadingAllowed) {
 		var dict = {};
 		dict[fltr] = true;
-		filter[fltr].coordinates.max.south = maxSouth;
-		filter[fltr].coordinates.max.west = maxWest;
-		filter[fltr].coordinates.max.north = maxNorth;
-		filter[fltr].coordinates.max.east = maxEast;
+		setCoordinatesOfFilter(fltr, {"south": maxSouth, "west": maxWest, "north": maxNorth, "east": maxEast}, ["max"]);
 		if (south_new == 0) {
 			south_new = map.getBounds().getSouth();
 		}
-		/*toggleLayers(fltr, 0);
-		filter[fltr].layers = [];*/
 		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
 }
-function setCoordinates(fltr) {
-	filter[fltr].usedBefore = true;
-	filter[fltr].coordinates.current.south = map.getBounds().getSouth();
-	filter[fltr].coordinates.current.west = map.getBounds().getWest();
-	filter[fltr].coordinates.current.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.current.east = map.getBounds().getEast();
-	filter[fltr].coordinates.max.south = map.getBounds().getSouth();
-	filter[fltr].coordinates.max.west = map.getBounds().getWest();
-	filter[fltr].coordinates.max.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.max.east = map.getBounds().getEast();
+function setCoordinatesOfFilter(fltr, values, entries=["current", "max"]) {
+	for (var value in values) {
+		for (var i in entries) {
+			filter[fltr].coordinates[entries[i]][value] = values[value];
+		}
+	}
 }
 function resetFilter(fltr) {
+	var values = {"south": 0, "west": 0, "north": 0, "east": 0}
+	toggleLayers(fltr, 0);
 	filter[fltr].usedBefore = true;
-	filter[fltr].coordinates.current.south = 0;
-	filter[fltr].coordinates.current.west = 0;
-	filter[fltr].coordinates.current.north = 0;
-	filter[fltr].coordinates.current.east = 0;
-	filter[fltr].coordinates.max.south = 0;
-	filter[fltr].coordinates.max.west = 0;
-	filter[fltr].coordinates.max.north = 0;
-	filter[fltr].coordinates.max.east = 0;
+	setCoordinatesOfFilter(fltr, values);
 	filter[fltr].layers = [];
 }
 function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
 	//Adds filter compactibility to locateNewArea() function.
+	var values = {"south": map.getBounds().getSouth(), "west": map.getBounds().getWest(), "north": map.getBounds().getNorth(), "east": map.getBounds().getEast()};
 	var url = "";
 	var result = "";
 	for (var fltr in activeFilter) {
 		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
-		if (!filter[fltr].usedBefore) { setCoordinates(fltr); }
+		if (!filter[fltr].usedBefore) {
+			//setCoordinates(fltr);
+			filter[fltr].usedBefore = true;
+			setCoordinatesOfFilter(fltr, values);
+		}
 		if (result) {
 			url += result
 		}
@@ -208,8 +196,6 @@ function onMapZoom() {
 	if (zoomLevel > newZoomLevel) {
 		//zoom out
 		for (var fltr in activeFilter) {
-			toggleLayers(fltr, 0);
-			filter[fltr].usedBefore = false;
 			resetFilter(fltr);
 		}
 	}
@@ -456,7 +442,6 @@ map.on("moveend", onMapMove);
 map.on("zoomend", onMapZoom);
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 progressbar();
