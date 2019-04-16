@@ -1,24 +1,29 @@
 var zoomLevel = "";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"}
 var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],
-				"children": {"female" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"male" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"unisex": {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"fee" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"description": {"values": [undefined, "*"]}
-							}
-						},
+					"children": {"female" : {"values": ["yes", "no", undefined]},
+								"male" : {"values": ["yes", "no", undefined]},
+								"unisex": {"values": ["yes", "no", undefined]},
+								"fee" : {"values": ["yes", "no", undefined, "*"]},
+								"description": {"values": [undefined, "*"]}
+								}
+							},
 				"highchair": {"values": ["yes", "no", undefined, "*"]},
 				"stroller": {"values": ["yes", "limited", "no", undefined],
-							"children": {"description": {"values" : [undefined, "*"]}}
+					"children": {"description": {"values" : [undefined, "*"]}}
 							},
 				"kids_area": {"values": ["yes", "no", undefined],
-				"children": {"indoor" :  {"values": ["yes", "no", undefined]},
-							"outdoor": {"values": ["yes", "no", undefined]},
-							"supervised": {"values": ["yes", "no", undefined]},
-							"fee": {"values": ["yes", "no", undefined]}
+					"children": {"indoor" :  {"values": ["yes", "no", undefined]},
+								"outdoor": {"values": ["yes", "no", undefined]},
+								"supervised": {"values": ["yes", "no", undefined]},
+								"fee": {"values": ["yes", "no", undefined]}
+								}
+							},
+				"baby_feeding": {"values": ["yes", "no", "room", undefined],
+					"children": {"female" : {"values": ["yes", "no", undefined]},
+								"male" : {"values": ["yes", "no", undefined]}
+								}
 							}
-						}
 				}
 function locationFound(e) {
 	//Fires the notification that Babykarte shows the location of the user.
@@ -274,18 +279,6 @@ function toggleTab(bla, id) {
 function addrTab(poi, prefix , condition, symbol) {
 	return "<div class='grid-container'><a target='_blank' href='" + prefix  + eval(condition) + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + eval(condition) + "'>" + eval(condition) + "</a></div>\n";
 }
-function babyTab_old(poi, colorcode, truecode, title, items) {
-	truecode = true;
-	title = "Changing table available";
-	console.log(colorcode);
-	if (truecode) {
-		console.log(`<details class=\"${eval(colorcode)}'"><summary>${eval(title)}</summary><ul>\n${eval(items)}\n</ul></details>`);
-		return `<details class=\"${eval(colorcode)}\"><summary>${eval(title)}</summary><ul>\n${eval(items)}\n</ul></details>`;
-	} else {
-		console.log(`<ul>\n<li class=\"${eval(colorcode)}\">${eval(title)}</li><ul>\n${eval(items)}</ul>`);
-		return `<ul>\n<li class=\"${eval(colorcode)}\">${eval(title)}</li><ul>\n${eval(items)}</ul>`;
-	}
-}
 function babyTab_intern(poi, tag, values, data) {
 	for (var i in values) {
 		var title;
@@ -447,7 +440,7 @@ function getStateFromHash() {
 	}
 }
 function requestLocation() {
-	map.locate({setView: true});
+	map.locate({setView: true, zoom: zoomLevel});
 }
 //init map
 progressbar(30);
