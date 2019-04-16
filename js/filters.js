@@ -19,20 +19,21 @@ var profiles = {default: {iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor:
 "violetMarker": {iconUrl: "/markers/marker-violet.svg", code: "#7a00b7ff"},
 "lightvioletMarker": {iconUrl: "/markers/marker-lightviolet.svg", code: "#dc1369"}
 };
+var filter_defaultValues = {"active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false};
 var filter = { //The filters, the query they trigger, their names and technical description as dictionary (JSON)
-0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.redMarker, "address" : "health paediatrics"},
-1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.darkredMarker, "address" : "health midwife"},
-2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightredMarker, "address" : "health birth"},
-3: {"query": {"node|way": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.greenMarker, "address" : "activity playground"},
-4: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"name\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.darkgreenMarker, "address" : "activity park"},
-5: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.blueMarker, "address" : "shop baby_goods"},
-6: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.darkblueMarker, "address" : "shop toys"},
-7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightblueMarker, "address" : "shop clothes"},
-8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.orangeMarker, "address" : "childcare kindergarten"},
-9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.yellowMarker, "address" : "activity zoo"},
-10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightgreyMarker, "address" : "childcare diaper"},
-11: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.violetMarker, "address" : "eat cafe"},
-12: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightvioletMarker, "address" : "eat restaurant"}
+0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]},  "color": profiles.redMarker, "address" : "health paediatrics"},
+1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "address" : "health midwife"},
+2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "address" : "health birth"},
+3: {"query": {"node|way": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]"]},  "color": profiles.greenMarker, "address" : "activity playground"},
+4: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"name\"]"]},  "color": profiles.darkgreenMarker, "address" : "activity park"},
+5: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]},  "color": profiles.blueMarker, "address" : "shop baby_goods"},
+6: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]},  "color": profiles.darkblueMarker, "address" : "shop toys"},
+7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]},  "color": profiles.lightblueMarker, "address" : "shop clothes"},
+8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "address" : "childcare kindergarten"},
+9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "address" : "activity zoo"},
+10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "address" : "childcare diaper"},
+11: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]},  "color": profiles.violetMarker, "address" : "eat cafe"},
+12: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]},  "color": profiles.lightvioletMarker, "address" : "eat restaurant"}
 };
 function triggerActivationOfFilters() {
 	clearTimeout(timerForFilter);
@@ -78,13 +79,9 @@ function setFilter(id) {
 	if (filter[id].active) {
 		//The filter is currently active, deactivate it because the user unchecked it.
 		filter[id].active = false;
-		//toggleLayers(id, 0) //Removes the POIs belonging to the filter from the map.
-		//delete activeFilter[id];
 	} else {
 		//The filter is deactivated, activate it because the user checked it.
 		filter[id].active = true;
-		//activeFilter[id] = true;
-		//toggleLayers(id, 1) //Adds the POIs belonging to the filter to the map.
 	}
 	triggerActivationOfFilters();
 }
@@ -92,6 +89,9 @@ function initFilters() {
 	var output = "";
 	var filtersGround = document.getElementById("filtersGround");
 	for (var id in filter) {
+		if (filter[id].layers == undefined) {
+			filter[id] = $.extend(true, filter[id], filter_defaultValues);
+		}
 		var fltr = filter[id];
 		output += "<label><input id='filter" + String(id) + "' onclick='setFilter(" + String(id) + ")' type='checkbox'><span style='color:" + fltr.color.code + ";font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().filtername[id]) + "</span></label>"
 	}
@@ -137,7 +137,7 @@ function groupIntoLayers(poi) {
 			type = query[type]; //Instead of its query name it gets the content of the type.
 			name = getText().filtertranslations[type[0]];
 			if (osmExpression(poi, type[0])) {
-				marker = L.icon(Object.assign({}, filter[fltr].color, profiles.default));
+				marker = L.icon($.extend(true, filter[fltr].color, profiles.default));
 				marker = L.marker([poi.lat, poi.lon], {icon: marker});
 				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
 				marker.name = name || getText().filtername[fltr];
@@ -146,7 +146,7 @@ function groupIntoLayers(poi) {
 			}
 		}
 	}
-	marker = L.marker([poi.lat, poi.lon], {icon: L.icon(Object.assign({}, profiles.defaultMarker, profiles.default))});
+	marker = L.marker([poi.lat, poi.lon], {icon: L.icon($.extend(true, profiles.defaultMarker, profiles.default))});
 	marker.address = "";
 	marker.name = "";
 	return marker;
