@@ -85,15 +85,34 @@ function setFilter(id) {
 	}
 	triggerActivationOfFilters();
 }
+function setAllFilters() {
+	var checkbox = document.getElementById("setFilters");
+	if (checkbox.checked) { //Activate all filters
+		for (var i in filter) {
+			if (!filter[i].active) {
+				setFilter(i);
+				document.getElementById("filter" + i).checked = true;
+			}
+		}
+	} else { //Deactivate all filters
+		for (var i in filter) {
+			if (filter[i].active) {
+				setFilter(i);
+				document.getElementById("filter" + i).checked = false;
+			}
+		}
+	}
+}
 function initFilters() {
 	var output = "";
 	var filtersGround = document.getElementById("filtersGround");
+	output += "<label style='color:#007399;'><input id='setFilters' onclick='setAllFilters()' type='checkbox'><span style='color:white;font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().FLTR_SELECTALL) + "</span></label>";
 	for (var id in filter) {
 		if (filter[id].layers == undefined) {
 			filter[id] = $.extend(true, filter[id], filter_defaultValues);
 		}
 		var fltr = filter[id];
-		output += "<label><input id='filter" + String(id) + "' onclick='setFilter(" + String(id) + ")' type='checkbox'><span style='color:" + fltr.color.code + ";font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().filtername[id]) + "</span></label>"
+		output += "<label><input id='filter" + String(id) + "' onclick='setFilter(" + String(id) + ")' type='checkbox'><span style='color:" + fltr.color.code + ";font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().filtername[id]) + "</span></label>";
 	}
 	filtersGround.innerHTML = output;
 }
