@@ -325,24 +325,28 @@ function babyTab(poi) {
 	}
 	return output
 }
-function loadPOIS(e, url) {
+function loadPOIS(e, post) {
+	var url = "https://overpass-api.de/api/interpreter";
 	hideFilterListOnMobile();
 	progressbar(50);
 	//Main function of POI loading.
 	//Handles connection to OSM Overpass server and parses the response into beautiful looking details views for each POI
-	if (!url) {
-		//No url was specified, because none of the filter functions called it.
-		var result = locateNewAreaBasedOnFilter();
-		if (!result) {
+	if (!post) {
+		//No data to send was specified, because none of the filter functions called it.
+		post = locateNewAreaBasedOnFilter();
+		if (!post) {
 			progressbar();
 			return 0;
 		}
-		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + result + "out body center;";
-	} else {
-		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + url + "out body center;";
 	}
 	//Connect to OSM server
-	$.get(url, function (osmDataAsJson) {
+	post = "[out:json][timeout:15];" + post + "out body center;";
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: post,
+		fail: function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();},
+		success: function (osmDataAsJson) {
 		//Go throw all elements (ways, relations, nodes) sent by Overpass
 		for (var poi in osmDataAsJson.elements) {
 			var marker;
@@ -405,10 +409,7 @@ function loadPOIS(e, url) {
 			}
 		}
 		progressbar();
-	}).fail(function() {
-		showGlobalPopup(getText().LOADING_FAILURE);
-		progressbar();
-	});
+	}});
 }
 function getStateFromHash() {
 	var hash = location.hash;
