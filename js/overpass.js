@@ -402,8 +402,9 @@ function loadPOIS(e, post) {
 			popupContent_header += "</div>";
 			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + getText().LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + getText().LNK_OSM_REPORT + "</a>";;
 			marker.bindPopup(marker.popupContent);
-			//Show marker on map
-			marker.addTo(map);
+			//Add marker to cluster
+			cluster.addLayer(marker);
+			map.addLayer(cluster);
 			if (poi.lat == saved_lat && poi.lon == saved_lon) {
 				addrTrigger_intern(poi, marker);
 			}
@@ -428,12 +429,11 @@ function getStateFromHash() {
 		map.setView([saved_lat, saved_lon], zoomLevel);
 	}
 }
-function requestLocation() {
-	map.locate({setView: true, zoom: zoomLevel});
-}
+function requestLocation() {map.locate({setView: true, zoom: zoomLevel});}
+function progress(added, total, time) {console.log(1);/*progressbar(Math.round(added/total*100));*/}
 //init map
 progressbar(30);
-var map = L.map('map')
+var map = L.map('map');
 map.options.maxZoom = 19;
 map.options.minZoom = 10;
 map.setView([saved_lat, saved_lon], 15);
@@ -443,6 +443,15 @@ map.on("locationerror", locationError);
 map.on("click", function(e) {location.hash = String(map.getZoom()) + "&" + String(e.latlng.lat) + "&" + String(e.latlng.lng);})
 map.on("moveend", onMapMove);
 map.on("zoomend", onMapZoom);
+var cluster = L.markerClusterGroup({
+		showCoverageOnHover: false,
+		spiderfyOnMaxZoom: false,
+		chunkedLoading: true,
+		disableClusteringAtZoom: 15,
+		zoomToBoundsOnClick: true,
+		removeOutsideVisibleBounds: true,
+		chunkProgress: progress
+});
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

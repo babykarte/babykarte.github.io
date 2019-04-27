@@ -46,6 +46,7 @@ function toggleLayers(id, toggle) {
 			for (var layer in filter[id].layers) {
 				//Removes every single POI that belongs to the filter.
 				filter[id].layers[layer].removeFrom(map);
+				cluster.refreshClusters(filter[id].layers);
 			}
 		}
 	} else {
@@ -54,6 +55,7 @@ function toggleLayers(id, toggle) {
 			for (var layer in filter[id].layers) {
 				//Adds every single POI that belongs to the filter.
 				filter[id].layers[layer].addTo(map);
+				cluster.refreshClusters(filter[id].layers);
 			}
 		}
 	}
