@@ -1,19 +1,30 @@
 var zoomLevel = "";
-var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"}
+var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"};
 var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],
-				"children": {"female" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"male" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"unisex": {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"fee" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"description": {"values": [undefined, "*"]}
-							}
-						},
+					"children": {"female" : {"values": ["yes", "no", undefined]},
+								"male" : {"values": ["yes", "no", undefined]},
+								"unisex": {"values": ["yes", "no", undefined]},
+								"fee" : {"values": ["yes", "no", undefined, "*"]},
+								"description": {"values": [undefined, "*"]}
+								}
+							},
 				"highchair": {"values": ["yes", "no", undefined, "*"]},
 				"stroller": {"values": ["yes", "limited", "no", undefined],
-							"children": {"description": {"values" : [undefined, "*"]}}
+					"children": {"description": {"values" : [undefined, "*"]}}
 							},
-				"kids_area": {"values": ["yes", "no", undefined]}
-				}
+				"kids_area": {"values": ["yes", "no", undefined],
+					"children": {"indoor" :  {"values": ["yes", "no", undefined]},
+								"outdoor": {"values": ["yes", "no", undefined]},
+								"supervised": {"values": ["yes", "no", undefined]},
+								"fee": {"values": ["yes", "no", undefined]}
+								}
+							},
+				"baby_feeding": {"values": ["yes", "no", "room", undefined],
+					"children": {"female" : {"values": ["yes", "no", undefined]},
+								"male" : {"values": ["yes", "no", undefined]}
+								}
+							}
+				};
 function locationFound(e) {
 	//Fires the notification that Babykarte shows the location of the user.
 	showGlobalPopup(getText().LOCATING_SUCCESS);
@@ -130,57 +141,45 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 			maxWest = west_new;
 		}
 	}
-	filter[fltr].coordinates.current.north = north_new;
-	filter[fltr].coordinates.current.south = south_new;
-	filter[fltr].coordinates.current.west = west_new;
-	filter[fltr].coordinates.current.east = east_new;
+	setCoordinatesOfFilter(fltr, {"south": south_new, "west": west_new, "north": north_new, "east": east_new}, ["current"]);
 	if (loadingAllowed) {
 		var dict = {};
 		dict[fltr] = true;
-		filter[fltr].coordinates.max.south = maxSouth;
-		filter[fltr].coordinates.max.west = maxWest;
-		filter[fltr].coordinates.max.north = maxNorth;
-		filter[fltr].coordinates.max.east = maxEast;
+		setCoordinatesOfFilter(fltr, {"south": maxSouth, "west": maxWest, "north": maxNorth, "east": maxEast}, ["max"]);
 		if (south_new == 0) {
 			south_new = map.getBounds().getSouth();
 		}
-		/*toggleLayers(fltr, 0);
-		filter[fltr].layers = [];*/
 		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
 }
-function setCoordinates(fltr) {
-	filter[fltr].usedBefore = true;
-	filter[fltr].coordinates.current.south = map.getBounds().getSouth();
-	filter[fltr].coordinates.current.west = map.getBounds().getWest();
-	filter[fltr].coordinates.current.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.current.east = map.getBounds().getEast();
-	filter[fltr].coordinates.max.south = map.getBounds().getSouth();
-	filter[fltr].coordinates.max.west = map.getBounds().getWest();
-	filter[fltr].coordinates.max.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.max.east = map.getBounds().getEast();
+function setCoordinatesOfFilter(fltr, values, entries=["current", "max"]) {
+	for (var value in values) {
+		for (var i in entries) {
+			filter[fltr].coordinates[entries[i]][value] = values[value];
+		}
+	}
 }
 function resetFilter(fltr) {
+	var values = {"south": 0, "west": 0, "north": 0, "east": 0}
+	toggleLayers(fltr, 0);
 	filter[fltr].usedBefore = true;
-	filter[fltr].coordinates.current.south = 0;
-	filter[fltr].coordinates.current.west = 0;
-	filter[fltr].coordinates.current.north = 0;
-	filter[fltr].coordinates.current.east = 0;
-	filter[fltr].coordinates.max.south = 0;
-	filter[fltr].coordinates.max.west = 0;
-	filter[fltr].coordinates.max.north = 0;
-	filter[fltr].coordinates.max.east = 0;
+	setCoordinatesOfFilter(fltr, values);
 	filter[fltr].layers = [];
 }
 function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
 	//Adds filter compactibility to locateNewArea() function.
+	var values = {"south": map.getBounds().getSouth(), "west": map.getBounds().getWest(), "north": map.getBounds().getNorth(), "east": map.getBounds().getEast()};
 	var url = "";
 	var result = "";
 	for (var fltr in activeFilter) {
 		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
-		if (!filter[fltr].usedBefore) { setCoordinates(fltr); }
+		if (!filter[fltr].usedBefore) {
+			//setCoordinates(fltr);
+			filter[fltr].usedBefore = true;
+			setCoordinatesOfFilter(fltr, values);
+		}
 		if (result) {
 			url += result
 		}
@@ -197,8 +196,6 @@ function onMapZoom() {
 	if (zoomLevel > newZoomLevel) {
 		//zoom out
 		for (var fltr in activeFilter) {
-			toggleLayers(fltr, 0);
-			filter[fltr].usedBefore = false;
 			resetFilter(fltr);
 		}
 	}
@@ -266,19 +263,9 @@ function toggleTab(bla, id) {
 	tab.style.display = "block";
 }
 function addrTab(poi, prefix , condition, symbol) {
-	return "<div class='grid-container'><a target='_blank' href='" + prefix  + eval(condition) + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + eval(condition) + "'>" + eval(condition) + "</a></div>\n";
-}
-function babyTab_old(poi, colorcode, truecode, title, items) {
-	truecode = true;
-	title = "Changing table available";
-	console.log(colorcode);
-	if (truecode) {
-		console.log(`<details class=\"${eval(colorcode)}'"><summary>${eval(title)}</summary><ul>\n${eval(items)}\n</ul></details>`);
-		return `<details class=\"${eval(colorcode)}\"><summary>${eval(title)}</summary><ul>\n${eval(items)}\n</ul></details>`;
-	} else {
-		console.log(`<ul>\n<li class=\"${eval(colorcode)}\">${eval(title)}</li><ul>\n${eval(items)}</ul>`);
-		return `<ul>\n<li class=\"${eval(colorcode)}\">${eval(title)}</li><ul>\n${eval(items)}</ul>`;
-	}
+	var result = eval(condition);
+	if (result.startsWith("www.") && !prefix.startsWith("mail")) {result = "http://" + result}
+	return "<div class='grid-container'><a target='_blank' href='" + prefix  + result + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + result + "'>" + result + "</a></div>\n";
 }
 function babyTab_intern(poi, tag, values, data) {
 	for (var i in values) {
@@ -338,24 +325,28 @@ function babyTab(poi) {
 	}
 	return output
 }
-function loadPOIS(e, url) {
+function loadPOIS(e, post) {
+	var url = "https://overpass-api.de/api/interpreter";
 	hideFilterListOnMobile();
 	progressbar(50);
 	//Main function of POI loading.
 	//Handles connection to OSM Overpass server and parses the response into beautiful looking details views for each POI
-	if (!url) {
-		//No url was specified, because none of the filter functions called it.
-		var result = locateNewAreaBasedOnFilter();
-		if (!result) {
+	if (!post) {
+		//No data to send was specified, because none of the filter functions called it.
+		post = locateNewAreaBasedOnFilter();
+		if (!post) {
 			progressbar();
 			return 0;
 		}
-		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + result + "out body center;";
-	} else {
-		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + url + "out body center;";
 	}
 	//Connect to OSM server
-	$.get(url, function (osmDataAsJson) {
+	post = "[out:json][timeout:15];" + post + "out body center;";
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: post,
+		fail: function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();},
+		success: function (osmDataAsJson) {
 		//Go throw all elements (ways, relations, nodes) sent by Overpass
 		for (var poi in osmDataAsJson.elements) {
 			var marker;
@@ -372,7 +363,7 @@ function loadPOIS(e, url) {
 			var details_data = {"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address>${ addrTrigger(poi, marker) }</address>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 			"baby": {"content": `${babyTab(poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"content": `${ parseOpening_hours(poi.tags["opening_hours"]) || "NODISPLAY" }`, "symbol": "/images/clock.svg", "title": getText().PDV_TITLE_OH, "active": true},
-			"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
+			"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "mailto:", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
 			"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
 			};
 			for (var entry in details_data) {
@@ -411,17 +402,15 @@ function loadPOIS(e, url) {
 			popupContent_header += "</div>";
 			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + getText().LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + getText().LNK_OSM_REPORT + "</a>";;
 			marker.bindPopup(marker.popupContent);
-			//Show marker on map
-			marker.addTo(map);
+			//Add marker to cluster
+			cluster.addLayer(marker);
+			map.addLayer(cluster);
 			if (poi.lat == saved_lat && poi.lon == saved_lon) {
 				addrTrigger_intern(poi, marker);
 			}
 		}
 		progressbar();
-	}).fail(function() {
-		showGlobalPopup(getText().LOADING_FAILURE);
-		progressbar();
-	});
+	}});
 }
 function getStateFromHash() {
 	var hash = location.hash;
@@ -440,12 +429,11 @@ function getStateFromHash() {
 		map.setView([saved_lat, saved_lon], zoomLevel);
 	}
 }
-function requestLocation() {
-	map.locate({setView: true});
-}
+function requestLocation() {map.locate({setView: true, zoom: zoomLevel});}
+function progress(added, total, time) {console.log(1);/*progressbar(Math.round(added/total*100));*/}
 //init map
 progressbar(30);
-var map = L.map('map')
+var map = L.map('map');
 map.options.maxZoom = 19;
 map.options.minZoom = 10;
 map.setView([saved_lat, saved_lon], 15);
@@ -455,9 +443,17 @@ map.on("locationerror", locationError);
 map.on("click", function(e) {location.hash = String(map.getZoom()) + "&" + String(e.latlng.lat) + "&" + String(e.latlng.lng);})
 map.on("moveend", onMapMove);
 map.on("zoomend", onMapZoom);
+var cluster = L.markerClusterGroup({
+		showCoverageOnHover: false,
+		spiderfyOnMaxZoom: false,
+		chunkedLoading: true,
+		disableClusteringAtZoom: 15,
+		zoomToBoundsOnClick: true,
+		removeOutsideVisibleBounds: true,
+		chunkProgress: progress
+});
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 progressbar();

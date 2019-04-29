@@ -19,20 +19,21 @@ var profiles = {default: {iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor:
 "violetMarker": {iconUrl: "/markers/marker-violet.svg", code: "#7a00b7ff"},
 "lightvioletMarker": {iconUrl: "/markers/marker-lightviolet.svg", code: "#dc1369"}
 };
+var filter_defaultValues = {"active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false};
 var filter = { //The filters, the query they trigger, their names and technical description as dictionary (JSON)
-0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.redMarker, "address" : "health paediatrics"},
-1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.darkredMarker, "address" : "health midwife"},
-2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightredMarker, "address" : "health birth"},
-3: {"query": {"node|way|relation": ["[\"leisure\"=\"playground\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.greenMarker, "address" : "activity playground"},
-4: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"name\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.darkgreenMarker, "address" : "activity park"},
-5: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.blueMarker, "address" : "shop baby_goods"},
-6: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.darkblueMarker, "address" : "shop toys"},
-7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightblueMarker, "address" : "shop clothes"},
-8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.orangeMarker, "address" : "childcare kindergarten"},
-9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.yellowMarker, "address" : "activity zoo"},
-10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightgreyMarker, "address" : "childcare diaper"},
-11: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.violetMarker, "address" : "eat cafe"},
-12: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]"]}, "active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false, "color": profiles.lightvioletMarker, "address" : "eat restaurant"}
+0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]},  "color": profiles.redMarker, "address" : "health paediatrics"},
+1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "address" : "health midwife"},
+2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "address" : "health birth"},
+3: {"query": {"node|way|relation": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.greenMarker, "address" : "activity playground"},
+4: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"access\"!=\"private\"]", "[\"name\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.darkgreenMarker, "address" : "activity park"},
+5: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]},  "color": profiles.blueMarker, "address" : "shop baby_goods"},
+6: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]},  "color": profiles.darkblueMarker, "address" : "shop toys"},
+7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]},  "color": profiles.lightblueMarker, "address" : "shop clothes"},
+8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "address" : "childcare kindergarten"},
+9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "address" : "activity zoo"},
+10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "address" : "childcare diaper"},
+11: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.violetMarker, "address" : "eat cafe"},
+12: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightvioletMarker, "address" : "eat restaurant"}
 };
 function triggerActivationOfFilters() {
 	clearTimeout(timerForFilter);
@@ -45,6 +46,7 @@ function toggleLayers(id, toggle) {
 			for (var layer in filter[id].layers) {
 				//Removes every single POI that belongs to the filter.
 				filter[id].layers[layer].removeFrom(map);
+				cluster.refreshClusters(filter[id].layers);
 			}
 		}
 	} else {
@@ -53,6 +55,7 @@ function toggleLayers(id, toggle) {
 			for (var layer in filter[id].layers) {
 				//Adds every single POI that belongs to the filter.
 				filter[id].layers[layer].addTo(map);
+				cluster.refreshClusters(filter[id].layers);
 			}
 		}
 	}
@@ -78,47 +81,42 @@ function setFilter(id) {
 	if (filter[id].active) {
 		//The filter is currently active, deactivate it because the user unchecked it.
 		filter[id].active = false;
-		//toggleLayers(id, 0) //Removes the POIs belonging to the filter from the map.
-		//delete activeFilter[id];
 	} else {
 		//The filter is deactivated, activate it because the user checked it.
 		filter[id].active = true;
-		//activeFilter[id] = true;
-		//toggleLayers(id, 1) //Adds the POIs belonging to the filter to the map.
 	}
 	triggerActivationOfFilters();
 }
+function setAllFilters() {
+	var checkbox = document.getElementById("setFilters");
+	if (checkbox.checked) { //Activate all filters
+		for (var i in filter) {
+			if (!filter[i].active) {
+				setFilter(i);
+				document.getElementById("filter" + i).checked = true;
+			}
+		}
+	} else { //Deactivate all filters
+		for (var i in filter) {
+			if (filter[i].active) {
+				setFilter(i);
+				document.getElementById("filter" + i).checked = false;
+			}
+		}
+	}
+}
 function initFilters() {
-	//Creates the list of the filters for the user so he/she can (un)check.
-	var oac = document.getElementById("filtersGround");
-	if (oac == null) {
-		return 0;
-	}
-	oac.innerHTML = "";
-	for (var id in filter) { //Go throw the list of our filters.
+	var output = "";
+	var filtersGround = document.getElementById("filtersGround");
+	output += "<label style='color:#007399;'><input id='setFilters' onclick='setAllFilters()' type='checkbox'><span style='color:white;font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().FLTR_SELECTALL) + "</span></label>";
+	for (var id in filter) {
+		if (filter[id].layers == undefined) {
+			filter[id] = $.extend(true, filter[id], filter_defaultValues);
+		}
 		var fltr = filter[id];
-		var label = document.createElement("label"); //Creates the surrounding container of checkbox and human readable name.
-        var checkbox = document.createElement("input"); //Creates the checkbox itself.
-        var span = document.createElement("span"); //Needed to have 'title' attribut supported
-        var text = document.createTextNode(getText().filtername[id]); //The text inside the 'span' element.
-        var color = document.createElement("span");
-        color.style.color = fltr.color.code;
-        color.style.fontWeight = "bold";
-        color.style.fontSize = "16px";
-        color.innerHTML = "&#9632; ";
-        checkbox.type = "checkbox";
-        checkbox.id = "filter" + id;
-        checkbox.setAttribute("onclick", "setFilter(" + id + ")"); //Add function 'setFilter(id)'.
-        if (id in activeFilter) {
-        	checkbox.checked = true;
-        }
-        span.setAttribute("title", "Filter: " + getText().filtername[id]); //Adds the title
-        label.appendChild(checkbox); //Assigns the checkbox to the text node.
-        label.appendChild(color);
-        span.appendChild(text); //Adds the human readable name of the filter to element 'span'
-        label.appendChild(span); //Adds the 'span' element to the surrounding container. 
-        oac.appendChild(label); //Finally adds the container itself to the filter list and displays it to the user.
+		output += "<label><input id='filter" + String(id) + "' onclick='setFilter(" + String(id) + ")' type='checkbox'><span style='color:" + fltr.color.code + ";font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().filtername[id]) + "</span></label>";
 	}
+	filtersGround.innerHTML = output;
 }
 function osmExpression(poi, value) {
 	var key, content, result;
@@ -156,30 +154,20 @@ function groupIntoLayers(poi) {
 	var name = ""
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
-		for (var type in query) { //Gets throw all the queries the filter has.
-			var length = 0;
-			var matches = 0; //Initiates the counter.
+		for (var type in query) { //Gets throw all the queries the filter has..
 			type = query[type]; //Instead of its query name it gets the content of the type.
-			length += type.length;
 			name = getText().filtertranslations[type[0]];
-			for (var vle in type) {
-				var item = "";
-				var value = type[vle];
-				if (osmExpression(poi, value)) {
-					matches += 1 //Yes
-				}
-			}
-			if (length == matches) { //Checks, if the amount of matches is equal to the amount of the matches it needs in order to have the POI grouped into this filter.
-				marker = L.icon(Object.assign({}, filter[fltr].color, profiles.default));
+			if (osmExpression(poi, type[0])) {
+				marker = L.icon($.extend(true, filter[fltr].color, profiles.default));
 				marker = L.marker([poi.lat, poi.lon], {icon: marker});
 				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
 				marker.name = name || getText().filtername[fltr];
 				marker.address = filter[fltr].address;
 				return marker;
-		}
+			}
 		}
 	}
-	marker = L.marker([poi.lat, poi.lon], {icon: L.icon(Object.assign({}, profiles.defaultMarker, profiles.default))});
+	marker = L.marker([poi.lat, poi.lon], {icon: L.icon($.extend(true, profiles.defaultMarker, profiles.default))});
 	marker.address = "";
 	marker.name = "";
 	return marker;

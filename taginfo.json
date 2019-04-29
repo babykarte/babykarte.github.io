@@ -46,4 +46,16 @@
             "description": "POIs with this tag shown on map."
         }
     ]
+"data_format": 1,
+"data_updated": "20190411T135100Z",
+"project": {
+	"name": "Babykarte",
+	"description": "OpenStreetMap-Karte mit relevanten Informationen für die Eltern von Babys und Kleinkindern (0-3 Jahre).",
+	"project_url": "https://github.com/babykarte/babykarte.github.io",
+	"doc_url": "https://wiki.openstreetmap.org/wiki/Babykarte",
+	"icon_url": "https://raw.githubusercontent.com/babykarte/babykarte.github.io/master/favicon.ico",
+	"contact_name": "Michael Brandtner",
+	"contact_email": "brandtner_michael@yahoo.de"
+	},
+	"tags": [{"key": "healthcare:speciality"}, {"key": "healthcare"}, {"key": "leisure"}, {"key": "shop"}, {"key": "amenity"}, {"key": "tourism"}, {"key": "diaper"}]
 }

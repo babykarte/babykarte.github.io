@@ -51,12 +51,11 @@ function jumpto(lat, lon, locname="") {
 	saved_lon = lon;
 	for (var id in activeFilter) {
 		//Resets all filters
-		toggleLayers(id, 0);
-		filter[id].layers = [];
-		setCoordinates(id);
+		resetFilter(id);
 	}
 	map.on("moveend", onMapMove);
-	onMapMove();
+	progressbar(50);
+	setTimeout(function() {onMapMove();}, 500);
 	showGlobalPopup(locname);
 	//$('#query-button').click();
 }

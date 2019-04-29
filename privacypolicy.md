@@ -1,4 +1,4 @@
-# Privacy Policy (v. 1)
+# Privacy Policy (v. 2)
 
 ## How user data will be treated
 We value your privacy. Because of that, Babykarte doesn't collect any user data. No cookies are being saved and no usage statistics are being generated.
@@ -8,13 +8,13 @@ The Babykarte isn't a map provider or a database but a portal. All user input wi
 The following list reveals which third parties are in use, what they are used for and where you can find their privacy policy.
 
 ## Third Parties we use
-This website is located on GitHub Servers so that Babykarte can be reached with a browser. Because of that GitHub receives some data about our users e.g. IP address, operating system and which browser is in use (see below). How GitHub threats collected data can be looked up in their [Privacy Policy](https://help.github.com/en/articles/github-privacy-statement).
+This website is located on GitHub Servers so that Babykarte can be reached with a Browser. Because of that GitHub receives some data about our users e.g. IP address, operating system and which browser is in use (see below). How GitHub threats collected data can be looked up in their [Privacy Policy](https://help.github.com/en/articles/github-privacy-statement).
 
 Komoot is used as the search engine. When you use the search field to search for a place, after the third character Babykarte will send the query and your system language to Komoot. How Komoot treats the data it gets from Babykarte can be read in their [Privacy Policy](https://www.komoot.de/privacy).
 
 When you visit the Babykarte, your browser requests some data from cache servers to reduce loading time. These servers are cache servers powered by two companies. The first one is Google and [here](https://policies.google.com/privacy#infocollect) you can find their privacy policy. The second one is DigitalOcean and has also its own [Privacy Policy](https://www.digitalocean.com/legal/privacy-policy/). Babykarte cannot control which data your browser sends to these servers.
 
-Babykarte uses data from the OpenStreetMap Community for displaying its map and other data like address, opening hours and other location data. The OpenStreetMap Foundation (St John’s Innovation Centre, Cowley Road, Cambridge, CB4 0WS, United Kingdom) hosts this data on their servers. They receive the following information from the Babykarte: Which filters are selected, user language and the coordinates of the map. Your browser might send additional data to the OpenStreetMap server like the browser's name, operating system's name etc. (see below). These servers are located in the UK and other countries. They might also store cookies in your browser that are needed for providing their services. Babykarte has no control over these connections and processing of your data by the OSMF. You can find more information in their [Privacy Policy](https://wiki.osmfoundation.org/wiki/Privacy_Policy).
+Babykarte uses data from the OpenStreetMap Community for displaying its map and other data like address, opening hours and other location data. The OpenStreetMap Foundation (St John’s Innovation Centre, Cowley Road, Cambridge, CB4 0WS, United Kingdom) (OSMF) hosts this data on their servers. They receive the following information from the Babykarte: Which filters are selected, user language and the coordinates of the map. Your browser might send additional data to the OpenStreetMap-servers like the browser's name, operating system's name etc. (see below). These servers are located in the UK and other countries. They might also store cookies in your browser that are needed for providing their services. Babykarte has no control over these connections and processing of your data by the OSMF. Find out more in their [Privacy Policy](https://wiki.osmfoundation.org/wiki/Privacy_Policy).
 
 **It's not technically possible for us to provide information about the data collected. We don't collect data by ourselves, and we don't instruct someone else to do it for us. We don't know anything about you. The third parties might collect data about you.**
 
@@ -33,7 +33,7 @@ E-mail: brandtner_michael@yahoo.de
 Responsible entity is the natural or legal person who, alone or in concert with others, decides on the purposes and means of processing personal data (such as names, e-mail addresses, etc.).
 
 ## Right to appeal at the appropriate supervisory body
-In the case of violations of the GDPR, the persons concerned have a right of appeal to a supervisory authority, in particular in the member state of their habitual residence, their place of work or the place of the alleged infringement. The right of appeal is without prejudice to any other administrative or judicial remedies.
+In the case of violations against the GDPR, the persons concerned have a right of appeal to a supervisory authority, in particular in the member state of their habitual residence, their place of work or the place of the alleged infringement. The right of appeal is without prejudice to any other administrative or judicial remedies.
 
 ## Description of user data (Definition)
 Babykarte doesn't collect user data, but it redirects it to third parties.
@@ -69,11 +69,11 @@ A cache server saves files, which are often requested by browsers. This reduces 
 
 ### Location of the user
 Your browser asks you if Babykarte should be given the permission to access your current location. If you agree, the Babykarte will jump to your geographical position where your browser assumes your location.
-The accuracy of the detected location depends on the used location mechanism. If you don't agree, the Babykarte will jump to a predefined position or to the address specified in the URL.
+The accuracy of the detected location depends on the used location mechanism. If you don't agree, locating won't work.
 
 When your browser doesn't ask you for permission to let Babykarte access your location, then you might have allowed to save your decision permanently.
 
-The Babykarte doesn't request your location in the background, it requests it only once when you visit Babykarte or when you reload it.
+The Babykarte doesn't request your location in the background, it requests it only once when you click on the desired button.
 
 ## Is this data sensible?
 Not really. Most users have enabled their used apps to update automatically or it is a default behaviour.
