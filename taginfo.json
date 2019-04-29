@@ -1,0 +1,49 @@
+{
+    "data_format": 1,
+    "data_url": "https://raw.githubusercontent.com/babykarte/babykarte.github.io/master/taginfo.json",
+    "project": {
+        "name": "Babykarte",
+        "description": "A map for parents of infants and toddlers.",
+        "project_url": "https://babykarte.github.io",
+        "doc_url": "https://wiki.openstreetmap.org/wiki/Babykarte",
+        "icon_url": "https://babykarte.github.io/favicon.ico",
+        "contact_name": "Michael Brandtner",
+        "contact_email": "brandtner_michael@yahoo.de"
+    },
+    "tags": [
+        {
+            "key": "diaper",
+            "description": "POIs with this tag shown on map. Evaluated for 'baby friendliness' tab of POI pop-ups."
+        },
+        {
+            "key": "healthcare:speciality",
+            "value": "paediatrics",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "healthcare",
+            "value": "midwife",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "healthcare",
+            "value": "birthing_center",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "leisure",
+            "value": "playground",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "leisure",
+            "value": "park",
+            "description": "POIs with this tag shown on map (when also having 'name' key)."
+        },
+        {
+            "key": "shop",
+            "value": "baby_goods",
+            "description": "POIs with this tag shown on map."
+        }
+    ]
+}
