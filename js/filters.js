@@ -24,7 +24,7 @@ var filter = { //The filters, the query they trigger, their names and technical 
 0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]},  "color": profiles.redMarker, "address" : "health paediatrics"},
 1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "address" : "health midwife"},
 2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "address" : "health birth"},
-3: {"query": {"node|way|relation": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.greenMarker, "address" : "activity playground"},
+3: {"query": {"nwr": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.greenMarker, "address" : "activity playground"},
 4: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"access\"!=\"private\"]", "[\"name\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.darkgreenMarker, "address" : "activity park"},
 5: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]},  "color": profiles.blueMarker, "address" : "shop baby_goods"},
 6: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]},  "color": profiles.darkblueMarker, "address" : "shop toys"},
@@ -46,7 +46,6 @@ function toggleLayers(id, toggle) {
 			for (var layer in filter[id].layers) {
 				//Removes every single POI that belongs to the filter.
 				filter[id].layers[layer].removeFrom(map);
-				cluster.refreshClusters(filter[id].layers);
 			}
 		}
 	} else {
@@ -55,7 +54,6 @@ function toggleLayers(id, toggle) {
 			for (var layer in filter[id].layers) {
 				//Adds every single POI that belongs to the filter.
 				filter[id].layers[layer].addTo(map);
-				cluster.refreshClusters(filter[id].layers);
 			}
 		}
 	}
@@ -151,7 +149,7 @@ function osmExpression(poi, value) {
 }
 function groupIntoLayers(poi) {
 	var marker;
-	var name = ""
+	var name = "";
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has..
