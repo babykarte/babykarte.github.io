@@ -66,8 +66,9 @@ var refEn = {"site-map": {
 		8: "Kindergartens and child care",
 		9: "Zoos",
 		10: "Changing tables",
-		11: "Cafes",
-		12: "Restaurants"
+		11: "Only changing tables accessible for men",
+		12: "Cafés",
+		13: "Restaurants"
 	},
 	"filtertranslations": {
 		"[\"healthcare\"=\"doctor\"]": "Pediatrician",

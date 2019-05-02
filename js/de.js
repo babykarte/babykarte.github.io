@@ -64,9 +64,10 @@ var refDe = {"site-map": {
 		7: "Bekleidungsgeschäfte",
 		8: "Kindertagesbetreuung",
 		9: "Zoo/Tierpark",
-		10: "Wickelplätze",
-		11: "Cafés",
-		12: "Restaurants"
+		10: "Wickeltische",
+		11: "Für Männer erreichbare Wickeltische",
+		12: "Cafés",
+		13: "Restaurants"
 	},
 	"filtertranslations": {
 		"[\"healthcare\"=\"doctor\"]": "Kinderarzt",
