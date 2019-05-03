@@ -12,37 +12,120 @@
     },
     "tags": [
         {
-            "key": "diaper",
-            "description": "POIs with this tag shown on map. Evaluated for 'baby friendliness' tab of POI pop-ups."
-        },
-        {
             "key": "healthcare:speciality",
             "value": "paediatrics",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/ff0000&text=+",
             "description": "POIs with this tag shown on map."
         },
         {
             "key": "healthcare",
             "value": "midwife",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/6b1c1c&text=+",
             "description": "POIs with this tag shown on map."
         },
         {
             "key": "healthcare",
             "value": "birthing_center",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/d25151&text=+",
             "description": "POIs with this tag shown on map."
         },
         {
             "key": "leisure",
             "value": "playground",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/00c700&text=+",
             "description": "POIs with this tag shown on map."
         },
         {
             "key": "leisure",
             "value": "park",
+            "object_types": ["way","relation"],
+            "icon_url": "https://dummyimage.com/16x16.gif/19641b&text=+",
             "description": "POIs with this tag shown on map (when also having 'name' key)."
         },
         {
             "key": "shop",
             "value": "baby_goods",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/000dff&text=+",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "shop",
+            "value": "toys",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/001369&text=+",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "shop",
+            "value": "clothes",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/3274c7&text=+",
+            "description": "POIs with this tag shown on map (when also having 'clothes=babies' or 'clothes=children' tag)."
+        },
+        {
+            "key": "clothes",
+            "value": "babies",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/3274c7&text=+",
+            "description": "POIs with this tag shown on map (when also having 'shop=clothes' tag)."
+        },
+        {
+            "key": "clothes",
+            "value": "children",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/3274c7&text=+",
+            "description": "POIs with this tag shown on map (when also having 'shop=clothes' tag)."
+        },
+        {
+            "key": "amenity",
+            "value": "kindergarten",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/d76b00&text=+",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "amenity",
+            "value": "childcare",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/d76b00&text=+",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "tourism",
+            "value": "zoo",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/ddc600&text=+",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "diaper",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/a0a0a0&text=+",
+            "description": "POIs with this tag shown on map (when not also having a value of 'no'). Evaluated for 'baby friendliness' tab of POI pop-ups."
+        },
+        {
+            "key": "diaper",
+            "value": "no",
+            "object_types": ["node","way"],
+            "description": "POIs with this tag not shown on map (if not otherwise shown)."
+        },
+        {
+            "key": "amenity",
+            "value": "cafe",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/7a00b7&text=+",
+            "description": "POIs with this tag shown on map."
+        },
+        {
+            "key": "amenity",
+            "value": "restaurant",
+            "object_types": ["node","way"],
+            "icon_url": "https://dummyimage.com/16x16.gif/dc1369&text=+",
             "description": "POIs with this tag shown on map."
         }
     ]
