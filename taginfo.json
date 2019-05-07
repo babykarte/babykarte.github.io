@@ -118,14 +118,14 @@
             "value": "yes",
             "object_types": ["node","way"],
             "icon_url": "https://dummyimage.com/16x16.gif/5c5c5c&text=+",
-            "description": "POIs with this tag on map. Evaluated for 'baby friendliness' tab of POI pop-ups."
+            "description": "POIs with this tag shown on map. Evaluated for 'baby friendliness' tab of POI pop-ups."
         },
         {
             "key": "diaper:male",
             "value": "yes",
             "object_types": ["node","way"],
             "icon_url": "https://dummyimage.com/16x16.gif/5c5c5c&text=+",
-            "description": "POIs with this tag on map. Evaluated for 'baby friendliness' tab of POI pop-ups."
+            "description": "POIs with this tag shown on map. Evaluated for 'baby friendliness' tab of POI pop-ups."
         },
         {
             "key": "amenity",
