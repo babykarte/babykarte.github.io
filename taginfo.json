@@ -114,12 +114,6 @@
             "description": "POIs with this tag shown on map (when not also having a value of 'no'). Evaluated for 'baby friendliness' tab of POI pop-ups."
         },
         {
-            "key": "diaper",
-            "value": "no",
-            "object_types": ["node","way"],
-            "description": "POIs with this tag not shown on map (if not otherwise shown)."
-        },
-        {
             "key": "diaper:unisex",
             "value": "yes",
             "object_types": ["node","way"],
