@@ -1,23 +1,23 @@
 var activeFilter = {}; //Dictionary of the current selected filters
-var timerForFilter;
-var profiles = {default: {iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40]}, //Colour profiles for the filters
-"defaultMarker": {iconUrl: "/markers/marker.svg", code: "#004387ff"},
-"redMarker": {iconUrl: "/markers/marker-red.svg", code: "#ff0000"},
-"darkredMarker": {iconUrl: "/markers/marker-darkred.svg", code: "#6b1c1cff"},
-"lightredMarker": {iconUrl: "/markers/marker-lightred.svg", code: "#d25151ff"},
-"greenMarker": {iconUrl: "/markers/marker-green.svg", code: "#00c700"},
-"darkgreenMarker": {iconUrl: "/markers/marker-darkgreen.svg", code: "#19641bff"},
-"blueMarker": {iconUrl: "/markers/marker-blue.svg", code: "#000dff"},
-"darkblueMarker": {iconUrl: "/markers/marker-darkblue.svg", code: "#001369"},
-"lightblueMarker": {iconUrl: "/markers/marker-lightblue.svg", code: "#3274c7ff"},
-"orangeMarker": {iconUrl: "/markers/marker-orange.svg", code: "#d76b00ff"},
-"yellowMarker": {iconUrl: "/markers/marker-yellow.svg", code: "#ddc600ff"},
-"darkyellowMarker": {iconUrl: "/markers/marker-darkyellow.svg", code: "#877800ff"},
-"lightyellowMarker": {iconUrl: "/markers/marker-lightyellow.svg", code: "#ffe92cff"},
-"greyMarker": {iconUrl: "/markers/marker-grey.svg", code: "#5c5c5cff"},
-"lightgreyMarker": {iconUrl: "/markers/marker-lightgrey.svg", code: "#a0a0a0ff"},
-"violetMarker": {iconUrl: "/markers/marker-violet.svg", code: "#7a00b7ff"},
-"lightvioletMarker": {iconUrl: "/markers/marker-lightviolet.svg", code: "#dc1369"}
+var timerForFilter, markerCode;
+var profiles = { //Colour profiles for the filters
+"defaultMarker": {code: "#004387ff"},
+"redMarker": {code: "#ff0000"},
+"darkredMarker": {code: "#6b1c1cff"},
+"lightredMarker": {code: "#d25151ff"},
+"greenMarker": {code: "#00c700"},
+"darkgreenMarker": {code: "#19641bff"},
+"blueMarker": {code: "#000dff"},
+"darkblueMarker": {code: "#001369"},
+"lightblueMarker": {code: "#3274c7ff"},
+"orangeMarker": {code: "#d76b00ff"},
+"yellowMarker": {code: "#ddc600ff"},
+"darkyellowMarker": {code: "#877800ff"},
+"lightyellowMarker": {code: "#ffe92cff"},
+"greyMarker": {code: "#5c5c5cff"},
+"lightgreyMarker": {code: "#a0a0a0ff"},
+"violetMarker": {code: "#7a00b7ff"},
+"lightvioletMarker": {code: "#dc1369"}
 };
 var filter_defaultValues = {"active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false};
 var filter = { //The filters, the query they trigger, their names and technical description as dictionary (JSON)
@@ -148,6 +148,14 @@ function osmExpression(poi, value) {
 		return result;
 	}
 }
+function loadMarker() {
+$.ajax({
+		url: "/markers/marker.svg",
+		dataType: "text",
+		fail: function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();},
+		success: function (data) {markerCode = data;}
+		})
+}
 function groupIntoLayers(poi) {
 	var marker;
 	var name = "";
@@ -157,7 +165,7 @@ function groupIntoLayers(poi) {
 			type = query[type]; //Instead of its query name it gets the content of the type.
 			name = getText().filtertranslations[type[0]];
 			if (osmExpression(poi, type[0])) {
-				marker = L.icon($.extend(true, filter[fltr].color, profiles.default));
+				marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode.replace("#004387", filter[fltr].color.code) + "</svg>"});
 				marker = L.marker([poi.lat, poi.lon], {icon: marker});
 				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
 				marker.name = name || getText().filtername[fltr];
@@ -166,8 +174,10 @@ function groupIntoLayers(poi) {
 			}
 		}
 	}
-	marker = L.marker([poi.lat, poi.lon], {icon: L.icon($.extend(true, profiles.defaultMarker, profiles.default))});
+	marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode + "</svg>"});
+	marker = L.marker([poi.lat, poi.lon], {icon: marker});
 	marker.address = "";
 	marker.name = "";
 	return marker;
 }
+loadMarker();
