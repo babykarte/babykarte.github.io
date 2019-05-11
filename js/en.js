@@ -87,6 +87,7 @@ var refEn = {"site-map": {
 		"[\"amenity\"=\"cafe\"]": "Cafe",
 		"[\"amenity\"=\"restaurant\"]": "Restaurant",
 		"[\"amenity\"~\"kindergarten|childcare\"]" : "Kindergarten",
+		"[\"diaper:male\"=\"yes\"]": "Changing table reachable for men"
 	}
 },
 "site-impress" : {

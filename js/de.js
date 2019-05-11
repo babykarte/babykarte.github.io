@@ -86,6 +86,7 @@ var refDe = {"site-map": {
 		"[\"amenity\"=\"cafe\"]": "Café",
 		"[\"amenity\"=\"restaurant\"]": "Restaurant",
 		"[\"amenity\"~\"kindergarten|childcare\"]" : "Kindertagesstätte",
+		"[\"diaper:male\"=\"yes\"]": "Wickelplatz erreichbar für Männer"
 		
 	}
 },
