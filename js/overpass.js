@@ -431,8 +431,6 @@ function requestLocation() {map.locate({setView: true, zoom: zoomLevel});}
 //init map
 progressbar(30);
 var map = L.map('map');
-map.options.maxZoom = 19;
-map.options.minZoom = 10;
 map.setView([saved_lat, saved_lon], 15);
 getStateFromHash();
 map.on("locationfound", locationFound);
@@ -442,6 +440,8 @@ map.on("moveend", onMapMove);
 map.on("zoomend", onMapZoom);
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  minZoom: 10,
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 progressbar();
