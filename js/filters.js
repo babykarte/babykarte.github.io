@@ -32,7 +32,7 @@ var filter = { //The filters, the query they trigger, their names and technical 
 8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "address" : "childcare kindergarten"},
 9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "address" : "activity zoo"},
 10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "address" : "childcare diaper"},
-11: {"query": {"node|way_": ["[\"diaper:male\"=\"yes\"]"], "node|way": ["[\"diaper:unisex\"=\"yes\"]"]},  "color": profiles.greyMarker, "address" : "childcare diaper"},
+11: {"query": {"node|way_": ["[\"diaper:male\"=\"yes\"]"], "node|way": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"]},  "color": profiles.greyMarker, "address" : "childcare diaper"},
 12: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.violetMarker, "address" : "eat cafe"},
 13: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightvioletMarker, "address" : "eat restaurant"}
 };
