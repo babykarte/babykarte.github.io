@@ -5,12 +5,23 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   id="svg8"
+   width="31"
+   height="48"
+   viewBox="0 0 4.96 8.1951219"
    version="1.1"
-   viewBox="0 0 4 7"
-   height="41px"
-   width="25px">
-  <defs id="defs2" />
+   id="svg8">
+  <defs
+     id="defs2">
+    <radialGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,2.0016736,0,-294.22541)"
+       r="1.955163"
+       fy="293.73383"
+       fx="1.7396395"
+       cy="293.73383"
+       cx="1.7396395"
+       id="radialGradient12741" />
+  </defs>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -24,20 +35,24 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(0,-290)"
-     id="layer1">
+     style="stroke:url(#radialGradient12741);stroke-opacity:1;stroke-width:0.4194878;stroke-miterlimit:4;stroke-dasharray:none"
+     id="layer1"
+     transform="translate(0.68220339,-289.36845)">
     <path
-       id="marker-body"
        transform="matrix(0.26458333,0,0,0.26458333,0,290)"
-       d="M 6.5859375 0.11328125 A 6.5858432 5.1836473 0 0 0 0 5.296875 A 6.5858432 5.1836473 0 0 0 0.28710938 6.7949219 L 0.26953125 6.7949219 L 6.4824219 26.322266 L 12.824219 6.9414062 A 6.5858432 5.1836473 0 0 0 13.171875 5.296875 A 6.5858432 5.1836473 0 0 0 6.5859375 0.11328125 z "
-       style="opacity:1;fill:#004387
-;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:24.42499352;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <ellipse
-       ry="0.45514834"
-       rx="0.49925774"
-       cy="291.44275"
-       cx="1.7620873"
-       id="path4496"
-       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.46244717;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="opacity:1;fill:#004387;fill-opacity:1;fill-rule:nonzero;stroke:url(#radialGradient12741);stroke-width:1.58546573;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 6.5859375,0.11328125 A 6.5858432,5.1836473 0 0 0 0,5.296875 6.5858432,5.1836473 0 0 0 0.28710938,6.7949219 H 0.26953125 L 6.4824219,26.322266 12.824219,6.9414062 A 6.5858432,5.1836473 0 0 0 13.171875,5.296875 6.5858432,5.1836473 0 0 0 6.5859375,0.11328125 Z"
+       id="marker-body" />
   </g>
+  <path
+     d="M 4.1409651,2.8725949 3.0111698,2.0144881 2.2187983,3.9758578 2.6857804,2.636189 0.57555069,2.4886954 1.9939569,2.5188414 1.4821347,0.46631568 1.8917758,1.8246157 3.685682,0.70357862 2.5204479,1.5129082 Z"
+     id="path9576"
+     style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.20487805;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <ellipse
+     ry="0.68915957"
+     rx="0.69450188"
+     cy="0.69984436"
+     cx="0.54952967"
+     id="path4485"
+     style="opacity:1;fill:rgba(255, 255, 255, 0);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.20487806;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
 </svg>

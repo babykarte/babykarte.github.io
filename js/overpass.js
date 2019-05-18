@@ -26,22 +26,22 @@ var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "
 							}
 				};
 var rating = {"diaper": {"multiplicator": 4,		// diaper=* 4
-						"values"
+						"values" :
 							{"yes": 2,				//     yes 2
 							"no": 2}				//     no  2
-						}
+						},
 				"highchair": {"multiplicator": 4,	// highchair=* 4  (POIs where you can get meal or something simliar)
-						"values" 
+						"values" :
 							{"yes": 2,				//     yes 2
 							"no": 2}				//     no  2
-						}
+						},
 				"kids_area": {"multiplicator": 2,	// kids_area=* 2
-						"values" 
+						"values" :
 							{"yes": 2,				//     yes 2
 							"no": 2}				//     no  2
-						}
+						},
 				"stroller": {"multiplicator": 1,	// stroller=* 1
-						"values" 
+						"values" :
 							{"yes": 2,				//     yes 3
 							"no": 2,				//     no  3
 							"limited": 1}			//     limited 1 (green)
