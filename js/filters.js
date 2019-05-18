@@ -1,22 +1,22 @@
 var activeFilter = {}; //Dictionary of the current selected filters
 var timerForFilter, markerCode;
 var profiles = { //Colour profiles for the filters
-"defaultMarker": {code: "#004387ff"},
+"defaultMarker": {code: "#004387"},
 "redMarker": {code: "#ff0000"},
-"darkredMarker": {code: "#6b1c1cff"},
-"lightredMarker": {code: "#d25151ff"},
+"darkredMarker": {code: "#6b1c1c"},
+"lightredMarker": {code: "#d25151"},
 "greenMarker": {code: "#00c700"},
-"darkgreenMarker": {code: "#19641bff"},
-"blueMarker": {code: "#000dff"},
+"darkgreenMarker": {code: "#19641b"},
+"blueMarker": {code: "#000d"},
 "darkblueMarker": {code: "#001369"},
-"lightblueMarker": {code: "#3274c7ff"},
-"orangeMarker": {code: "#d76b00ff"},
-"yellowMarker": {code: "#ddc600ff"},
-"darkyellowMarker": {code: "#877800ff"},
-"lightyellowMarker": {code: "#ffe92cff"},
-"greyMarker": {code: "#5c5c5cff"},
-"lightgreyMarker": {code: "#a0a0a0ff"},
-"violetMarker": {code: "#7a00b7ff"},
+"lightblueMarker": {code: "#3274c7"},
+"orangeMarker": {code: "#d76b00"},
+"yellowMarker": {code: "#ddc600"},
+"darkyellowMarker": {code: "#877800"},
+"lightyellowMarker": {code: "#ffe92c"},
+"greyMarker": {code: "#5c5c5c"},
+"lightgreyMarker": {code: "#a0a0a0"},
+"violetMarker": {code: "#7a00b7"},
 "lightvioletMarker": {code: "#dc1369"}
 };
 var filter_defaultValues = {"active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false};
