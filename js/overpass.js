@@ -25,6 +25,28 @@ var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "
 								}
 							}
 				};
+var rating = {"diaper": {"multiplicator": 4,		// diaper=* 4
+						"values"
+							{"yes": 2,				//     yes 2
+							"no": 2}				//     no  2
+						}
+				"highchair": {"multiplicator": 4,	// highchair=* 4  (POIs where you can get meal or something simliar)
+						"values" 
+							{"yes": 2,				//     yes 2
+							"no": 2}				//     no  2
+						}
+				"kids_area": {"multiplicator": 2,	// kids_area=* 2
+						"values" 
+							{"yes": 2,				//     yes 2
+							"no": 2}				//     no  2
+						}
+				"stroller": {"multiplicator": 1,	// stroller=* 1
+						"values" 
+							{"yes": 2,				//     yes 3
+							"no": 2,				//     no  3
+							"limited": 1}			//     limited 1 (green)
+						}
+			};
 function locationFound(e) {
 	//Fires the notification that Babykarte shows the location of the user.
 	showGlobalPopup(getText().LOCATING_SUCCESS);
@@ -378,9 +400,7 @@ function loadPOIS(e, post) {
 					var tmp = "";
 					var result = "";
 					result += content[i];
-					if (result.indexOf("NODISPLAY") == -1) {
-						//result = result.replace(new RegExp("</ul>\n<ul>", "g"), "");
-					} else {result = ""}
+					if (result.indexOf("NODISPLAY") > -1) {result = ""}
 					tabContent += result;
 				}
 				if (tabContent == "") {
