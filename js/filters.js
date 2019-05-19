@@ -19,8 +19,8 @@ var profiles = { //Colour profiles for the filters
 "violetMarker": {code: "#7a00b7"},
 "lightvioletMarker": {code: "#dc1369"}
 };
-var filter_defaultValues = {"active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false};
-var filter = { //The filters, the query they trigger, their names and technical description as dictionary (JSON)
+var filter_defaultValues = {"active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false}; //its active state, markers belonging to that filter, the boundings of a filter (area downloaded and cached)
+var filter = { //The filters, the query they trigger, their colour profile, their address and technical description as dictionary (JSON)
 0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]},  "color": profiles.redMarker, "address" : "health paediatrics"},
 1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "address" : "health midwife"},
 2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "address" : "health birth"},
@@ -38,19 +38,20 @@ var filter = { //The filters, the query they trigger, their names and technical 
 };
 function triggerActivationOfFilters() {
 	clearTimeout(timerForFilter);
-	timerForFilter = setTimeout(activateFilters, 1000);
+	timerForFilter = setTimeout(activateFilters, 1000); // Activate fillters after every user action regarding the filter menu has taken place. Gives the user 1sec time to react (activate/deactivate one or more filters)
 }
 function toggleLayers(id, toggle) {
+	// Removes/Adds cached filter data to the map
 	if (toggle == 0) {
-		//Removes the filter from the map.
+		//Removes the filter marker from the map. (e.g. red marker). Data remains in cache.
 		if (filter[id].layers.length > 0) {
 			for (var layer in filter[id].layers) {
-				//Removes every single POI that belongs to the filter.
+				//Removes every single marker that belongs to the filter.
 				filter[id].layers[layer].removeFrom(map);
 			}
 		}
 	} else {
-		//Readds a recently used filter to the map
+		//Readds a recently used filter marker to the map (e.g. red marker)
 		if (filter[id].layers.length > 0) {
 			for (var layer in filter[id].layers) {
 				//Adds every single POI that belongs to the filter.
@@ -60,7 +61,7 @@ function toggleLayers(id, toggle) {
 	}
 }
 function activateFilters() {
-	hideFilterListOnMobile();
+	hideFilterListOnMobile(); //Hides the menu on mobile devices when filter loads
 	for (var entry in filter) {
 		if (filter[entry].active) {
 			activeFilter[entry] = true;
@@ -73,7 +74,7 @@ function activateFilters() {
 		}
 		entry += 1;
 	}
-	loadPOIS("");
+	loadPOIS(""); //Send request to overpass and interpret/render the results for the POI popup
 }
 function setFilter(id) {
 	//Gets called when the user (un)checks a filter.
@@ -87,35 +88,36 @@ function setFilter(id) {
 	triggerActivationOfFilters();
 }
 function setAllFilters() {
-	var checkbox = document.getElementById("setFilters");
-	if (checkbox.checked) { //Activate all filters
+	var checkbox = document.getElementById("setFilters"); //Gets the "(Un)check them all" checkbox
+	if (checkbox.checked) { //User checked it. Activate all filters
 		for (var i in filter) {
 			if (!filter[i].active) {
 				setFilter(i);
-				document.getElementById("filter" + i).checked = true;
+				document.getElementById("filter" + i).checked = true; //Check all filters
 			}
 		}
 	} else { //Deactivate all filters
 		for (var i in filter) {
 			if (filter[i].active) {
 				setFilter(i);
-				document.getElementById("filter" + i).checked = false;
+				document.getElementById("filter" + i).checked = false; //Uncheck all filters
 			}
 		}
 	}
 }
 function initFilters() {
+	//Initialize filters at startup of this webapp
 	var output = "";
 	var filtersGround = document.getElementById("filtersGround");
-	output += "<label style='color:#007399;'><input id='setFilters' onclick='setAllFilters()' type='checkbox'><span style='color:white;font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().FLTR_SELECTALL) + "</span></label>";
+	output += "<label style='color:#007399;'><input id='setFilters' onclick='setAllFilters()' type='checkbox'><span style='color:white;font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().FLTR_SELECTALL) + "</span></label>"; //Adds the necessary HTML for checkbox element of '(Un)check them all'
 	for (var id in filter) {
 		if (filter[id].layers == undefined) {
-			filter[id] = $.extend(true, filter[id], filter_defaultValues);
+			filter[id] = $.extend(true, filter[id], filter_defaultValues); //Initialize the JSON variable 'filter'.
 		}
 		var fltr = filter[id];
-		output += "<label><input id='filter" + String(id) + "' onclick='setFilter(" + String(id) + ")' type='checkbox'><span style='color:" + fltr.color.code + ";font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().filtername[id]) + "</span></label>";
+		output += "<label><input id='filter" + String(id) + "' onclick='setFilter(" + String(id) + ")' type='checkbox'><span style='color:" + fltr.color.code + ";font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().filtername[id]) + "</span></label>";  //Adds the necessary HTML for checkbox element of every single filter
 	}
-	filtersGround.innerHTML = output;
+	filtersGround.innerHTML = output; //Add filters to the site (displaying them to user)
 }
 function osmExpression(poi, value) {
 	var key, content, result;
@@ -148,15 +150,16 @@ function osmExpression(poi, value) {
 		return result;
 	}
 }
-function loadMarker() {
+function loadMarker() { // Loads and caches the marker
 $.ajax({
 		url: "/markers/marker.svg",
 		dataType: "text",
 		fail: function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();},
-		success: function (data) {markerCode = data;}
+		success: function (data) {markerCode = data; /* Caches the marker for later altering (change of its colour for every single individual filter) */}
 		})
 }
 function groupIntoLayers(poi) {
+	// Guess which data received by Babykarte belongs to which filter
 	var marker;
 	var name = "";
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
@@ -165,19 +168,19 @@ function groupIntoLayers(poi) {
 			type = query[type]; //Instead of its query name it gets the content of the type.
 			name = getText().filtertranslations[type[0]];
 			if (osmExpression(poi, type[0])) {
-				marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode.replace("#004387", filter[fltr].color.code) + "</svg>"});
-				marker = L.marker([poi.lat, poi.lon], {icon: marker});
+				marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode.replace("#004387", filter[fltr].color.code) + "</svg>"}); //Adds the colourized marker icon
+				marker = L.marker([poi.lat, poi.lon], {icon: marker}); //Set the right coordinates
 				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
-				marker.name = name || getText().filtername[fltr];
+				marker.name = name || getText().filtername[fltr]; //Sets the subtitle which appears under the POI's name as text in grey
 				marker.address = filter[fltr].address;
 				return marker;
 			}
 		}
 	}
-	marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode + "</svg>"});
-	marker = L.marker([poi.lat, poi.lon], {icon: marker});
+	marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode + "</svg>"}); //Adds the maeker with a fallback colour (darkblue (default marker colour))
+	marker = L.marker([poi.lat, poi.lon], {icon: marker}); //Set the right coordinates
 	marker.address = "";
 	marker.name = "";
 	return marker;
 }
-loadMarker();
+loadMarker(); //Triggers the loading and caching of the marker icon at startup of Babykarte
