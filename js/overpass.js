@@ -1,27 +1,29 @@
 var zoomLevel = "";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"};
-var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],
-					"children": {"female" : {"values": ["yes", "no", undefined]},
-								"male" : {"values": ["yes", "no", undefined]},
-								"unisex": {"values": ["yes", "no", undefined]},
-								"fee" : {"values": ["yes", "no", undefined, "*"]},
-								"description": {"values": [undefined, "*"]}
+// 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
+// '*' is a placeholder for notes from mappers and any other value (even 'undefined')
+var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],	// diaper=yes|no|room|bench|undefined
+					"children": {"female" : {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
+								"male" : {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
+								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
+								"fee" : {"values": ["yes", "no", undefined, "*"]},		//		diaper:fee=yes|no|undefined
+								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|*
 								}
 							},
-				"highchair": {"values": ["yes", "no", undefined, "*"]},
-				"stroller": {"values": ["yes", "limited", "no", undefined],
-					"children": {"description": {"values" : [undefined, "*"]}}
+				"highchair": {"values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
+				"stroller": {"values": ["yes", "limited", "no", undefined],				// stroller=yes|limited|no|undefined
+					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|*
 							},
-				"kids_area": {"values": ["yes", "no", undefined],
-					"children": {"indoor" :  {"values": ["yes", "no", undefined]},
-								"outdoor": {"values": ["yes", "no", undefined]},
-								"supervised": {"values": ["yes", "no", undefined]},
-								"fee": {"values": ["yes", "no", undefined]}
+				"kids_area": {"values": ["yes", "no", undefined],						// kids_area=yes|no|undefined
+					"children": {"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
+								"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
+								"supervised": {"values": ["yes", "no", undefined]},		//		kids_area:supervised=yes|no|undefined
+								"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
 								}
 							},
-				"baby_feeding": {"values": ["yes", "no", "room", undefined],
-					"children": {"female" : {"values": ["yes", "no", undefined]},
-								"male" : {"values": ["yes", "no", undefined]}
+				"baby_feeding": {"values": ["yes", "no", "room", undefined],			// baby_feeding=yes|no|room|undefined
+					"children": {"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
+								"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
 								}
 							}
 				};
