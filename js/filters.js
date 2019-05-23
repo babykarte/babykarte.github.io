@@ -7,7 +7,7 @@ var profiles = { //Colour profiles for the filters
 "lightredMarker": {code: "#d25151"},
 "greenMarker": {code: "#00c700"},
 "darkgreenMarker": {code: "#19641b"},
-"blueMarker": {code: "#000d"},
+"blueMarker": {code: "#000dff"},
 "darkblueMarker": {code: "#001369"},
 "lightblueMarker": {code: "#3274c7"},
 "orangeMarker": {code: "#d76b00"},
@@ -160,27 +160,35 @@ $.ajax({
 }
 function groupIntoLayers(poi) {
 	// Guess which data received by Babykarte belongs to which filter
-	var marker;
+	var marker = "";
 	var name = "";
+	marker = new Object();
 	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has..
 			type = query[type]; //Instead of its query name it gets the content of the type.
 			name = getText().filtertranslations[type[0]];
 			if (osmExpression(poi, type[0])) {
+				/*
 				marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode.replace("#004387", filter[fltr].color.code) + "</svg>"}); //Adds the colourized marker icon
-				marker = L.marker([poi.lat, poi.lon], {icon: marker}); //Set the right coordinates
+				marker = L.marker([poi.lat, poi.lon], {icon: marker}); //Set the right coordinat
 				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
+				*/
+				marker.fltr = fltr;
 				marker.name = name || getText().filtername[fltr]; //Sets the subtitle which appears under the POI's name as text in grey
 				marker.address = filter[fltr].address;
+				marker.color = filter[fltr].color.code;
 				return marker;
 			}
 		}
 	}
+	/*
 	marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode + "</svg>"}); //Adds the maeker with a fallback colour (darkblue (default marker colour))
 	marker = L.marker([poi.lat, poi.lon], {icon: marker}); //Set the right coordinates
+	*/
 	marker.address = "";
 	marker.name = "";
+	marker.color = "default";
 	return marker;
 }
 loadMarker(); //Triggers the loading and caching of the marker icon at startup of Babykarte

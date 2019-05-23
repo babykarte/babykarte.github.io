@@ -27,7 +27,8 @@ var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "
 								}
 							}
 				};
-var rating = {"diaper": {"multiplicator": 4,		// diaper=* 4
+var ratingRules = {"max": 23, "green": {"default": 12, "color": "#009900"}, "red": {"default": 18, "color": "#990000"}};
+var ratingData = {"diaper": {"multiplicator": 4,	// diaper=* 4
 						"values" :
 							{"yes": 2,				//     yes 2
 							"no": 2}				//     no  2
@@ -348,6 +349,55 @@ function babyTab(poi) {
 	}
 	return output
 }
+function ratePOI(poi) {
+	var i;
+	if (!poi.rating) {poi.rating = {};poi.rating.green = 0;poi.rating.red = 0;}
+	for (i in ratingData) {
+		var value = poi.tags[i];
+		if (value == undefined) {
+			poi.rating.green += 0;
+			poi.rating.red += 0;
+		} else {
+			var points = ratingData[i].multiplicator * ratingData[i].values[value] || 0;
+			poi.rating.green += ((value == "yes") ? points : 0);
+			poi.rating.red += ((value == "no") ? points : 0);
+		}
+	}
+	return poi;
+}
+function determineRateColor(poi) {
+	var exception = {"yellow": {"default": 6, "color": "#ff9900"}};
+	var i, u;
+	var colours = [];
+	for (i in ratingRules) {
+		if (poi.rating[i]) {
+			if (poi.rating[i] >= ratingRules[i].default) {
+				colours.push(ratingRules[i]);
+			}
+		}
+	}
+	if (colours.length == 2) {
+		return exception.yellow.color;
+	} else if (colours.length == 0) {
+		return false;
+	} else {
+		return colours[0].color;
+	}
+}
+function addMarkerIcon(poi, marker) {
+	var markerIcon = markerCode;
+	var result = determineRateColor(poi);
+	console.log(result);
+	if (marker.color != "default") {
+		markerIcon = markerIcon.replace("#004387", marker.color);
+	}
+	if (result) {console.log(" 1");markerIcon = markerIcon.replace("rgba(255, 255, 255, 0)", result)}
+	var iconObject  = L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [12, 45], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerIcon + "</svg>"}) //Creates the colourized marker icon
+	var markerObject = L.marker([poi.lat, poi.lon], {icon: iconObject}); //Set the right coordinates
+	marker = $.extend(true, markerObject, marker); //Adds the colourized marker icon
+	filter[marker.fltr].layers.push(marker); //Adds the POI to the filter's layers list.
+	return marker;
+}
 function loadPOIS(e, post) {
 	var url = "https://overpass-api.de/api/interpreter";
 	hideFilterListOnMobile();
@@ -374,8 +424,9 @@ function loadPOIS(e, post) {
 		for (var poi in osmDataAsJson.elements) {
 			var marker;
 			var popupContent = "";
-			var popupContent_header = ""
+			var popupContent_header = "";
 			poi = osmDataAsJson.elements[poi];
+			poi = ratePOI(poi);
 			if (poi.center != undefined) {
 				poi.lat = poi.center.lat;
 				poi.lon = poi.center.lon;
@@ -383,6 +434,7 @@ function loadPOIS(e, post) {
 			var classId = String(poi.type)[0].toUpperCase() + String(poi.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
+			marker = addMarkerIcon(poi, marker);
 			var details_data = {"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address>${ addrTrigger(poi, marker) }</address>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 			"baby": {"content": `${babyTab(poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"content": `${ parseOpening_hours(poi.tags["opening_hours"]) || "NODISPLAY" }`, "symbol": "/images/clock.svg", "title": getText().PDV_TITLE_OH, "active": true},
