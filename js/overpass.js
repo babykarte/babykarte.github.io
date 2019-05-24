@@ -302,12 +302,15 @@ function babyTab_intern(poi, tag, values, data) {
 				langcode += "_" + values[i];
 			}
 			title = getText("PDV_" + langcode.toUpperCase());
+			console.log("PDV_" + langcode.toUpperCase());
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]];
+				break;
 			} else {
 				if (tag.endsWith("description") && poi.tags[tag] != undefined) {
 					data.title = "\"" + poi.tags[tag] + "\"";
+					break;
 				} else {
 					data.title = "NODISPLAY";
 				}
@@ -325,14 +328,17 @@ function babyTab(poi) {
 		var children = babyData[tag].children;
 		data[tag] = {};
 		data[tag] = babyTab_intern(poi, tag, values, data[tag]);
+		console.log(data[tag]);
 		data[tag].children = {};
 		for (var child in children) {
 			data[tag].children[child] = {};
 			data[tag].children[child] = babyTab_intern(poi, tag + ":" + child,  babyData[tag].children[child].values, data[tag].children[child])
+			
 			if (data[tag].children[child].title == "NODISPLAY") {
 				delete data[tag].children[child];
 			}
 		}
+		console.log(data);
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
 		} else {
@@ -346,6 +352,7 @@ function babyTab(poi) {
 			output = output.replace("%content", childrenHTML);
 		}
 	}
+	console.log(output);
 	return output;
 }
 function ratePOI(poi) {
