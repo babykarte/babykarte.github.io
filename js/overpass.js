@@ -6,7 +6,7 @@ var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "
 					"children": {"female" : {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
 								"male" : {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
 								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
-								"fee" : {"values": ["yes", "no", undefined, "*"]},		//		diaper:fee=yes|no|undefined
+								"fee" : {"values": ["yes", "no", undefined]},		//		diaper:fee=yes|no|undefined
 								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|*
 								}
 							},
@@ -294,8 +294,7 @@ function addrTab(poi, prefix , condition, symbol) {
 function babyTab_intern(poi, tag, values, data) {
 	for (var i in values) {
 		var title;
-		if (values[i] == "*") {values[i] = poi.tags[tag];}
-		if (poi.tags[tag] == values[i]) {
+		if (values[i] == "*" || poi.tags[tag] == values[i]) {
 			var langcode = tag.replace("_", "").replace(":", "_");
 			if (values[i] == undefined) {
 				langcode += "_UNKNOWN";
@@ -337,17 +336,17 @@ function babyTab(poi) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
 		} else {
-			output += "<details><summary class='" + data[tag].color + "'>" + data[tag].title + "</summary><div>\n%content</div></details>\n";
+			output += "<details><summary class='" + data[tag].color + "'>" + data[tag].title + "</summary>\n<div>\n%content</div>\n</details>\n";
 			var childrenHTML = "";
-			if (data[tag].title != "NODISPLAY") {	
+			if (data[tag].title != "NODISPLAY") {
 				for (var child in data[tag].children) {
-					childrenHTML += "<ul><li>" + data[tag].children[child].title + "</li></ul>\n"
+					childrenHTML += "<ul><li>" + data[tag].children[child].title + "</li></ul>\n";
 				}
 			}
 			output = output.replace("%content", childrenHTML);
 		}
 	}
-	return output
+	return output;
 }
 function ratePOI(poi) {
 	var i;
@@ -387,11 +386,10 @@ function determineRateColor(poi) {
 function addMarkerIcon(poi, marker) {
 	var markerIcon = markerCode;
 	var result = determineRateColor(poi);
-	console.log(result);
 	if (marker.color != "default") {
 		markerIcon = markerIcon.replace("#004387", marker.color);
 	}
-	if (result) {console.log(" 1");markerIcon = markerIcon.replace("rgba(255, 255, 255, 0)", result)}
+	if (result) {markerIcon = markerIcon.replace("rgba(255, 255, 255, 0)", result)}
 	var iconObject  = L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [12, 45], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerIcon + "</svg>"}) //Creates the colourized marker icon
 	var markerObject = L.marker([poi.lat, poi.lon], {icon: iconObject}); //Set the right coordinates
 	marker = $.extend(true, markerObject, marker); //Adds the colourized marker icon
@@ -454,7 +452,7 @@ function loadPOIS(e, post) {
 					var tmp = "";
 					var result = "";
 					result += content[i];
-					if (result.indexOf("NODISPLAY") > -1) {result = ""}
+					if (result.indexOf("NODISPLAY") > -1) {result = "";}
 					tabContent += result;
 				}
 				if (tabContent == "") {
