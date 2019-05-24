@@ -27,7 +27,7 @@ var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "
 								}
 							}
 				};
-var ratingRules = {"max": 23, "green": {"default": 12, "color": "#009900"}, "red": {"default": 18, "color": "#990000"}};
+var ratingRules = {"max": 23, "green": {"default": 12, "color": "rating-green"}, "red": {"default": 18, "color": "rating-red"}};
 var ratingData = {"diaper": {"multiplicator": 4,	// diaper=* 4
 						"values" :
 							{"yes": 2,				//     yes 2
@@ -365,7 +365,7 @@ function ratePOI(poi) {
 	return poi;
 }
 function determineRateColor(poi) {
-	var exception = {"yellow": {"default": 6, "color": "#ff9900"}};
+	var exception = {"yellow": {"default": 6, "color": "rating-yellow"}};
 	var i, u;
 	var colours = [];
 	for (i in ratingRules) {
@@ -389,8 +389,8 @@ function addMarkerIcon(poi, marker) {
 	if (marker.color != "default") {
 		markerIcon = markerIcon.replace("#004387", marker.color);
 	}
-	if (result) {markerIcon = markerIcon.replace("rgba(255, 255, 255, 0)", result)}
-	var iconObject  = L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [12, 45], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerIcon + "</svg>"}) //Creates the colourized marker icon
+	if (result) {markerIcon = markerIcon.replace("rating-default", result)}
+	var iconObject  = L.divIcon({iconSize: [31, 48], popupAnchor: [4, -32], iconAnchor: [12, 45], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerIcon + "</svg>"}) //Creates the colourized marker icon
 	var markerObject = L.marker([poi.lat, poi.lon], {icon: iconObject}); //Set the right coordinates
 	marker = $.extend(true, markerObject, marker); //Adds the colourized marker icon
 	filter[marker.fltr].layers.push(marker); //Adds the POI to the filter's layers list.
