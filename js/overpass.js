@@ -302,7 +302,6 @@ function babyTab_intern(poi, tag, values, data) {
 				langcode += "_" + values[i];
 			}
 			title = getText("PDV_" + langcode.toUpperCase());
-			console.log("PDV_" + langcode.toUpperCase());
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]];
@@ -328,7 +327,6 @@ function babyTab(poi) {
 		var children = babyData[tag].children;
 		data[tag] = {};
 		data[tag] = babyTab_intern(poi, tag, values, data[tag]);
-		console.log(data[tag]);
 		data[tag].children = {};
 		for (var child in children) {
 			data[tag].children[child] = {};
@@ -338,7 +336,6 @@ function babyTab(poi) {
 				delete data[tag].children[child];
 			}
 		}
-		console.log(data);
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
 		} else {
@@ -352,7 +349,6 @@ function babyTab(poi) {
 			output = output.replace("%content", childrenHTML);
 		}
 	}
-	console.log(output);
 	return output;
 }
 function ratePOI(poi) {
@@ -365,8 +361,8 @@ function ratePOI(poi) {
 			poi.rating.red += 0;
 		} else {
 			var points = ratingData[i].multiplicator * ratingData[i].values[value] || 0;
-			poi.rating.green += ((value == "yes") ? points : 0);
-			poi.rating.red += ((value == "no") ? points : 0);
+			poi.rating.green += ((value == "yes" || value == "limited") ? points : 0);
+			poi.rating.red += ((value == "no" || value == "limited") ? points : 0);
 		}
 	}
 	return poi;
@@ -379,6 +375,8 @@ function determineRateColor(poi) {
 		if (poi.rating[i]) {
 			if (poi.rating[i] >= ratingRules[i].default) {
 				colours.push(ratingRules[i]);
+			} else if (poi.rating[i] >= exception.yellow.default) {
+				colours.push(exception.yellow);
 			}
 		}
 	}
