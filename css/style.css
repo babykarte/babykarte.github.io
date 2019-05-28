@@ -227,15 +227,15 @@ label {
 	fill:none;
 }
 #rating-green {
-	fill:#009900;
+	fill:#01c401;
 	stroke:white;
 }
 #rating-yellow {
-	fill:#ff9900;
+	fill:#ffd900;
 	stroke:white;
 }
 #rating-red {
-	fill:#990000;
+	fill:#bb0202;
 	stroke:white;
 }
 @media only screen and (max-width:800px) {
