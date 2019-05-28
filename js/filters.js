@@ -158,6 +158,16 @@ $.ajax({
 		success: function (data) {markerCode = data; /* Caches the marker for later altering (change of its colour for every single individual filter) */}
 		})
 }
+function getSubtitle(poi) {
+	var json = getText().filtertranslations;
+	for (var i in json) {
+		var key, value = json[i].split("=");
+		if (poi.tags[key] == value) {
+			return getText().filtertranslations[i];
+		}
+	}
+	return undefined;
+}
 function groupIntoLayers(poi) {
 	// Guess which data received by Babykarte belongs to which filter
 	var marker = "";
@@ -167,7 +177,7 @@ function groupIntoLayers(poi) {
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has..
 			type = query[type]; //Instead of its query name it gets the content of the type.
-			name = getText().filtertranslations[type[0]];
+			name = getSubtitle(poi);
 			if (osmExpression(poi, type[0])) {
 				/*
 				marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode.replace("#004387", filter[fltr].color.code) + "</svg>"}); //Adds the colourized marker icon
