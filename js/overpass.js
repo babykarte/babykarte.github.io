@@ -351,9 +351,10 @@ function babyTab(poi) {
 	}
 	return output;
 }
-function ratePOI(poi) {
+function ratePOI(marker, poi) {
 	var i;
 	if (!poi.rating) {poi.rating = {};poi.rating.green = 0;poi.rating.red = 0;}
+	if (!filter[marker.fltr].address.startsWith("eat")) {return poi;}
 	for (i in ratingData) {
 		var value = poi.tags[i];
 		if (value == undefined) {
@@ -429,7 +430,6 @@ function loadPOIS(e, post) {
 			var popupContent = "";
 			var popupContent_header = "";
 			poi = osmDataAsJson.elements[poi];
-			poi = ratePOI(poi);
 			if (poi.center != undefined) {
 				poi.lat = poi.center.lat;
 				poi.lon = poi.center.lon;
@@ -437,6 +437,7 @@ function loadPOIS(e, post) {
 			var classId = String(poi.type)[0].toUpperCase() + String(poi.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
+			poi = ratePOI(marker, poi);
 			marker = addMarkerIcon(poi, marker);
 			var details_data = {"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address>${ addrTrigger(poi, marker) }</address>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 			"baby": {"content": `${babyTab(poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
