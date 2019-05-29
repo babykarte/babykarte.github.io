@@ -161,8 +161,8 @@ $.ajax({
 function getSubtitle(poi) {
 	var json = getText().filtertranslations;
 	for (var i in json) {
-		var key, value = json[i].split("=");
-		if (poi.tags[key] == value) {
+		var key = i.split("=");
+		if (poi.tags[key[0]] == key[1]) {
 			return getText().filtertranslations[i];
 		}
 	}
