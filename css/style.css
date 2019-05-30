@@ -223,6 +223,21 @@ label {
 #linkToPP {
 	margin-right: 10px;
 }
+#rating-default {
+	fill:none;
+}
+#rating-green {
+	fill:#01c401;
+	stroke:white;
+}
+#rating-yellow {
+	fill:#ffd900;
+	stroke:white;
+}
+#rating-red {
+	fill:#bb0202;
+	stroke:white;
+}
 @media only screen and (max-width:800px) {
 section {
 	display:block;

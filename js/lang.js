@@ -52,7 +52,6 @@ function setLang(e, lang) {
 	}
 	if (languageOfUser in langRef[document.body.id]) {
 		var data = {
-		0: ((document.getElementById("query-button") != null) ? document.getElementById("query-button").value = getText().BTN_APPLY_FILTERS : ""),
 		1: ((document.getElementById("linkToPP") != null) ? document.getElementById("linkToPP").innerHTML = getText().LNK_PP_SITE : ""),
 		2: ((document.getElementById("linkToPP") != null) ? document.getElementById("linkToPP").href = getText().LNK_PP_SITE_URL : ""),
 		3: ((document.getElementById("searchfield") != null) ? document.getElementById("searchfield").placeholder = getText().TB_SEARCHFIELD : ""),

@@ -1,19 +1,55 @@
 var zoomLevel = "";
-var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"}
-var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],
-				"children": {"female" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"male" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"unisex": {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"fee" : {"values": ["yes", "no", "room", "bench", undefined, "*"]},
-							"description": {"values": [undefined, "*"]}
-							}
-						},
-				"highchair": {"values": ["yes", "no", undefined, "*"]},
-				"stroller": {"values": ["yes", "limited", "no", undefined],
-							"children": {"description": {"values" : [undefined, "*"]}}
+var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"};
+// 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
+// '*' is a placeholder for notes from mappers and any other value (even 'undefined')
+var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],	// diaper=yes|no|room|bench|undefined
+					"children": {"female" : {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
+								"male" : {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
+								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
+								"fee" : {"values": ["yes", "no", undefined]},		//		diaper:fee=yes|no|undefined
+								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|*
+								}
 							},
-				"kids_area": {"values": ["yes", "no", undefined]}
-				}
+				"highchair": {"values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
+				"stroller": {"values": ["yes", "limited", "no", undefined],				// stroller=yes|limited|no|undefined
+					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|*
+							},
+				"kids_area": {"values": ["yes", "no", undefined],						// kids_area=yes|no|undefined
+					"children": {"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
+								"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
+								"supervised": {"values": ["yes", "no", undefined]},		//		kids_area:supervised=yes|no|undefined
+								"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
+								}
+							},
+				"baby_feeding": {"values": ["yes", "no", "room", undefined],			// baby_feeding=yes|no|room|undefined
+					"children": {"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
+								"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
+								}
+							}
+				};
+var ratingRules = {"max": 23, "green": {"default": 12, "color": "rating-green"}, "red": {"default": 18, "color": "rating-red"}};
+var ratingData = {"diaper": {"multiplicator": 4,	// diaper=* 4
+						"values" :
+							{"yes": 2,				//     yes 2
+							"no": 2}				//     no  2
+						},
+				"highchair": {"multiplicator": 4,	// highchair=* 4  (POIs where you can get meal or something simliar)
+						"values" :
+							{"yes": 2,				//     yes 2
+							"no": 2}				//     no  2
+						},
+				"kids_area": {"multiplicator": 2,	// kids_area=* 2
+						"values" :
+							{"yes": 2,				//     yes 2
+							"no": 2}				//     no  2
+						},
+				"stroller": {"multiplicator": 1,	// stroller=* 1
+						"values" :
+							{"yes": 2,				//     yes 3
+							"no": 2,				//     no  3
+							"limited": 1}			//     limited 1 (green)
+						}
+			};
 function locationFound(e) {
 	//Fires the notification that Babykarte shows the location of the user.
 	showGlobalPopup(getText().LOCATING_SUCCESS);
@@ -35,10 +71,10 @@ function checkboxes2overpass(bounds, actFilter) {
 	for (var id in actFilter) {
 		for (var value in filter[id].query) {
 			var content = filter[id].query[value];
-			value = value.trim();
-			value = value.split("|");
-			for (var type in value) {
-				andquery += value[type];
+			var name = value.trim();
+			name = value.split("|");
+			for (var type in name) {
+				andquery += name[type].replace(RegExp("_", "g"), "");
 				for (var i in content) {
 					andquery += content[i];
 				}
@@ -130,57 +166,44 @@ function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
 			maxWest = west_new;
 		}
 	}
-	filter[fltr].coordinates.current.north = north_new;
-	filter[fltr].coordinates.current.south = south_new;
-	filter[fltr].coordinates.current.west = west_new;
-	filter[fltr].coordinates.current.east = east_new;
+	setCoordinatesOfFilter(fltr, {"south": south_new, "west": west_new, "north": north_new, "east": east_new}, ["current"]);
 	if (loadingAllowed) {
 		var dict = {};
 		dict[fltr] = true;
-		filter[fltr].coordinates.max.south = maxSouth;
-		filter[fltr].coordinates.max.west = maxWest;
-		filter[fltr].coordinates.max.north = maxNorth;
-		filter[fltr].coordinates.max.east = maxEast;
+		setCoordinatesOfFilter(fltr, {"south": maxSouth, "west": maxWest, "north": maxNorth, "east": maxEast}, ["max"]);
 		if (south_new == 0) {
 			south_new = map.getBounds().getSouth();
 		}
-		/*toggleLayers(fltr, 0);
-		filter[fltr].layers = [];*/
 		return checkboxes2overpass(String(south_new) + "," + String(west_new) + "," + String(north_new) + "," + String(east_new), dict);
 	}
 	return false;
 }
-function setCoordinates(fltr) {
-	filter[fltr].usedBefore = true;
-	filter[fltr].coordinates.current.south = map.getBounds().getSouth();
-	filter[fltr].coordinates.current.west = map.getBounds().getWest();
-	filter[fltr].coordinates.current.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.current.east = map.getBounds().getEast();
-	filter[fltr].coordinates.max.south = map.getBounds().getSouth();
-	filter[fltr].coordinates.max.west = map.getBounds().getWest();
-	filter[fltr].coordinates.max.north = map.getBounds().getNorth();
-	filter[fltr].coordinates.max.east = map.getBounds().getEast();
+function setCoordinatesOfFilter(fltr, values, entries=["current", "max"]) {
+	for (var value in values) {
+		for (var i in entries) {
+			filter[fltr].coordinates[entries[i]][value] = values[value];
+		}
+	}
 }
 function resetFilter(fltr) {
+	var values = {"south": 0, "west": 0, "north": 0, "east": 0}
+	toggleLayers(fltr, 0);
 	filter[fltr].usedBefore = true;
-	filter[fltr].coordinates.current.south = 0;
-	filter[fltr].coordinates.current.west = 0;
-	filter[fltr].coordinates.current.north = 0;
-	filter[fltr].coordinates.current.east = 0;
-	filter[fltr].coordinates.max.south = 0;
-	filter[fltr].coordinates.max.west = 0;
-	filter[fltr].coordinates.max.north = 0;
-	filter[fltr].coordinates.max.east = 0;
+	setCoordinatesOfFilter(fltr, values);
 	filter[fltr].layers = [];
 }
 function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
 	//Adds filter compactibility to locateNewArea() function.
+	var values = {"south": map.getBounds().getSouth(), "west": map.getBounds().getWest(), "north": map.getBounds().getNorth(), "east": map.getBounds().getEast()};
 	var url = "";
 	var result = "";
 	for (var fltr in activeFilter) {
 		result = locateNewArea(fltr, filter[fltr].coordinates.max.north, filter[fltr].coordinates.max.south, filter[fltr].coordinates.max.west, filter[fltr].coordinates.max.east);
-		if (!filter[fltr].usedBefore) { setCoordinates(fltr); }
+		if (!filter[fltr].usedBefore) {
+			filter[fltr].usedBefore = true;
+			setCoordinatesOfFilter(fltr, values);
+		}
 		if (result) {
 			url += result
 		}
@@ -197,8 +220,6 @@ function onMapZoom() {
 	if (zoomLevel > newZoomLevel) {
 		//zoom out
 		for (var fltr in activeFilter) {
-			toggleLayers(fltr, 0);
-			filter[fltr].usedBefore = false;
 			resetFilter(fltr);
 		}
 	}
@@ -266,25 +287,14 @@ function toggleTab(bla, id) {
 	tab.style.display = "block";
 }
 function addrTab(poi, prefix , condition, symbol) {
-	return "<div class='grid-container'><a target='_blank' href='" + prefix  + eval(condition) + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + eval(condition) + "'>" + eval(condition) + "</a></div>\n";
-}
-function babyTab_old(poi, colorcode, truecode, title, items) {
-	truecode = true;
-	title = "Changing table available";
-	console.log(colorcode);
-	if (truecode) {
-		console.log(`<details class=\"${eval(colorcode)}'"><summary>${eval(title)}</summary><ul>\n${eval(items)}\n</ul></details>`);
-		return `<details class=\"${eval(colorcode)}\"><summary>${eval(title)}</summary><ul>\n${eval(items)}\n</ul></details>`;
-	} else {
-		console.log(`<ul>\n<li class=\"${eval(colorcode)}\">${eval(title)}</li><ul>\n${eval(items)}</ul>`);
-		return `<ul>\n<li class=\"${eval(colorcode)}\">${eval(title)}</li><ul>\n${eval(items)}</ul>`;
-	}
+	var result = eval(condition);
+	if (result.startsWith("www.") && !prefix.startsWith("mail")) {result = "http://" + result}
+	return "<div class='grid-container'><a target='_blank' href='" + prefix  + result + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + result + "'>" + result + "</a></div>\n";
 }
 function babyTab_intern(poi, tag, values, data) {
 	for (var i in values) {
 		var title;
-		if (values[i] == "*") {values[i] = poi.tags[tag];}
-		if (poi.tags[tag] == values[i]) {
+		if (values[i] == "*" || poi.tags[tag] == values[i]) {
 			var langcode = tag.replace("_", "").replace(":", "_");
 			if (values[i] == undefined) {
 				langcode += "_UNKNOWN";
@@ -295,9 +305,11 @@ function babyTab_intern(poi, tag, values, data) {
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]];
+				break;
 			} else {
 				if (tag.endsWith("description") && poi.tags[tag] != undefined) {
 					data.title = "\"" + poi.tags[tag] + "\"";
+					break;
 				} else {
 					data.title = "NODISPLAY";
 				}
@@ -319,6 +331,7 @@ function babyTab(poi) {
 		for (var child in children) {
 			data[tag].children[child] = {};
 			data[tag].children[child] = babyTab_intern(poi, tag + ":" + child,  babyData[tag].children[child].values, data[tag].children[child])
+			
 			if (data[tag].children[child].title == "NODISPLAY") {
 				delete data[tag].children[child];
 			}
@@ -326,41 +339,96 @@ function babyTab(poi) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
 		} else {
-			output += "<details><summary class='" + data[tag].color + "'>" + data[tag].title + "</summary><div>\n%content</div></details>\n";
+			output += "<details><summary class='" + data[tag].color + "'>" + data[tag].title + "</summary>\n<div>\n%content</div>\n</details>\n";
 			var childrenHTML = "";
-			if (data[tag].title != "NODISPLAY") {	
+			if (data[tag].title != "NODISPLAY") {
 				for (var child in data[tag].children) {
-					childrenHTML += "<ul><li>" + data[tag].children[child].title + "</li></ul>\n"
+					childrenHTML += "<ul><li>" + data[tag].children[child].title + "</li></ul>\n";
 				}
 			}
 			output = output.replace("%content", childrenHTML);
 		}
 	}
-	return output
+	return output;
 }
-function loadPOIS(e, url) {
+function ratePOI(marker, poi) {
+	var i;
+	if (!poi.rating) {poi.rating = {};poi.rating.green = 0;poi.rating.red = 0;}
+	if (!filter[marker.fltr].address.startsWith("eat")) {return poi;}
+	for (i in ratingData) {
+		var value = poi.tags[i];
+		if (value == undefined) {
+			poi.rating.green += 0;
+			poi.rating.red += 0;
+		} else {
+			var points = ratingData[i].multiplicator * ratingData[i].values[value] || 0;
+			poi.rating.green += ((value == "yes" || value == "limited") ? points : 0);
+			poi.rating.red += ((value == "no" || value == "limited") ? points : 0);
+		}
+	}
+	return poi;
+}
+function determineRateColor(poi) {
+	var exception = {"yellow": {"default": 6, "color": "rating-yellow"}};
+	var i, u;
+	var colours = [];
+	for (i in ratingRules) {
+		if (poi.rating[i]) {
+			if (poi.rating[i] >= ratingRules[i].default) {
+				colours.push(ratingRules[i]);
+			} else if (poi.rating[i] >= exception.yellow.default) {
+				colours.push(exception.yellow);
+			}
+		}
+	}
+	if (colours.length == 2) {
+		return exception.yellow.color;
+	} else if (colours.length == 0) {
+		return false;
+	} else {
+		return colours[0].color;
+	}
+}
+function addMarkerIcon(poi, marker) {
+	var markerIcon = markerCode;
+	var result = determineRateColor(poi);
+	if (marker.color != "default") {
+		markerIcon = markerIcon.replace("#004387", marker.color);
+	}
+	if (result) {markerIcon = markerIcon.replace("rating-default", result)}
+	var iconObject  = L.divIcon({iconSize: [31, 48], popupAnchor: [4, -32], iconAnchor: [12, 45], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerIcon + "</svg>"}) //Creates the colourized marker icon
+	var markerObject = L.marker([poi.lat, poi.lon], {icon: iconObject}); //Set the right coordinates
+	marker = $.extend(true, markerObject, marker); //Adds the colourized marker icon
+	filter[marker.fltr].layers.push(marker); //Adds the POI to the filter's layers list.
+	return marker;
+}
+function loadPOIS(e, post) {
+	var url = "https://overpass-api.de/api/interpreter";
 	hideFilterListOnMobile();
 	progressbar(50);
 	//Main function of POI loading.
 	//Handles connection to OSM Overpass server and parses the response into beautiful looking details views for each POI
-	if (!url) {
-		//No url was specified, because none of the filter functions called it.
-		var result = locateNewAreaBasedOnFilter();
-		if (!result) {
+	if (!post) {
+		//No data to send was specified, because none of the filter functions called it.
+		post = locateNewAreaBasedOnFilter();
+		if (!post) {
 			progressbar();
 			return 0;
 		}
-		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + result + "out body center;";
-	} else {
-		url = "https://overpass-api.de/api/interpreter?data=[out:json][timeout:15];" + url + "out body center;";
 	}
 	//Connect to OSM server
-	$.get(url, function (osmDataAsJson) {
+	post = "[out:json][timeout:15];" + post + "out body center;";
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: post,
+		fail: function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();},
+		success: function (osmDataAsJson) {
 		//Go throw all elements (ways, relations, nodes) sent by Overpass
 		for (var poi in osmDataAsJson.elements) {
 			var marker;
 			var popupContent = "";
-			var popupContent_header = ""
+			var popupContent_header = "";
 			poi = osmDataAsJson.elements[poi];
 			if (poi.center != undefined) {
 				poi.lat = poi.center.lat;
@@ -369,10 +437,12 @@ function loadPOIS(e, url) {
 			var classId = String(poi.type)[0].toUpperCase() + String(poi.id);
 			//creates a new Marker() Object and groups into the layers given by our filters.
 			marker = groupIntoLayers(poi);
+			poi = ratePOI(marker, poi);
+			marker = addMarkerIcon(poi, marker);
 			var details_data = {"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address>${ addrTrigger(poi, marker) }</address>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 			"baby": {"content": `${babyTab(poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"content": `${ parseOpening_hours(poi.tags["opening_hours"]) || "NODISPLAY" }`, "symbol": "/images/clock.svg", "title": getText().PDV_TITLE_OH, "active": true},
-			"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
+			"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "mailto:", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
 			"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
 			};
 			for (var entry in details_data) {
@@ -388,9 +458,7 @@ function loadPOIS(e, url) {
 					var tmp = "";
 					var result = "";
 					result += content[i];
-					if (result.indexOf("NODISPLAY") == -1) {
-						//result = result.replace(new RegExp("</ul>\n<ul>", "g"), "");
-					} else {result = ""}
+					if (result.indexOf("NODISPLAY") > -1) {result = "";}
 					tabContent += result;
 				}
 				if (tabContent == "") {
@@ -411,17 +479,14 @@ function loadPOIS(e, url) {
 			popupContent_header += "</div>";
 			marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + getText().LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + getText().LNK_OSM_REPORT + "</a>";;
 			marker.bindPopup(marker.popupContent);
-			//Show marker on map
-			marker.addTo(map);
+			//Add marker to cluster
+			map.addLayer(marker);
 			if (poi.lat == saved_lat && poi.lon == saved_lon) {
 				addrTrigger_intern(poi, marker);
 			}
 		}
 		progressbar();
-	}).fail(function() {
-		showGlobalPopup(getText().LOADING_FAILURE);
-		progressbar();
-	});
+	}});
 }
 function getStateFromHash() {
 	var hash = location.hash;
@@ -440,14 +505,10 @@ function getStateFromHash() {
 		map.setView([saved_lat, saved_lon], zoomLevel);
 	}
 }
-function requestLocation() {
-	map.locate({setView: true});
-}
+function requestLocation() {map.locate({setView: true, zoom: zoomLevel});}
 //init map
 progressbar(30);
-var map = L.map('map')
-map.options.maxZoom = 19;
-map.options.minZoom = 10;
+var map = L.map('map');
 map.setView([saved_lat, saved_lon], 15);
 getStateFromHash();
 map.on("locationfound", locationFound);
@@ -458,6 +519,7 @@ map.on("zoomend", onMapZoom);
 var Layergroup = new L.LayerGroup();
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
+  minZoom: 10,
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 progressbar();
