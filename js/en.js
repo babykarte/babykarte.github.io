@@ -98,6 +98,7 @@ var refEn = {"site-map": {
 		"shop=toys": "Toy store",
 		"shop=clothes": "Clothes",
 		"shop=chemist": "Chemist",
+		"shop=supermarket": "Supermarket"
 	}
 },
 "site-impress" : {

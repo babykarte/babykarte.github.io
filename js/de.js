@@ -97,6 +97,7 @@ var refDe = {"site-map": {
 		"shop=toys": "Spielwarenladen",
 		"shop=clothes": "Bekleidung",
 		"shop=chemist": "Drogerie",
+		"shop=supermarket": "Supermarkt"
 		
 	}
 },
@@ -105,7 +106,7 @@ var refDe = {"site-map": {
 	"IMPRESS_SUBTITLE": "Angaben gemäß § 5 TMG:",
 	"IMPRESS_COUNTRY": "Deutschland",
 	"IMPRESS_CONTACT": "Kontakt",
-	"IMPRESS_NOTE": "Alle Daten auf dieser Website stammen aus dem Projekt OpenStreetMap. Die Babykarte wertet diese Daten lediglich aus.<br/>Für die Richtigkeit der Angaben kann keine Garantie übernommen werden. Anmerkungen zu falschen oder fehlenden Daten<br/>übermitteln Sie bitte direkt an OpenStreetMap über die bereitgestellten Links. Darüber hinaus gibt es die Möglichkeit durch Einrichtung eines OpenStreetMap-Accounts falsche- zu berichtigen oder fehlende Daten hinzuzufügen."
+	"IMPRESS_NOTE": "Alle Daten auf dieser Website stammen aus dem Projekt OpenStreetMap. Die Babykarte wertet diese Daten lediglich aus.<br/>Für die Richtigkeit der Angaben kann keine Garantie übernommen werden. Anmerkungen zu falschen oder fehlenden Daten<br/>übermitteln Sie bitte direkt an OpenStreetMap über die bereitgestellten Links. Darüber hinaus gibt es die Möglichkeit durch Einrichtung eines OpenStreetMap-Accounts falsche- oder fehlende Daten zu berichtigen bzw. hinzuzufügen."
 	}
 };
 registerLang("de", refDe);
