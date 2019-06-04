@@ -150,13 +150,17 @@ function osmExpression(poi, value) {
 		return result;
 	}
 }
-function loadMarker() { // Loads and caches the marker
-$.ajax({
-		url: "/markers/marker.svg",
-		dataType: "text",
-		fail: function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();},
-		success: function (data) {markerCode = data; /* Caches the marker for later altering (change of its colour for every single individual filter) */}
-		})
+function getData(url, dataType, data,  fail, success, type) {
+	if (type == undefined) {type = "GET"}
+	if (fail == undefined) {fail = function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();}}
+	$.ajax({
+		type: type,
+		url: String(url),
+		dataType: String(dataType),
+		data: data,
+		fail: fail,
+		success: success
+		});
 }
 function getSubtitle(poi) {
 	var json = getText().filtertranslations;
@@ -179,11 +183,6 @@ function groupIntoLayers(poi) {
 			type = query[type]; //Instead of its query name it gets the content of the type.
 			name = getSubtitle(poi);
 			if (osmExpression(poi, type[0])) {
-				/*
-				marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode.replace("#004387", filter[fltr].color.code) + "</svg>"}); //Adds the colourized marker icon
-				marker = L.marker([poi.lat, poi.lon], {icon: marker}); //Set the right coordinat
-				filter[fltr].layers.push(marker); //Adds the POI to the filter's layers list.
-				*/
 				marker.fltr = fltr;
 				marker.name = name || getText().filtername[fltr]; //Sets the subtitle which appears under the POI's name as text in grey
 				marker.address = filter[fltr].address;
@@ -192,13 +191,9 @@ function groupIntoLayers(poi) {
 			}
 		}
 	}
-	/*
-	marker =  L.divIcon({iconSize: [25, 41], popupAnchor: [4, -32], iconAnchor: [8, 40], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerCode + "</svg>"}); //Adds the maeker with a fallback colour (darkblue (default marker colour))
-	marker = L.marker([poi.lat, poi.lon], {icon: marker}); //Set the right coordinates
-	*/
 	marker.address = "";
 	marker.name = "";
 	marker.color = "default";
 	return marker;
 }
-loadMarker(); //Triggers the loading and caching of the marker icon at startup of Babykarte
+getData("/markers/marker.svg", "text", "", undefined, function (data) {markerCode = data; /* Caches the marker for later altering (change of its colour for every single individual filter) */}); //Triggers the loading and caching of the marker icon at startup of Babykarte

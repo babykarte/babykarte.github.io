@@ -1,4 +1,5 @@
 var zoomLevel = "";
+var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
@@ -403,7 +404,6 @@ function addMarkerIcon(poi, marker) {
 	return marker;
 }
 function loadPOIS(e, post) {
-	var url = "https://overpass-api.de/api/interpreter";
 	hideFilterListOnMobile();
 	progressbar(50);
 	//Main function of POI loading.
@@ -418,12 +418,7 @@ function loadPOIS(e, post) {
 	}
 	//Connect to OSM server
 	post = "[out:json][timeout:15];" + post + "out body center;";
-	$.ajax({
-		type: "POST",
-		url: url,
-		data: post,
-		fail: function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();},
-		success: function (osmDataAsJson) {
+	getData(url, "json", post, undefined, function (osmDataAsJson) {
 		//Go throw all elements (ways, relations, nodes) sent by Overpass
 		for (var poi in osmDataAsJson.elements) {
 			var marker;
@@ -486,7 +481,7 @@ function loadPOIS(e, post) {
 			}
 		}
 		progressbar();
-	}});
+	}, "POST");
 }
 function getStateFromHash() {
 	var hash = location.hash;
