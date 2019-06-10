@@ -1,5 +1,5 @@
 var activeFilter = {}; //Dictionary of the current selected filters
-var timerForFilter, markerCode;
+var timerForFilter, markerCode, filtersSorted;
 var profiles = { //Colour profiles for the filters
 "defaultMarker": {code: "#004387"},
 "redMarker": {code: "#ff0000"},
@@ -21,24 +21,37 @@ var profiles = { //Colour profiles for the filters
 };
 var filter_defaultValues = {"active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false}; //its active state, markers belonging to that filter, the boundings of a filter (area downloaded and cached)
 var filter = { //The filters, the query they trigger, their colour profile, their address and technical description as dictionary (JSON)
-0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]},  "color": profiles.redMarker, "address" : "health paediatrics"},
-1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "address" : "health midwife"},
-2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "address" : "health birth"},
-3: {"query": {"nwr": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.greenMarker, "address" : "activity playground"},
-4: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"access\"!=\"private\"]", "[\"name\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.darkgreenMarker, "address" : "activity park"},
-5: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]},  "color": profiles.blueMarker, "address" : "shop baby_goods"},
-6: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]},  "color": profiles.darkblueMarker, "address" : "shop toys"},
-7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]},  "color": profiles.lightblueMarker, "address" : "shop clothes"},
-8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "address" : "childcare kindergarten"},
-9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "address" : "activity zoo"},
-10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "address" : "childcare diaper"},
-11: {"query": {"node|way": ["[\"diaper:male\"=\"yes\"]"], "node|way_": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"], "node|way___": ["[\"diaper:wheelchair\"=\"yes\"]"]},  "color": profiles.greyMarker, "address" : "childcare diaper"},
-12: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.violetMarker, "address" : "eat cafe"},
-13: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightvioletMarker, "address" : "eat restaurant"}
+0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]},  "color": profiles.redMarker, "address" : "health paediatrics", "priorize": 1},
+1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "address" : "health midwife", "priorize": 1},
+2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "address" : "health birth", "priorize": 1},
+3: {"query": {"nwr": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.greenMarker, "address" : "activity playground", "priorize": 1},
+4: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"access\"!=\"private\"]", "[\"name\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.darkgreenMarker, "address" : "activity park", "priorize": 1},
+5: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]},  "color": profiles.blueMarker, "address" : "shop baby_goods", "priorize": 1},
+6: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]},  "color": profiles.darkblueMarker, "address" : "shop toys", "priorize": 1},
+7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]},  "color": profiles.lightblueMarker, "address" : "shop clothes", "priorize": 1},
+8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "address" : "childcare kindergarten", "priorize": 1},
+9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "address" : "activity zoo", "priorize": 1},
+10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "address" : "childcare diaper", "priorize": 3},
+11: {"query": {"node|way": ["[\"diaper:male\"=\"yes\"]"], "node|way_": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"], "node|way___": ["[\"diaper:wheelchair\"=\"yes\"]"]},  "color": profiles.greyMarker, "address" : "childcare diaper", "priorize": 2},
+12: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.violetMarker, "address" : "eat cafe", "priorize": 1},
+13: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightvioletMarker, "address" : "eat restaurant", "priorize": 1}
 };
 function triggerActivationOfFilters() {
 	clearTimeout(timerForFilter);
 	timerForFilter = setTimeout(activateFilters, 1000); // Activate fillters after every user action regarding the filter menu has taken place. Gives the user 1sec time to react (activate/deactivate one or more filters)
+}
+function compareFunction(a,b) {
+	return b-a;
+}
+function getSortedListOfFilters(priorizeList) {
+	var int, fltr;
+	var output = [];
+	for (int in priorizeList) {
+		for (fltr in priorizeList[int]) {
+			output.push(priorizeList[int][fltr]);
+		}
+	}
+	return output.join(",").split(","); //Workaround for a weird bug
 }
 function toggleLayers(id, toggle) {
 	// Removes/Adds cached filter data to the map
@@ -62,17 +75,16 @@ function toggleLayers(id, toggle) {
 }
 function activateFilters() {
 	hideFilterListOnMobile(); //Hides the menu on mobile devices when filter loads
-	for (var entry in filter) {
-		if (filter[entry].active) {
-			activeFilter[entry] = true;
-			toggleLayers(entry, 1) //Adds the POIs belonging to the filter to the map.
+	for (var fltr of filtersSorted) {
+		if (filter[fltr].active) {
+			activeFilter[fltr] = true;
+			toggleLayers(fltr, 1) //Adds the POIs belonging to the filter to the map.
 		} else {
-			if (activeFilter[entry]) {
-				delete activeFilter[entry];
-				toggleLayers(entry, 0) //Removes the POIs belonging to the filter from the map.
+			if (activeFilter[fltr]) {
+				delete activeFilter[fltr];
+				toggleLayers(fltr, 0) //Removes the POIs belonging to the filter from the map.
 			}
 		}
-		entry += 1;
 	}
 	loadPOIS(""); //Send request to overpass and interpret/render the results for the POI popup
 }
@@ -108,16 +120,20 @@ function setAllFilters() {
 function initFilters() {
 	//Initialize filters at startup of this webapp
 	var output = "";
+	var priorizeList = {}; //Dictionary used for priorizing filters like priorizing the 'restaurant' filter over the 'cafe' filter
 	var filtersGround = document.getElementById("filtersGround");
 	output += "<label style='color:#007399;'><input id='setFilters' onclick='setAllFilters()' type='checkbox'><span style='color:white;font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().FLTR_SELECTALL) + "</span></label>"; //Adds the necessary HTML for checkbox element of '(Un)check them all'
 	for (var id in filter) {
 		if (filter[id].layers == undefined) {
 			filter[id] = $.extend(true, filter[id], filter_defaultValues); //Initialize the JSON variable 'filter'.
 		}
+		if (!priorizeList[filter[id].priorize]) {priorizeList[filter[id].priorize] = [];}
+		priorizeList[filter[id].priorize].push(id);
 		var fltr = filter[id];
 		output += "<label><input id='filter" + String(id) + "' onclick='setFilter(" + String(id) + ")' type='checkbox'><span style='color:" + fltr.color.code + ";font-weight:bold;font-size:16px;'>&#9632; </span><span>" + String(getText().filtername[id]) + "</span></label>";  //Adds the necessary HTML for checkbox element of every single filter
 	}
 	filtersGround.innerHTML = output; //Add filters to the site (displaying them to user)
+	filtersSorted = getSortedListOfFilters(priorizeList);
 }
 function osmExpression(poi, value) {
 	var key, content, result;
@@ -174,10 +190,18 @@ function getSubtitle(poi) {
 }
 function groupIntoLayers(poi) {
 	// Guess which data received by Babykarte belongs to which filter
+	var tmp;
+	var priorizeList = {};
 	var marker = "";
 	var name = "";
 	marker = new Object();
-	for (var fltr in activeFilter) { //Goes throw all active filters. (Those the user has currently selected).
+	for (var id in activeFilter) {
+		if (!priorizeList[filter[id].priorize]) {priorizeList[filter[id].priorize] = [];}
+		priorizeList[filter[id].priorize].push(id);
+	}
+	tmp = getSortedListOfFilters(priorizeList)
+	for (var fltr in tmp) { //Goes throw all active filters. (Those the user has currently selected).
+		fltr = tmp[fltr];
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has..
 			type = query[type]; //Instead of its query name it gets the content of the type.
@@ -187,6 +211,7 @@ function groupIntoLayers(poi) {
 				marker.name = name || getText().filtername[fltr]; //Sets the subtitle which appears under the POI's name as text in grey
 				marker.address = filter[fltr].address;
 				marker.color = filter[fltr].color.code;
+				marker.priorize = filter[fltr].priorize;
 				return marker;
 			}
 		}
