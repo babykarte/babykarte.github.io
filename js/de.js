@@ -17,7 +17,7 @@ var refDe = {"site-map": {
 	"PDV_HOUSENUMBER_UNKNOWN": "?",
 	"PDV_COMMUNE_UNKNOWN": "?",
 	"PDV_TITLE_HOME": "Allgemein",
-	"PDV_TITLE_BABY": "Babytauglichkeit",
+	"PDV_TITLE_BABY": "Babyfreundlichkeit",
 	"PDV_TITLE_OH": "Öffnungszeiten",
 	"PDV_TITLE_CONTACT": "Kontakt",
 	"PDV_TITLE_MI": "Weitere informationen",
