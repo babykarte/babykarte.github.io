@@ -4,11 +4,17 @@ var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green",
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
 var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],	// diaper=yes|no|room|bench|undefined
-					"children": {"female" : {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
-								"male" : {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
+					"children": {"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
+								"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
 								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
-								"fee" : {"values": ["yes", "no", undefined]},		//		diaper:fee=yes|no|undefined
+								"fee": {"values": ["yes", "no", undefined]},		//		diaper:fee=yes|no|undefined
 								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|*
+								}
+							},
+				"changing_table": {"triggers": function(data) {delete data["diaper"];return data;}, "values": ["yes", "no", "room", "bench", undefined, "*"],
+					"children": {"fee": {"values": ["yes", "no", undefined]},
+								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},
+								"description": {"values": [undefined, "*"]}
 								}
 							},
 				"highchair": {"values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
@@ -295,12 +301,12 @@ function addrTab(poi, prefix , condition, symbol) {
 function babyTab_intern(poi, tag, values, data) {
 	for (var i in values) {
 		var title;
-		if (values[i] == "*" || poi.tags[tag] == values[i]) {
+		if (values[i] == "*" || poi.tags[tag] == values[i] || poi.tags[tag] && poi.tags[tag].indexOf(values[i]) > -1) {
 			var langcode = tag.replace("_", "").replace(":", "_");
 			if (values[i] == undefined) {
 				langcode += "_UNKNOWN";
 			} else {
-				langcode += "_" + values[i];
+				langcode += "_" + values[i].replace("_", "").replace(":", "_");;
 			}
 			title = getText("PDV_" + langcode.toUpperCase());
 			if (title != undefined) {
@@ -326,6 +332,7 @@ function babyTab(poi) {
 	for (var tag in babyData) {
 		var values = babyData[tag].values;
 		var children = babyData[tag].children;
+		if (babyData[tag].triggers) {data = babyData[tag].triggers(data);}
 		data[tag] = {};
 		data[tag] = babyTab_intern(poi, tag, values, data[tag]);
 		data[tag].children = {};
@@ -337,6 +344,8 @@ function babyTab(poi) {
 				delete data[tag].children[child];
 			}
 		}
+	}
+	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
 		} else {
