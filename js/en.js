@@ -45,7 +45,7 @@ var refEn = {"site-map": {
 	"PDV_STROLLER_YES": "Location is stroller friendly",
 	"PDV_STROLLER_LIMITED": "Location is partially stroller friendly",
 	"PDV_STROLLER_NO": "Location isn't stroller friendly",
-	"PDV_STROLLER_UNKNOWN": "Stroller friendlyness unknown",
+	"PDV_STROLLER_UNKNOWN": "Stroller friendliness unknown",
 	"PDV_BABYFEEDING_YES": "Place for (breast-)feeding available",
 	"PDV_BABYFEEDING_NO": "No place for (breast-)feeding available",
 	"PDV_BABYFEEDING_ROOM": "Room for (breast-)feeding available",

@@ -31,8 +31,8 @@ var filter = { //The filters, the query they trigger, their colour profile, thei
 7: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]},  "color": profiles.lightblueMarker, "address" : "shop clothes", "priorize": 1},
 8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "address" : "childcare kindergarten", "priorize": 1},
 9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "address" : "activity zoo", "priorize": 1},
-10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "address" : "childcare diaper", "priorize": 3},
-11: {"query": {"node|way": ["[\"diaper:male\"=\"yes\"]"], "node|way_": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"], "node|way___": ["[\"diaper:wheelchair\"=\"yes\"]"]},  "color": profiles.greyMarker, "address" : "childcare diaper", "priorize": 2},
+10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"], "node|way_": ["[\"changing_table\"]", "[\"changing_table\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "address" : "childcare diaper", "priorize": 3},
+11: {"query": {"node|way": ["[\"diaper:male\"=\"yes\"]"], "node|way_": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"], "node|way___": ["[\"diaper:wheelchair\"=\"yes\"]"], "node|way____": ["[\"changing_table:location\"~\"male_toilet|unisex_toilet|dedicated_room|room|wheelchair_toilet|sales_area\"]"]},  "color": profiles.greyMarker, "address" : "childcare diaper", "priorize": 2},
 12: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.violetMarker, "address" : "eat cafe", "priorize": 1},
 13: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightvioletMarker, "address" : "eat restaurant", "priorize": 1}
 };
