@@ -32,7 +32,7 @@ var refDe = {"site-map": {
 	"PDV_DIAPER_UNKNOWN": "Verfügbarkeit eines Wickeltisches unbekannt",
 	"PDV_CHANGINGTABLE_YES": "Wickeltisch vorhanden",
 	"PDV_CHANGINGTABLE_NO": "Wickeltisch nicht vorhanden",
-	"PDV_CHANGINGTABLE_LOCATION_ROOM": "im Mehrzweckraum",
+	"PDV_CHANGINGTABLE_LOCATION_ROOM": "in einem Mehrzweckraum",
 	"PDV_CHANGINGTABLE_LOCATION_DEDICATEDROOM": "im Wickelraum",
 	"PDV_CHANGINGTABLE_LOCATION_MALETOILET": "in der Herrentoilette",
 	"PDV_CHANGINGTABLE_LOCATION_FEMALETOILET": "in der Damentoilette",
