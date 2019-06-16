@@ -32,7 +32,7 @@ var filter = { //The filters, the query they trigger, their colour profile, thei
 8: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "address" : "childcare kindergarten", "priorize": 1},
 9: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "address" : "activity zoo", "priorize": 1},
 10: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"], "node|way_": ["[\"changing_table\"]", "[\"changing_table\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "address" : "childcare diaper", "priorize": 3},
-11: {"query": {"node|way": ["[\"diaper:male\"=\"yes\"]"], "node|way_": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"], "node|way___": ["[\"diaper:wheelchair\"=\"yes\"]"], "node|way____": ["[\"changing_table:location\"~\"male_toilet|unisex_toilet|dedicated_room|room|wheelchair_toilet|sales_area\"]"]},  "color": profiles.greyMarker, "address" : "childcare diaper", "priorize": 2},
+11: {"query": {"node|way": ["[\"diaper:male\"=\"yes\"]"], "node|way_": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"], "node|way___": ["[\"diaper:wheelchair\"=\"yes\"]"], "node|way____": ["[\"changing_table\"]","[\"changing_table:location\"!=\"female_toilet\"]"]},  "color": profiles.greyMarker, "address" : "childcare diaper", "priorize": 2},
 12: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.violetMarker, "address" : "eat cafe", "priorize": 1},
 13: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightvioletMarker, "address" : "eat restaurant", "priorize": 1}
 };
@@ -182,7 +182,8 @@ function getSubtitle(poi) {
 	var json = getText().filtertranslations;
 	for (var i in json) {
 		var key = i.split("=");
-		if (poi.tags[key[0]] == key[1]) {
+		if (!poi.tags[key[0]]) {continue;}
+		if (poi.tags[key[0]] && poi.tags[key[0]] == key[1]) {
 			return getText().filtertranslations[i];
 		}
 	}

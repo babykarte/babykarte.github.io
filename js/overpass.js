@@ -439,6 +439,7 @@ function loadPOIS(e, post) {
 			var popupContent = "";
 			var popupContent_header = "";
 			poi = osmDataAsJson.elements[poi];
+			if (!poi.tags) {poi.tags = {};}
 			if (poi.center != undefined) {
 				poi.lat = poi.center.lat;
 				poi.lon = poi.center.lon;
