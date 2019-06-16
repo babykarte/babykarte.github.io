@@ -1,13 +1,20 @@
 var zoomLevel = "";
+var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
 var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],	// diaper=yes|no|room|bench|undefined
-					"children": {"female" : {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
-								"male" : {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
+					"children": {"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
+								"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
 								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
-								"fee" : {"values": ["yes", "no", undefined]},		//		diaper:fee=yes|no|undefined
+								"fee": {"values": ["yes", "no", undefined]},		//		diaper:fee=yes|no|undefined
 								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|*
+								}
+							},
+				"changing_table": {"triggers": function(data) {delete data["diaper"];return data;}, "values": ["yes", "no", "room", "bench", undefined, "*"],
+					"children": {"fee": {"values": ["yes", "no", undefined]},
+								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},
+								"description": {"values": [undefined, "*"]}
 								}
 							},
 				"highchair": {"values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
@@ -33,6 +40,11 @@ var ratingData = {"diaper": {"multiplicator": 4,	// diaper=* 4
 							{"yes": 2,				//     yes 2
 							"no": 2}				//     no  2
 						},
+				"changing_table": {"multiplicator": 4,	// changing_table=* 4
+						"values" :
+							{"yes": 2,				//     yes 2
+							"no": 2}				//     no  2
+							},
 				"highchair": {"multiplicator": 4,	// highchair=* 4  (POIs where you can get meal or something simliar)
 						"values" :
 							{"yes": 2,				//     yes 2
@@ -294,12 +306,12 @@ function addrTab(poi, prefix , condition, symbol) {
 function babyTab_intern(poi, tag, values, data) {
 	for (var i in values) {
 		var title;
-		if (values[i] == "*" || poi.tags[tag] == values[i]) {
+		if (values[i] == "*" || poi.tags[tag] == values[i] || poi.tags[tag] && poi.tags[tag].indexOf(values[i]) > -1) {
 			var langcode = tag.replace("_", "").replace(":", "_");
 			if (values[i] == undefined) {
 				langcode += "_UNKNOWN";
 			} else {
-				langcode += "_" + values[i];
+				langcode += "_" + values[i].replace("_", "").replace(":", "_");;
 			}
 			title = getText("PDV_" + langcode.toUpperCase());
 			if (title != undefined) {
@@ -325,6 +337,7 @@ function babyTab(poi) {
 	for (var tag in babyData) {
 		var values = babyData[tag].values;
 		var children = babyData[tag].children;
+		if (babyData[tag].triggers) {data = babyData[tag].triggers(data);}
 		data[tag] = {};
 		data[tag] = babyTab_intern(poi, tag, values, data[tag]);
 		data[tag].children = {};
@@ -336,6 +349,8 @@ function babyTab(poi) {
 				delete data[tag].children[child];
 			}
 		}
+	}
+	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
 		} else {
@@ -403,7 +418,6 @@ function addMarkerIcon(poi, marker) {
 	return marker;
 }
 function loadPOIS(e, post) {
-	var url = "https://overpass-api.de/api/interpreter";
 	hideFilterListOnMobile();
 	progressbar(50);
 	//Main function of POI loading.
@@ -418,18 +432,14 @@ function loadPOIS(e, post) {
 	}
 	//Connect to OSM server
 	post = "[out:json][timeout:15];" + post + "out body center;";
-	$.ajax({
-		type: "POST",
-		url: url,
-		data: post,
-		fail: function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();},
-		success: function (osmDataAsJson) {
+	getData(url, "json", post, undefined, function (osmDataAsJson) {
 		//Go throw all elements (ways, relations, nodes) sent by Overpass
 		for (var poi in osmDataAsJson.elements) {
 			var marker;
 			var popupContent = "";
 			var popupContent_header = "";
 			poi = osmDataAsJson.elements[poi];
+			if (!poi.tags) {poi.tags = {};}
 			if (poi.center != undefined) {
 				poi.lat = poi.center.lat;
 				poi.lon = poi.center.lon;
@@ -442,7 +452,7 @@ function loadPOIS(e, post) {
 			var details_data = {"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address>${ addrTrigger(poi, marker) }</address>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 			"baby": {"content": `${babyTab(poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"content": `${ parseOpening_hours(poi.tags["opening_hours"]) || "NODISPLAY" }`, "symbol": "/images/clock.svg", "title": getText().PDV_TITLE_OH, "active": true},
-			"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "mailto:", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
+			"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "tel:", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "mailto:", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
 			"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
 			};
 			for (var entry in details_data) {
@@ -486,7 +496,7 @@ function loadPOIS(e, post) {
 			}
 		}
 		progressbar();
-	}});
+	}, "POST");
 }
 function getStateFromHash() {
 	var hash = location.hash;
