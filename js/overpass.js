@@ -3,7 +3,51 @@ var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
-var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],	// diaper=yes|no|room|bench|undefined
+var babyData = {"leisure": {"nameInherit": false, "values": ["playground"],
+					"children": {"playground:slide": {"values": ["yes"]},
+								"playground:swing": {"values": ["yes"]},
+								"playground:climbingframe": {"values": ["yes"]},
+								"playground:sandpit": {"values": ["yes"]},
+								"playground:seesaw": {"values": ["yes"]},
+								"playground:springy": {"values": ["yes"]},
+								"playground:playhouse": {"values": ["yes"]},
+								"playground:roundabout": {"values": ["yes"]},
+								"playground:multi_play": {"values": ["yes"]},
+								"playground:basketswing": {"values": ["yes"]},
+								"playground:structure": {"values": ["yes"]},
+								"playground:zipwire": {"values": ["yes"]},
+								"playground:balancebeam": {"values": ["yes"]},
+								"playground:water": {"values": ["yes"]},
+								"playground:trampoline": {"values": ["yes"]},
+								"playground:chain_ladder": {"values": ["yes"]},
+								"playground:hopscotch": {"values": ["yes"]},
+								"playground:climb_wall": {"values": ["yes"]},
+								"playground:tunnel_tube": {"values": ["yes"]},
+								"playground:chess_table": {"values": ["yes"]},
+								"playground:tree_house": {"values": ["yes"]},
+								"playground:basketball_backboards": {"values": ["yes"]},
+								"playground:cushion": {"values": ["yes"]},
+								"playground:Skate_equipment": {"values": ["yes"]},
+								"playground:horizontal_bar": {"values": ["yes"]},
+								"playground:climbingwall": {"values": ["yes"]},
+								"playground:balance_beam": {"values": ["yes"]},
+								"playground:basketball_backboard": {"values": ["yes"]},
+								"playground:exercise": {"values": ["yes"]},
+								"playground:skate_equipment": {"values": ["yes"]},
+								"playground:aerialrotator": {"values": ["yes"]},
+								"playground:stepping_stones": {"values": ["yes"]},
+								"playground:table_tennis": {"values": ["yes"]},
+								"playground:surface": {"values": ["yes"]},
+								"playground:four_square": {"values": ["yes"]},
+								"playground:sledding": {"values": ["yes"]},
+								"playground:spinner": {"values": ["yes"]},
+								"playground:activitypanel": {"values": ["yes"]},
+								"playground:basketrotator": {"values": ["yes"]},
+								"playground:splash_pad": {"values": ["yes"]},
+								"playground:playship": {"values": ["yes"]}
+								}
+							},
+				"diaper": {"nameInherit": true, "values": ["yes", "no", "room", "bench", undefined, "*"],	// diaper=yes|no|room|bench|undefined
 					"children": {"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
 								"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
 								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
@@ -11,24 +55,24 @@ var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "
 								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|*
 								}
 							},
-				"changing_table": {"triggers": function(data) {delete data["diaper"];return data;}, "values": ["yes", "no", "room", "bench", undefined, "*"],
+				"changing_table": {"nameInherit": true, "triggers": function(data) {delete data["diaper"];return data;}, "values": ["yes", "no", "room", "bench", undefined, "*"],
 					"children": {"fee": {"values": ["yes", "no", undefined]},
 								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},
 								"description": {"values": [undefined, "*"]}
 								}
 							},
-				"highchair": {"values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
-				"stroller": {"values": ["yes", "limited", "no", undefined],				// stroller=yes|limited|no|undefined
+				"highchair": {"nameInherit": true, "values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
+				"stroller": {"nameInherit": true, "values": ["yes", "limited", "no", undefined],				// stroller=yes|limited|no|undefined
 					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|*
 							},
-				"kids_area": {"values": ["yes", "no", undefined],						// kids_area=yes|no|undefined
+				"kids_area": {"nameInherit": true, "values": ["yes", "no", undefined],						// kids_area=yes|no|undefined
 					"children": {"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
 								"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
 								"supervised": {"values": ["yes", "no", undefined]},		//		kids_area:supervised=yes|no|undefined
 								"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
 								}
 							},
-				"baby_feeding": {"values": ["yes", "no", "room", undefined],			// baby_feeding=yes|no|room|undefined
+				"baby_feeding": {"nameInherit": true, "values": ["yes", "no", "room", undefined],			// baby_feeding=yes|no|room|undefined
 					"children": {"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
 								"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
 								}
@@ -342,8 +386,10 @@ function babyTab(poi) {
 		data[tag] = babyTab_intern(poi, tag, values, data[tag]);
 		data[tag].children = {};
 		for (var child in children) {
+			var childname = child;
 			data[tag].children[child] = {};
-			data[tag].children[child] = babyTab_intern(poi, tag + ":" + child,  babyData[tag].children[child].values, data[tag].children[child])
+			if (babyData[tag].nameInherit) {childname = tag + ":" + child}
+			data[tag].children[child] = babyTab_intern(poi, childname,  babyData[tag].children[child].values, data[tag].children[child])
 			
 			if (data[tag].children[child].title == "NODISPLAY") {
 				delete data[tag].children[child];
