@@ -93,7 +93,7 @@ var refFr = {"site-map": {
 	"BTN_APPLY_FILTERS": "Appliquer des filtres",
 	"LNK_IMPRESS": "A propos",
 	"LNK_IMPRESS_URL": "/impressum.html#fr",
-	"LNK_PP_SITE": "Vie privée (v.2)",
+	"LNK_PP_SITE": "Politique de confidentialité (v.2)",
 	"LNK_PP_SITE_URL": "/privacypolicy-fr.html",
 	"LNK_GITHUB": "Sur Github",
 	"LNK_OSMWIKI": "Wiki OSM",
