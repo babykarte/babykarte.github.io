@@ -284,8 +284,7 @@ function parseOpening_hours(value) {
    	return value
 }
 function addrTrigger_intern(poi, marker) {
-	var popupElem = document.getElementById("popup" + poi.classId);
-	if (popupElem.innerHTML.indexOf("%data_address%") > -1) {
+	if (marker.popupContent.indexOf("%data_address%") > -1) {
 		$.get("https://nominatim.openstreetmap.org/reverse?accept-language=" + languageOfUser + "&format=json&osm_type=" + String(poi.type)[0].toUpperCase() + "&osm_id=" + String(poi.id), function(data, status, xhr, trash) {
 			var content = "";
 			var address = data["address"];
@@ -298,12 +297,13 @@ function addrTrigger_intern(poi, marker) {
 			} else {
 				content = "<i><span style='color:red;'>" + getText().PDV_ADDRESS_UNKNOWN + "</span></i>";
 			}
-			popupElem.innerHTML = popupElem.innerHTML.replace("%data_address%", content);
+			marker.popupContent = marker.popupContent.replace("%data_address%", content);
+			marker.bindPopup(marker.popupContent);
 		});
 	}
 }
 function addrTrigger(poi, marker) {
-	var timeout = setTimeout(addrTrigger_intern, 200, poi, marker);
+	var timeout = setTimeout(addrTrigger_intern, 500, poi, marker);
 	return "%data_address%";
 }
 function toggleTab(bla, id) {
@@ -454,11 +454,6 @@ function createDialog(marker) {
 	var popupContent = "";
 	var popupContent_header = "";
 	var poi = marker.data;
-	var popupElem = document.getElementById("popup" + poi.classId);
-	if (!popupElem) {
-	popupElem = document.createElement("div");
-	popupElem.setAttribute("id", "popup" + poi.classId);
-	document.getElementById("map").appendChild(popupElem);
 	var details_data = {"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address id='address${poi.classId}'>${addrTrigger(poi, marker)}</address>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 	"baby": {"content": `${babyTab(marker, poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
 	"opening_hours": {"content": `${ parseOpening_hours(poi.tags["opening_hours"]) || "NODISPLAY" }`, "symbol": "/images/clock.svg", "title": getText().PDV_TITLE_OH, "active": true},
@@ -498,10 +493,9 @@ function createDialog(marker) {
 	}
 	popupContent_header += "</div>";
 	marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + getText().LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + getText().LNK_OSM_REPORT + "</a>";
-	popupElem.innerHTML = marker.popupContent;
-	}
-	setTimeout(function() {marker.bindPopup(popupElem.innerHTML);marker.openPopup()}, 300, marker, popupElem);
+	marker.bindPopup(marker.popupContent);
 	marker.openPopup();
+	objref = marker;
 } 
 function loadPOIS(e, post) {
 	hideFilterListOnMobile();
@@ -534,7 +528,7 @@ function loadPOIS(e, post) {
 			marker = addMarkerIcon(poi, marker);
 			marker.data = poi;
 			marker.data.classId = String(poi.type)[0].toUpperCase() + String(poi.id);
-			marker.on("click", function(marker) {createDialog(marker);});
+			marker.once("click", function(marker) {createDialog(marker);});
 			//Add marker to map
 			map.addLayer(marker);
 			/*if (poi.lat == saved_lat && poi.lon == saved_lon) {
