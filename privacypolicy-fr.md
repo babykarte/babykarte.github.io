@@ -7,7 +7,7 @@ Babykarte n'est pas un fournisseur de cartes ou une base de données mais un por
 
 La liste suivante indique quels tiers sont utilisés, à quoi ils servent et où vous pouvez trouver leur politique de confidentialité.
 
-## Thiers utilisés
+## Tiers utilisés
 Ce site est situé sur les serveurs de GitHub afin que Babykarte soit accessible avec un navigateur. C'est pourquoi GitHub reçoit certaines données concernant nos utilisateurs, par exemple l'adresse IP, le système d'exploitation et le navigateur utilisé (voir ci-dessous). La manière de gérer les données collectées par GitHub peut être consultée dans sa[Politique de confidentialité] (https://help.github.com/en/articles/github-privacy-statement).
 
 Komoot est utilisé comme moteur de recherche. Lorsque vous utilisez le champ de recherche pour rechercher un lieu, après le troisième caractère Babykarte enverra la requête et la langue de votre système à Komoot. La façon dont Komoot traite les données qu'elle reçoit de Babykarte peut être lue dans sa[Politique de confidentialité] (https://www.komoot.de/privacy).
@@ -40,7 +40,7 @@ Babykarte ne collecte pas les données des utilisateurs, mais les redirige vers 
 
 Ci-dessous vous trouverez une description des données que des tiers traitent et peuvent stocker.
 
-- Addresse IP (Publique)
+- Adresse IP (Publique)
   - L'adresse de votre routeur. Le routeur obtient son adresse auprès de votre fournisseur d'accès Internet. Il ne s'agit pas de l'adresse individuelle de votre ordinateur, smartphone, etc. L'adresse IP publique peut être enregistrée par les sites Web que vous visitez.
   - Normalement, votre fournisseur d'accès Internet vous fournit une nouvelle adresse IP après 24 heures. Les sites Web qui ont sauvegardé votre adresse IP précédente ne peuvent plus vous identifier par simple relais sur votre adresse IP.
   - Le routeur entre votre ordinateur et Internet agit donc comme un pare-feu.
