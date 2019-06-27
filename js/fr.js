@@ -14,7 +14,7 @@ var refFr = {"site-map": {
 	"PDV_HOUSENUMBER_UNKNOWN": "?",
 	"PDV_ZIPCODE_UNKNOWN": "Code postal inconnu",
 	"PDV_TITLE_HOME": "General",
-	"PDV_TITLE_BABY": "Baby friendliness",
+	"PDV_TITLE_BABY": "Équipements pour bébés",
 	"PDV_TITLE_OH": "Horaires d'ouverture",
 	"PDV_TITLE_CONTACT": "Contact",
 	"PDV_TITLE_MI": "Plus d'informations",
