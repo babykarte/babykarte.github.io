@@ -3,32 +3,32 @@ var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
-var babyData = {"diaper": {"values": ["yes", "no", "room", "bench", undefined, "*"],	// diaper=yes|no|room|bench|undefined
+var babyData = {"diaper": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
 					"children": {"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
 								"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
 								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
-								"fee": {"values": ["yes", "no", undefined]},		//		diaper:fee=yes|no|undefined
-								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|*
+								"fee": {"values": ["yes", "no", undefined]},			//		diaper:fee=yes|no|undefined
+								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|* (implicit specification)
 								}
 							},
-				"changing_table": {"triggers": function(data) {delete data["diaper"];return data;}, "values": ["yes", "no", "room", "bench", undefined, "*"],
-					"children": {"fee": {"values": ["yes", "no", undefined]},
-								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},
-								"description": {"values": [undefined, "*"]}
+				"changing_table": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN && data["diaper"] != getText().PDV_DIAPER_UNKNOWN){delete data["changing_table"];}if(data["diaper"] == getText().PDV_DIAPER_UNKNOWN && local.title != getText().PDV_CHANGINGTABLE_UNKNOWN){delete data["diaper"];};return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
+					"children": {"fee": {"values": ["yes", "no", undefined]},	//changing_table:fee=yes|no|undefined
+								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},	//changing_table:location=wheelchair_toilet|female_toilet|male_toilet|unisex_toilet|dedicated_room|room|sales_area|undefined
+								"description": {"values": [undefined, "*"]}	//changing_table:description=undefined|* (implicit specification)
 								}
 							},
-				"highchair": {"values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
-				"stroller": {"values": ["yes", "limited", "no", undefined],				// stroller=yes|limited|no|undefined
-					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|*
+				"highchair": {"nameInherit": true, "applyfor": {"eat": true}, "values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
+				"stroller": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
+					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|* (implicit specification) (implicit specification)
 							},
-				"kids_area": {"values": ["yes", "no", undefined],						// kids_area=yes|no|undefined
+				"kids_area": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
 					"children": {"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
 								"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
 								"supervised": {"values": ["yes", "no", undefined]},		//		kids_area:supervised=yes|no|undefined
 								"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
 								}
 							},
-				"baby_feeding": {"values": ["yes", "no", "room", undefined],			// baby_feeding=yes|no|room|undefined
+				"baby_feeding": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
 					"children": {"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
 								"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
 								}
@@ -303,7 +303,8 @@ function addrTab(poi, prefix , condition, symbol) {
 	if (result.startsWith("www.") && !prefix.startsWith("mail")) {result = "http://" + result}
 	return "<div class='grid-container'><a target='_blank' href='" + prefix  + result + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + result + "'>" + result + "</a></div>\n";
 }
-function babyTab_intern(poi, tag, values, data) {
+function babyTab_intern(marker, poi, tag, values, data, parent) {
+	if (!parent) {parent = tag;}
 	for (var i in values) {
 		var title;
 		if (values[i] == "*" || poi.tags[tag] == values[i] || poi.tags[tag] && poi.tags[tag].indexOf(values[i]) > -1) {
@@ -313,7 +314,7 @@ function babyTab_intern(poi, tag, values, data) {
 			} else {
 				langcode += "_" + values[i].replace("_", "").replace(":", "_");;
 			}
-			title = getText("PDV_" + langcode.toUpperCase());
+			if (babyData[parent].applyfor[marker.address.split(" ")[0]]) {title = getText("PDV_" + langcode.toUpperCase());}
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]];
@@ -331,24 +332,26 @@ function babyTab_intern(poi, tag, values, data) {
 	}
 	return data
 }
-function babyTab(poi) {
+function babyTab(marker, poi) {
 	var data = {};
 	var output = "";
 	for (var tag in babyData) {
 		var values = babyData[tag].values;
 		var children = babyData[tag].children;
-		if (babyData[tag].triggers) {data = babyData[tag].triggers(data);}
 		data[tag] = {};
-		data[tag] = babyTab_intern(poi, tag, values, data[tag]);
+		data[tag] = babyTab_intern(marker, poi, tag, values, data[tag]);
 		data[tag].children = {};
 		for (var child in children) {
 			data[tag].children[child] = {};
-			data[tag].children[child] = babyTab_intern(poi, tag + ":" + child,  babyData[tag].children[child].values, data[tag].children[child])
+			data[tag].children[child] = babyTab_intern(marker, poi, tag + ":" + child,  babyData[tag].children[child].values, data[tag].children[child], tag)
 			
 			if (data[tag].children[child].title == "NODISPLAY") {
 				delete data[tag].children[child];
 			}
 		}
+	}
+	for (var tag in babyData) {
+		if (babyData[tag].triggers) {data = babyData[tag].triggers(data, data[tag]);}
 	}
 	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
@@ -450,7 +453,7 @@ function loadPOIS(e, post) {
 			poi = ratePOI(marker, poi);
 			marker = addMarkerIcon(poi, marker);
 			var details_data = {"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address>${ addrTrigger(poi, marker) }</address>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
-			"baby": {"content": `${babyTab(poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
+			"baby": {"content": `${babyTab(marker, poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
 			"opening_hours": {"content": `${ parseOpening_hours(poi.tags["opening_hours"]) || "NODISPLAY" }`, "symbol": "/images/clock.svg", "title": getText().PDV_TITLE_OH, "active": true},
 			"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "tel:", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "mailto:", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
 			"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
