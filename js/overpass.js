@@ -4,7 +4,7 @@ var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow", "playground": "color-green"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
-var babyData = {"leisure": {"nameInherit": false, "values": ["playground", undefined],
+var babyData = {"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined],
 					"children": {"playground:slide": {"values": ["yes", undefined]},
 								"playground:swing": {"values": ["yes", undefined]},
 								"playground:climbingframe": {"values": ["yes", undefined]},
@@ -32,32 +32,32 @@ var babyData = {"leisure": {"nameInherit": false, "values": ["playground", undef
 								"playground:Skate_equipment": {"values": ["yes", undefined]}
 								}
 							},
-				"diaper": {"nameInherit": true, "values": ["yes", "no", "room", "bench", undefined, "*"],	// diaper=yes|no|room|bench|undefined
+				"diaper": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
 					"children": {"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
 								"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
 								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
-								"fee": {"values": ["yes", "no", undefined]},		//		diaper:fee=yes|no|undefined
-								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|*
+								"fee": {"values": ["yes", "no", undefined]},			//		diaper:fee=yes|no|undefined
+								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|* (implicit specification)
 								}
 							},
-				"changing_table": {"nameInherit": true, "triggers": function(data) {delete data["diaper"];return data;}, "values": ["yes", "no", "room", "bench", undefined, "*"],
-					"children": {"fee": {"values": ["yes", "no", undefined]},
-								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},
-								"description": {"values": [undefined, "*"]}
+				"changing_table": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN && data["diaper"] != getText().PDV_DIAPER_UNKNOWN){delete data["changing_table"];}if(data["diaper"] == getText().PDV_DIAPER_UNKNOWN && local.title != getText().PDV_CHANGINGTABLE_UNKNOWN){delete data["diaper"];};return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
+					"children": {"fee": {"values": ["yes", "no", undefined]},	//changing_table:fee=yes|no|undefined
+								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},	//changing_table:location=wheelchair_toilet|female_toilet|male_toilet|unisex_toilet|dedicated_room|room|sales_area|undefined
+								"description": {"values": [undefined, "*"]}	//changing_table:description=undefined|* (implicit specification)
 								}
 							},
-				"highchair": {"nameInherit": true, "values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
-				"stroller": {"nameInherit": true, "values": ["yes", "limited", "no", undefined],				// stroller=yes|limited|no|undefined
-					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|*
+				"highchair": {"nameInherit": true, "applyfor": {"eat": true}, "values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
+				"stroller": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
+					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|* (implicit specification) (implicit specification)
 							},
-				"kids_area": {"nameInherit": true, "values": ["yes", "no", undefined],						// kids_area=yes|no|undefined
+				"kids_area": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
 					"children": {"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
 								"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
 								"supervised": {"values": ["yes", "no", undefined]},		//		kids_area:supervised=yes|no|undefined
 								"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
 								}
 							},
-				"baby_feeding": {"nameInherit": true, "values": ["yes", "no", "room", undefined],			// baby_feeding=yes|no|room|undefined
+				"baby_feeding": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
 					"children": {"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
 								"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
 								}
@@ -333,7 +333,8 @@ function addrTab(poi, prefix , condition, symbol) {
 	if (result.startsWith("www.") && !prefix.startsWith("mail")) {result = "http://" + result}
 	return "<div class='grid-container'><a target='_blank' href='" + prefix  + result + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + result + "'>" + result + "</a></div>\n";
 }
-function babyTab_intern(marker, poi, tag, values, data) {
+function babyTab_intern(marker, poi, tag, values, data, parent) {
+	if (!parent) {parent = tag;}
 	for (var i in values) {
 		var title;
 		if (values[i] == "*" || poi.tags[tag] == values[i] || poi.tags[tag] && poi.tags[tag].indexOf(values[i]) > -1) {
@@ -343,7 +344,7 @@ function babyTab_intern(marker, poi, tag, values, data) {
 			} else {
 				langcode += "_" + values[i].replace("_", "").replace(":", "_");;
 			}
-			if (marker.address.startsWith("eat")) {title = getText("PDV_" + langcode.toUpperCase());}
+			if (babyData[parent].applyfor[marker.address.split(" ")[0]]) {title = getText("PDV_" + langcode.toUpperCase());}
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]];
@@ -367,7 +368,6 @@ function babyTab(marker, poi) {
 	for (var tag in babyData) {
 		var values = babyData[tag].values;
 		var children = babyData[tag].children;
-		if (babyData[tag].triggers) {data = babyData[tag].triggers(data);}
 		data[tag] = {};
 		data[tag] = babyTab_intern(marker, poi, tag, values, data[tag]);
 		data[tag].children = {};
@@ -375,12 +375,15 @@ function babyTab(marker, poi) {
 			var childname = child;
 			data[tag].children[child] = {};
 			if (babyData[tag].nameInherit) {childname = tag + ":" + child}
-			data[tag].children[child] = babyTab_intern(marker, poi, childname,  babyData[tag].children[child].values, data[tag].children[child])
+			data[tag].children[child] = babyTab_intern(marker, poi, childname,  babyData[tag].children[child].values, data[tag].children[child], tag)
 			
 			if (data[tag].children[child].title == "NODISPLAY") {
 				delete data[tag].children[child];
 			}
 		}
+	}
+	for (var tag in babyData) {
+		if (babyData[tag].triggers) {data = babyData[tag].triggers(data, data[tag]);}
 	}
 	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
@@ -396,6 +399,7 @@ function babyTab(marker, poi) {
 			output = output.replace("%content", childrenHTML);
 		}
 	}
+	objref = data;
 	return output;
 }
 function ratePOI(marker, poi) {
@@ -495,7 +499,6 @@ function createDialog(marker) {
 	marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + getText().LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + getText().LNK_OSM_REPORT + "</a>";
 	marker.bindPopup(marker.popupContent);
 	marker.openPopup();
-	objref = marker;
 } 
 function loadPOIS(e, post) {
 	hideFilterListOnMobile();
