@@ -165,9 +165,34 @@ label {
 .color-grey {
 	color:#858585;
 }
+.dropdown {
+	padding:5px;
+	display:inline-block;
+}
+.dropdown-menu {
+	background-color:white;
+	padding:5px;
+	display:none;
+	height:100px;
+	width:50px;
+	z-index:2;
+	position:absolute;
+}
+.dropdown-menu:hover {
+	display:block;
+}
+.dropdown-menu a {
+	display:block;
+	text-align:center;
+	border-bottom:2px solid lightblue;
+}
+.dropdown:hover ~ .dropdown-menu {
+	display:block;
+}
 #menubutton {
 	display:none;
-	margin-top:12px; 
+	font-size:24px;
+	margin-top:8px;
 	margin-left:10px;
 	margin-right:-10px;
 	width:50px;
@@ -243,7 +268,7 @@ section {
 	display:block;
 }
 .layermenu {
-	height:75px;
+	height:80px;
 	width:100%;
 }
 .lang-select {

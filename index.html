@@ -3,31 +3,35 @@
   <head>
     <title>Babykarte - Der Stadtplan für Eltern von Babys und Kleinkindern</title>
     <meta charset='utf-8'>
-    <meta name="description" content="Gibt es hier irgendwo einen Wickeltisch? Welches Café in der Hamburger Innenstadt hat eine Spielecke? Wo ist der nächste Spielplatz? ✔ Die Babykarte weiß es"> 
+    <meta name='description' content='Gibt es hier irgendwo einen Wickeltisch? Welches Café in der Hamburger Innenstadt hat eine Spielecke? Wo ist der nächste Spielplatz? ✔ Die Babykarte weiß es'> 
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
     <link rel='stylesheet' href='https://unpkg.com/leaflet@1.0.3/dist/leaflet.css' /> <!--https://policies.google.com/privacy#infocollect-->
     <link rel='stylesheet' href='/css/style.css' />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel='icon' href='/favicon.ico' type='image/x-icon'>
   </head>
   <body id='site-map'>
   	<div id='progressbar'></div>
   	<div class='info'><div id='infoPopup'></div></div>
   	<section>
-  	<div class="layermenu">
-  		<div class="lang-select">
-  			<a href="#" onclick="loadLang(this, 'en');"><img class="small-icon" alt="EN" src="/images/en.svg"></a> <a href="#" onclick="loadLang(this, 'de');"><img class="small-icon" alt="DE" src="/images/de.svg"></a> <a href='#' onclick='loadLang(this, "fr");'><img class='small-icon' alt='FR' src='/images/fr.svg' /></a> 
-  		<a href="/impressum.html#de" id="lnk-impress" target="_blank">Impressum</a><a href="/privacypolicy-de.html" id="linkToPP" target="_blank;">Datenschutz (v.1)</a></div>
-     	<div id="searchgroup">
-     		<div style="display:flex;max-height:50px;">
-     			<img id="menubutton" src="/images/menu.svg" onclick="togglemenu();mobileTrue();" alt="Menü"> <input type="text" onclick="geocode()" placeholder="Ort" id="searchfield">
+  	<div class='layermenu'>
+  		<div class='lang-select'>
+  			<div class='dropdown'><img class='small-icon' src='/images/www.svg' /></div>
+  			<div class='dropdown-menu'>
+  				<a href='#' onclick='loadLang(this, "en");'><img class='small-icon' alt='EN' src='/images/en.svg'></a>
+  				<a href='#' onclick='loadLang(this, "de");'><img class='small-icon' alt='DE' src='/images/de.svg'></a>
+  				<a href='#' onclick='loadLang(this, "fr");'><img class='small-icon' alt='FR' src='/images/fr.svg' /></a></div>
+  		<a href='/impressum.html#de' id='lnk-impress' target='_blank'>Impressum</a><a href='/privacypolicy-de.html' id='linkToPP' target='_blank;'>Datenschutz (v.1)</a></div>
+     	<div id='searchgroup'>
+     		<div style='display:flex;max-height:50px;'>
+     			<span id='menubutton' onclick='togglemenu();mobileTrue()'>&#9776;</span><input type='text' onclick='geocode()' placeholder='Ort' id='searchfield'>
      		</div>
 		</div>
-		<div id="filtersGround"></div>  
-        <a href="https://github.com/Discostu36/Babykarte" target="_blank" id="linkToGitHub">Auf Github</a>
-        <a href="https://wiki.openstreetmap.org/wiki/Baby-Karte" target="_blank" id="linkToOSMWiki">OSM Wiki</a>
+		<div id='filtersGround'></div>  
+        <a href='https://github.com/Discostu36/Babykarte' target='_blank' id='linkToGitHub'>Auf Github</a>
+        <a href='https://wiki.openstreetmap.org/wiki/Baby-Karte' target='_blank' id='linkToOSMWiki'>OSM Wiki</a>
     
     </div>
-    <div id="autocomplete"></div>
+    <div id='autocomplete'></div>
     <div id='map'>
     	<div class='leaflet-control-container'>
 			<div class='leaflet-top leaflet-right own-control-style'>

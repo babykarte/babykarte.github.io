@@ -11,7 +11,7 @@ function togglemenu(value=false) {
 	if (obj.style.height != "auto") { //Opens the menu by just knowing its current height (any value ecept 'auto')
 		obj.style.height = "auto";
 	} else {
-		obj.style.height = "75px"; //Closes the menu and applies given height for the searchbar, language buttons and legal links
+		obj.style.height = "80px"; //Closes the menu and applies given height for the searchbar, language buttons and legal links
 	}
 }
 function hideFilterListOnMobile() { //Hides the menu when a filter loads (the green loading bar appears)
@@ -39,24 +39,23 @@ function showGlobalPopup(m) { // Triggers the blue rounded message popup
 		}, 3000);
 		}, 1000);
 }
-function jumpto(lat, lon, locname="") { // Function which fires when user clicks on a search suggestion. Forcing Babykarte to jump to a new position (e.g. Berlin central station)
-	if (locname != "") {
-		$("#searchfield").value = locname;
+function jumpto(elem, lat, lon) { // Function which fires when user clicks on a search suggestion. Forcing Babykarte to jump to a new position (e.g. Berlin central station)
+	if (elem.innerHTML) {
+		$("#autocomplete").hide(); // Hide the search suggestions
+		map.on("moveend", function() {}); //Deactivate the dynamic loading of content
+		map.setView([lat, lon]); //Set the view (e.g. Berlin central station)
+		location.hash = String(map.getZoom()) + "&" + String(lat) + "&" + String(lon); //Set the url
+		saved_lat = lat;
+		saved_lon = lon;
+		for (var id in activeFilter) {
+			//Resets all filters
+			resetFilter(id);
+		}
+		map.on("moveend", onMapMove); //Activate the dynamic loading of content
+		progressbar(50);
+		setTimeout(function() {onMapMove();}, 500); //After 5sec trigger the dynamic loading of content manually without user action.
+		showGlobalPopup(elem.innerHTML); //Show the message displaying the location is user is viewing
 	}
-	$("#autocomplete").hide(); // Hide the search suggestions
-	map.on("moveend", function() {}); //Deactivate the dynamic loading of content
-	map.setView([lat, lon]); //Set the view (e.g. Berlin central station)
-	location.hash = String(map.getZoom()) + "&" + String(lat) + "&" + String(lon); //Set the url
-	saved_lat = lat;
-	saved_lon = lon;
-	for (var id in activeFilter) {
-		//Resets all filters
-		resetFilter(id);
-	}
-	map.on("moveend", onMapMove); //Activate the dynamic loading of content
-	progressbar(50);
-	setTimeout(function() {onMapMove();}, 500); //After 5sec trigger the dynamic loading of content manually without user action.
-	showGlobalPopup(locname); //Show the message displaying the location is user is viewing
 }
 function geocode() { // Function which powers the search suggestion list
 	var searchword = $("#searchfield").val();
@@ -74,8 +73,7 @@ function geocode() { // Function which powers the search suggestion list
 
 			$.each(data.features, function(number, feature) {
 				var latlng = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]]; //Get the coordinates of the search suggestion entry
-
-				autocomplete_content += "<li onclick='jumpto(" + latlng[0] + ", " + latlng[1] + ", \"" + feature.properties.name + ", " + feature.properties.country + "\")'>" + feature.properties.name + ", " + feature.properties.country + "</li>"; //Adds a entry in the search suggestion popup (e.g. Berlin central station)
+				autocomplete_content += "<li onclick='jumpto(this, " + latlng[0] + ", " + latlng[1] + ")'>" + feature.properties.name + ", " + feature.properties.country + "</li>"; //Adds a entry in the search suggestion popup (e.g. Berlin central station)
 			});
 			if (autocomplete) {
 				$("#autocomplete").html(autocomplete_content+"</ul>"); //Add them all to the search suggestion popup
