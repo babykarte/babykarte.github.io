@@ -275,8 +275,11 @@ function parseOpening_hours(value) {
 	var syntaxToHTML = {"; " : "<br/>", ";" : "<br/>",  "," : ", ", "-" : " - "}
 	//Translates by replacing <OSM expression>'s with the respective <human expression>'s.
 	for (var item in toTranslate) {
-		value = value.replace(new RegExp(item, "g"), "<b>" + toTranslate[item] + "</b>");
+		if (value.indexOf("%" + item) == -1) {
+			value = value.replace(new RegExp(item, "g"), "<b>%" + toTranslate[item] + "</b>");
+		}
 	}
+	value = value.replace(new RegExp("%", "g"), "");
 	//Do some translating of special command chars into HTML code or beautiful looking human speech.
 	for (var item in syntaxToHTML) {
 		value = value.replace(new RegExp(item, "g"), "<b>" + syntaxToHTML[item] + "</b>");
