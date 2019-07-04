@@ -32,7 +32,7 @@ var babyData = {"leisure": {"nameInherit": false, "applyfor": {"activity": true}
 								"playground:Skate_equipment": {"values": ["yes", undefined]}
 								}
 							},
-				"diaper": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
+				"diaper": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
 					"children": {"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
 								"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
 								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
@@ -40,7 +40,7 @@ var babyData = {"leisure": {"nameInherit": false, "applyfor": {"activity": true}
 								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|* (implicit specification)
 								}
 							},
-				"changing_table": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN && data["diaper"] != getText().PDV_DIAPER_UNKNOWN){delete data["changing_table"];}if(data["diaper"] == getText().PDV_DIAPER_UNKNOWN && local.title != getText().PDV_CHANGINGTABLE_UNKNOWN){delete data["diaper"];};return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
+				"changing_table": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN && data["diaper"] != getText().PDV_DIAPER_UNKNOWN){delete data["changing_table"];}if(data["diaper"] == getText().PDV_DIAPER_UNKNOWN && local.title != getText().PDV_CHANGINGTABLE_UNKNOWN){delete data["diaper"];};return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
 					"children": {"fee": {"values": ["yes", "no", undefined]},	//changing_table:fee=yes|no|undefined
 								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},	//changing_table:location=wheelchair_toilet|female_toilet|male_toilet|unisex_toilet|dedicated_room|room|sales_area|undefined
 								"description": {"values": [undefined, "*"]}	//changing_table:description=undefined|* (implicit specification)
@@ -50,14 +50,14 @@ var babyData = {"leisure": {"nameInherit": false, "applyfor": {"activity": true}
 				"stroller": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
 					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|* (implicit specification) (implicit specification)
 							},
-				"kids_area": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
+				"kids_area": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
 					"children": {"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
 								"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
 								"supervised": {"values": ["yes", "no", undefined]},		//		kids_area:supervised=yes|no|undefined
 								"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
 								}
 							},
-				"baby_feeding": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
+				"baby_feeding": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
 					"children": {"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
 								"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
 								}
