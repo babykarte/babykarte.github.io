@@ -4,7 +4,7 @@ var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow", "playground": "color-green"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
-var babyData = {"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined],
+var PDV_babyTab = {"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined],
 					"children": {"playground:slide": {"values": ["yes", undefined]},
 								"playground:swing": {"values": ["yes", undefined]},
 								"playground:climbingframe": {"values": ["yes", undefined]},
@@ -336,7 +336,7 @@ function addrTab(poi, prefix , condition, symbol) {
 	if (result.startsWith("www.") && !prefix.startsWith("mail")) {result = "http://" + result}
 	return "<div class='grid-container'><a target='_blank' href='" + prefix  + result + "'><img class='small-icon' src='" + symbol + "' /></a><a target='_blank' href='"+ prefix + result + "'>" + result + "</a></div>\n";
 }
-function babyTab_intern(marker, poi, tag, values, data, parent) {
+function processContentDatabase_intern(marker, poi, database, tag, values, data, parent) {
 	if (!parent) {parent = tag;}
 	for (var i in values) {
 		var title;
@@ -347,7 +347,7 @@ function babyTab_intern(marker, poi, tag, values, data, parent) {
 			} else {
 				langcode += "_" + values[i].replace("_", "").replace(":", "_");;
 			}
-			if (babyData[parent].applyfor[marker.address.split(" ")[0]]) {title = getText("PDV_" + langcode.toUpperCase());}
+			if (database[parent].applyfor[marker.category.split(" ")[0]]) {title = getText("PDV_" + langcode.toUpperCase());}
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]];
@@ -365,28 +365,28 @@ function babyTab_intern(marker, poi, tag, values, data, parent) {
 	}
 	return data
 }
-function babyTab(marker, poi) {
+function processContentDatabase(marker, poi, database) {
 	var data = {};
 	var output = "";
-	for (var tag in babyData) {
-		var values = babyData[tag].values;
-		var children = babyData[tag].children;
+	for (var tag in database) {
+		var values = database[tag].values;
+		var children = database[tag].children;
 		data[tag] = {};
-		data[tag] = babyTab_intern(marker, poi, tag, values, data[tag]);
+		data[tag] = processContentDatabase_intern(marker, poi, database, tag, values, data[tag]);
 		data[tag].children = {};
 		for (var child in children) {
 			var childname = child;
 			data[tag].children[child] = {};
-			if (babyData[tag].nameInherit) {childname = tag + ":" + child}
-			data[tag].children[child] = babyTab_intern(marker, poi, childname,  babyData[tag].children[child].values, data[tag].children[child], tag)
+			if (database[tag].nameInherit) {childname = tag + ":" + child}
+			data[tag].children[child] = processContentDatabase_intern(marker, poi, database, childname,  database[tag].children[child].values, data[tag].children[child], tag)
 			
 			if (data[tag].children[child].title == "NODISPLAY") {
 				delete data[tag].children[child];
 			}
 		}
 	}
-	for (var tag in babyData) {
-		if (babyData[tag].triggers) {data = babyData[tag].triggers(data, data[tag]);}
+	for (var tag in database) {
+		if (database[tag].triggers) {data = database[tag].triggers(data, data[tag]);}
 	}
 	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
@@ -408,7 +408,7 @@ function babyTab(marker, poi) {
 function ratePOI(marker, poi) {
 	var i;
 	if (!poi.rating) {poi.rating = {};poi.rating.green = 0;poi.rating.red = 0;}
-	if (!filter[marker.fltr].address.startsWith("eat")) {return poi;}
+	if (!filter[marker.fltr].category.startsWith("eat")) {return poi;}
 	for (i in ratingData) {
 		var value = poi.tags[i];
 		if (value == undefined) {
@@ -461,7 +461,7 @@ function getRightPopup(marker, usePopup) {
 	var poi = marker.data;
 	var popup = {"POIpopup": 
 		{"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address id='address${poi.classId}'>${addrTrigger(poi, marker)}</address>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
-	"baby": {"content": `${babyTab(marker, poi)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
+	"baby": {"content": `${processContentDatabase(marker, poi, PDV_babyTab)}`, "symbol": "/images/baby.svg", "title": getText().PDV_TITLE_BABY, "active": true},
 	"opening_hours": {"content": `${ parseOpening_hours(poi.tags["opening_hours"]) || "NODISPLAY" }`, "symbol": "/images/clock.svg", "title": getText().PDV_TITLE_OH, "active": true},
 		"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "tel:", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "mailto:", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
 		"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
