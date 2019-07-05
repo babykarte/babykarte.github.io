@@ -104,35 +104,17 @@ var refEn = {"site-map": {
 		1: "Midwifes",
 		2: "Birthing centers",
 		3: "Playgrounds",
-		4: "Parks",
-		5: "Shops for baby goods",
-		6: "Shops for toys",
-		7: "Shops for clothes",
-		8: "Kindergartens and child care",
-		9: "Zoos",
-		10: "Changing tables",
-		11: "Only changing tables accessible for men",
-		12: "Cafés",
-		13: "Restaurants"
-	},
-	"filtertranslations": {
-		"healthcare=doctor": "Pediatrician",
-		"healthcare=hospital": "Hospital",
-		"healthcare=midwife": "Midwife",
-		"healthcare=birthing_center": "Birthing center",
-		"amenity=toilets": "Toilets",
-		"amenity=cafe": "Cafe",
-		"amenity=restaurant": "Restaurant",
-		"amenity=kindergarten" : "Kindergarten",
-		"amenity=childcare" : "Kindergarten",
-		"leisure=playground": "Playground",
-		"leisure=park": "Park",
-		"tourism=zoo": "Zoo",
-		"shop=baby_goods": "Baby goods",
-		"shop=toys": "Toy store",
-		"shop=clothes": "Clothes",
-		"shop=chemist": "Chemist",
-		"shop=supermarket": "Supermarket"
+		4: "Playground equipment",
+		5: "Parks",
+		6: "Shops for baby goods",
+		7: "Shops for toys",
+		8: "Shops for clothes",
+		9: "Kindergartens and child care",
+		10: "Zoos",
+		11: "Changing tables",
+		12: "Only changing tables accessible for men",
+		13: "Cafés",
+		14: "Restaurants"
 	}
 },
 "site-impress" : {
@@ -143,5 +125,24 @@ var refEn = {"site-map": {
 	"IMPRESS_NOTE": "All data available on this website is coming from OpenStreetMap. Babykarte just uses the data. We do not guarantee for the correctness of it. Through the provided links you can convey annotations to wrong or missing data to OpenStreetMap. You can also correct wrong ones or add further information by yourself."
 	}
 };
+refEn["site-map"].filtertranslations = {
+	"healthcare=doctor": "Pediatrician",
+	"healthcare=hospital": "Hospital",
+	"healthcare=midwife": "Midwife",
+	"healthcare=birthing_center": "Birthing center",
+	"amenity=toilets": "Toilets",
+	"amenity=cafe": "Cafe",
+	"amenity=restaurant": "Restaurant",
+	"amenity=kindergarten" : "Kindergarten",
+	"amenity=childcare" : "Kindergarten",
+	"leisure=playground": "Playground",
+	"leisure=park": "Park",
+	"tourism=zoo": "Zoo",
+	"shop=baby_goods": "Baby goods",
+	"shop=toys": "Toy store",
+	"shop=clothes": "Clothes",
+	"shop=chemist": "Chemist",
+	"shop=supermarket": "Supermarket"
+}
 registerLang("en", refEn);
 setLang("", "en");

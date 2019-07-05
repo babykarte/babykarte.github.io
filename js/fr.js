@@ -104,35 +104,17 @@ var refFr = {"site-map": {
 		1: "Sages-femmes",
 		2: "Natalités",
 		3: "Aires de jeux",
-		4: "Parcs",
-		5: "Magasins d'articles pour bébés",
-		6: "Magasins de jouets",
-		7: "Magasins de chaussures",
-		8: "Jardins d'enfants et garderies",
-		9: "Zoos",
-		10: "Tables à langer",
-		11: "Uniquement les tables à langer accessibles aux hommes",
-		12: "Cafés",
-		13: "Restaurants"
-	},
-	"filtertranslations": {
-		"healthcare=doctor": "Pédiatre",
-		"healthcare=hospital": "Hôpital",
-		"healthcare=midwife": "Sage-femme",
-		"healthcare=birthing_center": "Natalité",
-		"amenity=toilets": "Toilettes",
-		"amenity=cafe": "Café",
-		"amenity=restaurant": "Restaurant",
-		"amenity=kindergarten" : "Jardin d'enfants",
-		"amenity=childcare" : "Garderie",
-		"leisure=playground": "Aire de jeu",
-		"leisure=park": "Parc",
-		"tourism=zoo": "Zoo",
-		"shop=baby_goods": "Articles pour bébé",
-		"shop=toys": "Magasin de jouets",
-		"shop=clothes": "Vêtements",
-		"shop=chemist": "Pharmacie",
-		"shop=supermarket": "Supermarché"
+		4: "équipement de terrain de jeu",
+		5: "Parcs",
+		6: "Magasins d'articles pour bébés",
+		7: "Magasins de jouets",
+		8: "Magasins de chaussures",
+		9: "Jardins d'enfants et garderies",
+		10: "Zoos",
+		11: "Tables à langer",
+		12: "Uniquement les tables à langer accessibles aux hommes",
+		13: "Cafés",
+		14: "Restaurants"
 	}
 },
 "site-impress" : {
@@ -143,5 +125,24 @@ var refFr = {"site-map": {
 	"IMPRESS_NOTE": "Toutes les données disponibles sur ce site proviennent d'OpenStreetMap. Babykarte n'utilise que les données. Nous ne garantissons pas l'exactitude de ces informations. Grâce aux liens fournis, vous pouvez signaler des données erronées ou manquantes à OpenStreetMap. Vous pouvez également corriger les erreurs ou ajouter d'autres informations par vous-même."
 	}
 };
+refFr["site-map"].filtertranslations = {
+	"healthcare=doctor": "Pédiatre",
+	"healthcare=hospital": "Hôpital",
+	"healthcare=midwife": "Sage-femme",
+	"healthcare=birthing_center": "Natalité",
+	"amenity=toilets": "Toilettes",
+	"amenity=cafe": "Café",
+	"amenity=restaurant": "Restaurant",
+	"amenity=kindergarten" : "Jardin d'enfants",
+	"amenity=childcare" : "Garderie",
+	"leisure=playground": "Aire de jeu",
+	"leisure=park": "Parc",
+	"tourism=zoo": "Zoo",
+	"shop=baby_goods": "Articles pour bébé",
+	"shop=toys": "Magasin de jouets",
+	"shop=clothes": "Vêtements",
+	"shop=chemist": "Pharmacie",
+	"shop=supermarket": "Supermarché"
+}
 registerLang("fr", refFr);
 setLang("", "fr");

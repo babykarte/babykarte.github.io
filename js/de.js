@@ -104,36 +104,17 @@ var refDe = {"site-map": {
 		1: "Hebammen",
 		2: "Geburtshäuser",
 		3: "Spielplätze",
-		4: "Parks",
-		5: "Geschäfte für Babybedarf",
-		6: "Spielwarenläden",
-		7: "Bekleidungsgeschäfte",
-		8: "Kindertagesbetreuung",
-		9: "Zoo/Tierpark",
-		10: "Wickeltische",
-		11: "Für Männer erreichbare Wickeltische",
-		12: "Cafés",
-		13: "Restaurants"
-	},
-	"filtertranslations": {
-		"healthcare=doctor": "Kinderarzt",
-		"healthcare=hospital": "Krankenhaus",
-		"healthcare=midwife": "Hebamme",
-		"healthcare=birthing_center": "Geburtshaus",
-		"amenity=toilets": "Toilette",
-		"amenity=cafe": "Café",
-		"amenity=restaurant": "Restaurant",
-		"amenity=kindergarten" : "Kindertagesstätte",
-		"amenity=childcare" : "Kindertagesstätte",
-		"leisure=playground": "Spielplatz",
-		"leisure=park": "Park",
-		"tourism=zoo": "Zoo/Tierpark",
-		"shop=baby_goods": "Babybedarf",
-		"shop=toys": "Spielwarenladen",
-		"shop=clothes": "Bekleidung",
-		"shop=chemist": "Drogerie",
-		"shop=supermarket": "Supermarkt"
-		
+		4: "Spielgeräte",
+		5: "Parks",
+		6: "Geschäfte für Babybedarf",
+		7: "Spielwarenläden",
+		8: "Bekleidungsgeschäfte",
+		9: "Kindertagesbetreuung",
+		10: "Zoo/Tierpark",
+		11: "Wickeltische",
+		12: "Für Männer erreichbare Wickeltische",
+		13: "Cafés",
+		14: "Restaurants"
 	}
 },
 "site-impress" : {
@@ -144,5 +125,24 @@ var refDe = {"site-map": {
 	"IMPRESS_NOTE": "Alle Daten auf dieser Website stammen aus dem Projekt OpenStreetMap. Die Babykarte wertet diese Daten lediglich aus.<br/>Für die Richtigkeit der Angaben kann keine Garantie übernommen werden. Anmerkungen zu falschen oder fehlenden Daten<br/>übermitteln Sie bitte direkt an OpenStreetMap über die bereitgestellten Links. Darüber hinaus gibt es die Möglichkeit durch Einrichtung eines OpenStreetMap-Accounts falsche- oder fehlende Daten zu berichtigen bzw. hinzuzufügen."
 	}
 };
+refDe["site-map"].filtertranslations = {
+	"healthcare=doctor": "Kinderarzt",
+	"healthcare=hospital": "Krankenhaus",
+	"healthcare=midwife": "Hebamme",
+	"healthcare=birthing_center": "Geburtshaus",
+	"amenity=toilets": "Toilette",
+	"amenity=cafe": "Café",
+	"amenity=restaurant": "Restaurant",
+	"amenity=kindergarten" : "Kindertagesstätte",
+	"amenity=childcare" : "Kindertagesstätte",
+	"leisure=playground": "Spielplatz",
+	"leisure=park": "Park",
+	"tourism=zoo": "Zoo/Tierpark",
+	"shop=baby_goods": "Babybedarf",
+	"shop=toys": "Spielwarenladen",
+	"shop=clothes": "Bekleidung",
+	"shop=chemist": "Drogerie",
+	"shop=supermarket": "Supermarkt"
+}
 registerLang("de", refDe);
 setLang("", "de");
