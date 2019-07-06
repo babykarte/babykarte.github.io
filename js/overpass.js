@@ -4,7 +4,20 @@ var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow", "playground": "color-green"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
-var PDV_babyTab = {
+var PEP_data = {// PEP = Playground Equipment Popup
+				"baby": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined], "children": {}},
+				"wheelchair": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["yes", "limited", "no", "designated", undefined], "children": {}},
+				"surface": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["paved", undefined], "children": {}},
+				"description": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
+				"min_age": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
+				"max_age": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
+				"material": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["wood", "bamboo", "metal", "steel", "concrete", "reinforced_concrete", "plastic", undefined], "children": {}},
+				"capacity": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"],
+					"children":
+						{"disabled": {"values": ["yes", "no", undefined, "*"]}}
+						}
+		};
+var PDV_babyTab = { //PDV = POI Details View
 				"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined],
 					"children": 
 						{"playground:slide": {"values": ["yes", undefined]},
@@ -372,6 +385,7 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 	return data
 }
 function processContentDatabase(marker, poi, database) {
+	console.log(19);
 	var data = {};
 	var output = "";
 	for (var tag in database) {
@@ -394,6 +408,7 @@ function processContentDatabase(marker, poi, database) {
 	for (var tag in database) {
 		if (database[tag].triggers) {data = database[tag].triggers(data, data[tag]);}
 	}
+	console.log(data);
 	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
@@ -473,7 +488,9 @@ function getRightPopup(marker, usePopup) {
 		"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
 		},
 	"playgroundPopup":
-		{"home": {"content": `<h1>${ ((poi.tags["name"] != undefined) ? poi.tags["name"] : getText().PDV_UNNAME)}</h1>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true}}
+		{"home": {"content": `<h1>${ ((poi.tags["name"] != undefined) ? poi.tags["name"] : ((marker.name != undefined) ? marker.name : getText().PDV_UNNAME)) }</h1><h2>${ marker.name }</h2>${ console.log(processContentDatabase(marker, poi, PEP_data)) }`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
+		"furtherInfos": {"content": `<a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
+		}
 	};
 	createDialog(marker, poi, popup[usePopup]);
 }
@@ -515,6 +532,7 @@ function createDialog(marker, poi, details_data) {
 	marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + getText().LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + getText().LNK_OSM_REPORT + "</a>";
 	marker.bindPopup(marker.popupContent);
 	marker.openPopup();
+	objref = marker;
 } 
 function loadPOIS(e, post) {
 	hideFilterListOnMobile();
