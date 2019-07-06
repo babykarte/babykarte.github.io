@@ -4,92 +4,98 @@ var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow", "playground": "color-green"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
-var PDV_babyTab = {"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined],
-					"children": {"playground:slide": {"values": ["yes", undefined]},
-								"playground:swing": {"values": ["yes", undefined]},
-								"playground:climbingframe": {"values": ["yes", undefined]},
-								"playground:sandpit": {"values": ["yes", undefined]},
-								"playground:seesaw": {"values": ["yes", undefined]},
-								"playground:springy": {"values": ["yes", undefined]},
-								"playground:playhouse": {"values": ["yes", undefined]},
-								"playground:roundabout": {"values": ["yes", undefined]},
-								"playground:multi_play": {"values": ["yes", undefined]},
-								"playground:basketswing": {"values": ["yes", undefined]},
-								"playground:structure": {"values": ["yes", undefined]},
-								"playground:zipwire": {"values": ["yes", undefined]},
-								"playground:balancebeam": {"values": ["yes", undefined]},
-								"playground:water": {"values": ["yes", undefined]},
-								"playground:trampoline": {"values": ["yes", undefined]},
-						     	"playground:teenshelter": {"values": ["yes", undefined]},
-								"playground:chain_ladder": {"values": ["yes", undefined]},
-								"playground:hopscotch": {"values": ["yes", undefined]},
-								"playground:climb_wall": {"values": ["yes", undefined]},
-								"playground:tunnel_tube": {"values": ["yes", undefined]},
-								"playground:chess_table": {"values": ["yes", undefined]},
-								"playground:tree_house": {"values": ["yes", undefined]},
-								"playground:basketball_backboards": {"values": ["yes", undefined]},
-								"playground:cushion": {"values": ["yes", undefined]},
-								"playground:Skate_equipment": {"values": ["yes", undefined]}
-								}
-							},
+var PDV_babyTab = {
+				"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined],
+					"children": 
+						{"playground:slide": {"values": ["yes", undefined]},
+						"playground:swing": {"values": ["yes", undefined]},
+						"playground:climbingframe": {"values": ["yes", undefined]},
+						"playground:sandpit": {"values": ["yes", undefined]},
+						"playground:seesaw": {"values": ["yes", undefined]},
+						"playground:springy": {"values": ["yes", undefined]},
+						"playground:playhouse": {"values": ["yes", undefined]},
+						"playground:roundabout": {"values": ["yes", undefined]},
+						"playground:multi_play": {"values": ["yes", undefined]},
+						"playground:basketswing": {"values": ["yes", undefined]},
+						"playground:structure": {"values": ["yes", undefined]},
+						"playground:zipwire": {"values": ["yes", undefined]},
+						"playground:balancebeam": {"values": ["yes", undefined]},
+						"playground:water": {"values": ["yes", undefined]},
+						"playground:trampoline": {"values": ["yes", undefined]},
+						"playground:teenshelter": {"values": ["yes", undefined]},
+						"playground:chain_ladder": {"values": ["yes", undefined]},
+						"playground:hopscotch": {"values": ["yes", undefined]},
+						"playground:climb_wall": {"values": ["yes", undefined]},
+						"playground:tunnel_tube": {"values": ["yes", undefined]},
+						"playground:chess_table": {"values": ["yes", undefined]},
+						"playground:tree_house": {"values": ["yes", undefined]},
+						"playground:basketball_backboards": {"values": ["yes", undefined]},
+						"playground:cushion": {"values": ["yes", undefined]},
+						"playground:Skate_equipment": {"values": ["yes", undefined]}
+						}
+				},
 				"diaper": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
-					"children": {"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
-								"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
-								"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
-								"fee": {"values": ["yes", "no", undefined]},			//		diaper:fee=yes|no|undefined
-								"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|* (implicit specification)
-								}
-							},
+					"children": 
+						{"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
+						"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
+						"unisex": {"values": ["yes", "no", undefined]},			//		diaper:unisex=yes|no|undefined
+						"fee": {"values": ["yes", "no", undefined]},			//		diaper:fee=yes|no|undefined
+						"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|* (implicit specification)
+						}
+				},
 				"changing_table": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN && data["diaper"] != getText().PDV_DIAPER_UNKNOWN){delete data["changing_table"];}if(data["diaper"] == getText().PDV_DIAPER_UNKNOWN && local.title != getText().PDV_CHANGINGTABLE_UNKNOWN){delete data["diaper"];};return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
-					"children": {"fee": {"values": ["yes", "no", undefined]},	//changing_table:fee=yes|no|undefined
-								"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},	//changing_table:location=wheelchair_toilet|female_toilet|male_toilet|unisex_toilet|dedicated_room|room|sales_area|undefined
-								"description": {"values": [undefined, "*"]}	//changing_table:description=undefined|* (implicit specification)
-								}
-							},
+					"children":
+						{"fee": {"values": ["yes", "no", undefined]},	//changing_table:fee=yes|no|undefined
+						"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},	//changing_table:location=wheelchair_toilet|female_toilet|male_toilet|unisex_toilet|dedicated_room|room|sales_area|undefined
+						"description": {"values": [undefined, "*"]}	//changing_table:description=undefined|* (implicit specification)
+						}
+				},
 				"highchair": {"nameInherit": true, "applyfor": {"eat": true}, "values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
 				"stroller": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
 					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|* (implicit specification) (implicit specification)
-							},
+				},
 				"kids_area": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
-					"children": {"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
-								"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
-								"supervised": {"values": ["yes", "no", undefined]},		//		kids_area:supervised=yes|no|undefined
-								"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
-								}
-							},
+					"children":
+						{"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
+						"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
+						"supervised": {"values": ["yes", "no", undefined]},		//		kids_area:supervised=yes|no|undefined
+						"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
+						}
+				},
 				"baby_feeding": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
-					"children": {"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
-								"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
-								}
-							}
-				};
+					"children":
+						{"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
+						"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
+						}
+				}
+			};
 var ratingRules = {"max": 23, "green": {"default": 12, "color": "rating-green"}, "red": {"default": 18, "color": "rating-red"}};
 var ratingData = {"diaper": {"multiplicator": 4,	// diaper=* 4
-						"values" :
-							{"yes": 2,				//     yes 2
-							"no": 2}				//     no  2
-						},
+					"values" :
+						{"yes": 2,				//     yes 2
+						"no": 2}				//     no  2
+					},
 				"changing_table": {"multiplicator": 4,	// changing_table=* 4
-						"values" :
-							{"yes": 2,				//     yes 2
-							"no": 2}				//     no  2
-							},
+					"values" :
+						{"yes": 2,				//     yes 2
+						"no": 2}				//     no  2
+					},
 				"highchair": {"multiplicator": 4,	// highchair=* 4  (POIs where you can get meal or something simliar)
-						"values" :
-							{"yes": 2,				//     yes 2
-							"no": 2}				//     no  2
-						},
+					"values" :
+						{"yes": 2,				//     yes 2
+						"no": 2}				//     no  2
+					},
 				"kids_area": {"multiplicator": 2,	// kids_area=* 2
-						"values" :
-							{"yes": 2,				//     yes 2
-							"no": 2}				//     no  2
-						},
+					"values" :
+						{"yes": 2,				//     yes 2
+						"no": 2}				//     no  2
+					},
 				"stroller": {"multiplicator": 1,	// stroller=* 1
-						"values" :
-							{"yes": 2,				//     yes 3
-							"no": 2,				//     no  3
-							"limited": 1}			//     limited 1 (green)
-						}
+					"values" :
+						{"yes": 2,				//     yes 3
+						"no": 2,				//     no  3
+						"limited": 1}			//     limited 1 (green)
+					}
 			};
 function locationFound(e) {
 	//Fires the notification that Babykarte shows the location of the user.
@@ -466,7 +472,8 @@ function getRightPopup(marker, usePopup) {
 		"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "/images/www.svg") }${ addrTab(poi, "tel:", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "/images/call.svg") }${ addrTab(poi, "mailto:", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "/images/email.png") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg") }`, "symbol": "/images/contact.svg", "title": getText().PDV_TITLE_CONTACT, "active": true},
 		"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
 		},
-	"playgroundPopup": {"home": {"content": `<h1>${ ((poi.tags["name"] != undefined) ? poi.tags["name"] : getText().PDV_UNNAME)}</h1>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true}}
+	"playgroundPopup":
+		{"home": {"content": `<h1>${ ((poi.tags["name"] != undefined) ? poi.tags["name"] : getText().PDV_UNNAME)}</h1>`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true}}
 	};
 	createDialog(marker, poi, popup[usePopup]);
 }
