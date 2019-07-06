@@ -13,7 +13,10 @@ var PEP_data = {// PEP = Playground Equipment Popup
 				"capacity": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"],
 					"children":
 						{"disabled": {"values": ["yes", "no", undefined, "*"]}}
-						}
+						},
+				"baby": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["yes", "no", "only", undefined], "children": {}},
+				"surface": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["sand", "wood", "grass", "dirt", "woodchips", "clay", "tartan", "artificial_surf", "decoturf", undefined], "children": {}},
+				"access": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["yes", "no", "customers", "private", undefined], "children": {}},
 		};
 var PDV_babyTab = { //PDV = POI Details View
 				"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined],
