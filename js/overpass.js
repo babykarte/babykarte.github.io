@@ -5,9 +5,7 @@ var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green",
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
 // '*' is a placeholder for notes from mappers and any other value (even 'undefined')
 var PEP_data = {// PEP = Playground Equipment Popup
-				"baby": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined], "children": {}},
 				"wheelchair": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["yes", "limited", "no", "designated", undefined], "children": {}},
-				"surface": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["paved", undefined], "children": {}},
 				"description": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
 				"min_age": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
 				"max_age": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
@@ -23,6 +21,8 @@ var PDV_babyTab = { //PDV = POI Details View
 						{"playground:slide": {"values": ["yes", undefined]},
 						"playground:swing": {"values": ["yes", undefined]},
 						"playground:climbingframe": {"values": ["yes", undefined]},
+						"playground:climbingwall": {"values": ["yes", undefined]},
+						"playground:sledding": {"values": ["yes", undefined]},
 						"playground:sandpit": {"values": ["yes", undefined]},
 						"playground:seesaw": {"values": ["yes", undefined]},
 						"playground:springy": {"values": ["yes", undefined]},
@@ -369,7 +369,7 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 			if (database[parent].applyfor[marker.category.split(" ")[0]]) {title = getText("PDV_" + langcode.toUpperCase());}
 			if (title != undefined) {
 				data.title = title;
-				data.color = colorcode[values[i]];
+				data.color = colorcode[values[i]] || "";
 				break;
 			} else {
 				if (tag.endsWith("description") && poi.tags[tag] != undefined) {
@@ -385,7 +385,6 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 	return data
 }
 function processContentDatabase(marker, poi, database) {
-	console.log(19);
 	var data = {};
 	var output = "";
 	for (var tag in database) {
@@ -423,6 +422,9 @@ function processContentDatabase(marker, poi, database) {
 			output = output.replace("%content", childrenHTML);
 		}
 	}
+	var result = output.split("\m");
+	output = ""
+	for (var i in result) {if (result[i].indexOf("NODISPLAY") == -1) {output += result[i];}}
 	objref = data;
 	return output;
 }
@@ -488,10 +490,11 @@ function getRightPopup(marker, usePopup) {
 		"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
 		},
 	"playgroundPopup":
-		{"home": {"content": `<h1>${ ((poi.tags["name"] != undefined) ? poi.tags["name"] : ((marker.name != undefined) ? marker.name : getText().PDV_UNNAME)) }</h1><h2>${ marker.name }</h2>${ console.log(processContentDatabase(marker, poi, PEP_data)) }`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
+		{"home": {"content": `<h1>${ poi.tags["name"] = ((poi.tags["name"] == undefined && marker.name) ? marker.name : poi.tags["name"]) }</h1><h2>${ ((poi.tags["name"] != marker.name) ? ((marker.name != undefined) ? marker.name : "") : "") }</h2>${ processContentDatabase(marker, poi, PEP_data) }`, "symbol": "/images/home.svg", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 		"furtherInfos": {"content": `<a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "/images/moreInfo.svg", "title": getText().PDV_TITLE_MI, "active": true}
 		}
 	};
+	console.log(popup.playgroundPopup.home.content);
 	createDialog(marker, poi, popup[usePopup]);
 }
 function createDialog(marker, poi, details_data) {

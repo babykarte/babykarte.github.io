@@ -65,6 +65,8 @@ var refDe = {"site-map": {
 	"PDV_PLAYGROUNDSLIDE_YES": "Rutsche",
 	"PDV_PLAYGROUND_SWING_YES": "Schaukel",
 	"PDV_PLAYGROUND_CLIMBINGFRAME_YES": "Klettergerüst",
+	"PDV_PLAYGROUND_CLIMBINGWALL_YES": "Kletterwand",
+	"PDV_PLAYGROUND_SLEDDING_YES": "Schlittern",
 	"PDV_PLAYGROUND_SANDPIT_YES": "Sandkasten",
 	"PDV_PLAYGROUND_SEESAW_YES": "Wippe",
 	"PDV_PLAYGROUND_SPRINGY_YES": "Federwipptier",
