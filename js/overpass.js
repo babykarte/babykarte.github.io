@@ -59,7 +59,7 @@ var PDV_babyTab = { //PDV = POI Details View
 						"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|* (implicit specification)
 						}
 				},
-				"changing_table": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN && data["diaper"].title != getText().PDV_DIAPER_UNKNOWN){delete data["changing_table"];}if(data["diaper"].title == getText().PDV_DIAPER_UNKNOWN && local.title != getText().PDV_CHANGINGTABLE_UNKNOWN){delete data["diaper"];};return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
+				"changing_table": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN) {delete data["changing_table"]}if (data["diaper"] && data["changing_table"]) {delete data["diaper"];} return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
 					"children":
 						{"fee": {"values": ["yes", "no", undefined]},	//changing_table:fee=yes|no|undefined
 						"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},	//changing_table:location=wheelchair_toilet|female_toilet|male_toilet|unisex_toilet|dedicated_room|room|sales_area|undefined
