@@ -122,6 +122,8 @@ label {
 .small-icon {
 	height:20px;
 	width:20px;
+	font-size:20px;
+	color:#006691ff;
 	margin-top:5px;
 	margin-left:5px;
 	margin-right:10px;
@@ -146,7 +148,7 @@ label {
 }
 .lang-select {
 	margin-right:5px;
-	padding-left:5px;
+	padding-left:0px;
 }
 .grid-container {
 	display:grid;
@@ -167,6 +169,7 @@ label {
 }
 .dropdown {
 	padding:5px;
+	padding-left:0px;
 	display:inline-block;
 }
 .dropdown-menu {
