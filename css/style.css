@@ -117,7 +117,8 @@ label {
 .pdv-icon {
 	height:25px;
 	width:25px;
-	margin:5px;
+	margin:10px;
+	font-size:25px;
 }
 .small-icon {
 	height:20px;
