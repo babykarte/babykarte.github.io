@@ -119,6 +119,7 @@ label {
 	width:25px;
 	margin:10px;
 	font-size:25px;
+	cursor: pointer;
 }
 .small-icon {
 	height:20px;
