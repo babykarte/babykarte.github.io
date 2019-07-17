@@ -9,7 +9,7 @@ var PEP_data = {// PEP = Playground Equipment Popup
 				"description": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
 				"min_age": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
 				"max_age": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"], "children": {}},
-				"material": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["wood", "bamboo", "metal", "steel", "concrete", "reinforced_concrete", "plastic", undefined], "children": {}},
+				"material": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["wood", "metal", "steel", "plastic", "rope", undefined], "children": {}},
 				"capacity": {"nameInherit": true, "applyfor": {"activity": true}, "values": [undefined, "*"],
 					"children":
 						{"disabled": {"values": ["yes", "no", undefined, "*"]}}
