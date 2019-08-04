@@ -178,7 +178,7 @@ function osmExpression(poi, value) {
 function getData(url, dataType, data,  fail, success, type) {
 	if (type == undefined) {type = "GET"}
 	if (fail == undefined) {fail = function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();}}
-	request = function() {console.log(data);
+	request = function() {
 		$.ajax({
 			type: type,
 			url: String(url),
@@ -194,7 +194,6 @@ function getData(url, dataType, data,  fail, success, type) {
 			});
 	}
 	queue.push(request);
-	console.log(queue.length);
 	if (queue.length == 1) {request();} 
 }
 function getSubtitle(poi) {

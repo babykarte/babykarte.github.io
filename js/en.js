@@ -64,6 +64,8 @@ var refEn = {"site-map": {
 	"PDV_BABYFEEDING_MALE_NO": "No place for men to feed a baby available",
 	"PDV_BABYFEEDING_FEMALE_NO": "No place for women to feed a baby available",
 	"PDV_LEISURE_PLAYGROUND": "Playground equipment",
+	"PDV_MINAGE_*": "Min age: %s",
+	"PDV_MAXAGE_*": "Max age: %s",
 	"PDV_PLAYGROUND_SLIDE_YES": "Slide",
 	"PDV_PLAYGROUND_SWING_YES": "Swing",
 	"PDV_PLAYGROUND_CLIMBINGFRAME_YES": "Climbing frame",

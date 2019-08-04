@@ -64,6 +64,8 @@ var refFr = {"site-map": {
 	"PDV_BABYFEEDING_MALE_NO": "Pas de lieu pour les hommes pour nourrir un bébé disponible",
 	"PDV_BABYFEEDING_FEMALE_NO": "Pas de lieu pour les femmes pour nourrir un bébé disponible",
 	"PDV_LEISURE_PLAYGROUND": "Équipements d'aires de jeux",
+	"PDV_MINAGE_*": "Min age: %s (EN)",
+	"PDV_MAXAGE_*": "Max age: %s (EN)",
 	"PDV_PLAYGROUND_SLIDE_YES": "Toboggan",
 	"PDV_PLAYGROUND_SWING_YES": "Balançoire",
 	"PDV_PLAYGROUND_CLIMBINGFRAME_YES": "Équipement d'escalade",

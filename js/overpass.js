@@ -1,5 +1,5 @@
 var zoomLevel = "";
-var objref;
+var debug_markerobj;
 var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow", "playground": "color-green"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
@@ -145,7 +145,6 @@ function checkboxes2overpass(bounds, actFilter) {
 			}
 		}
 	}
-	console.log(andquery);
 	return andquery + ");";
 }
 function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
@@ -375,7 +374,10 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 			} else {
 				langcode += "_" + values[i].replace("_", "").replace(":", "_");;
 			}
-			if (database[parent].applyfor[marker.category.split(" ")[0]]) {title = getText("PDV_" + langcode.toUpperCase());}
+			if (database[parent].applyfor[marker.category.split(" ")[0]]) {
+				title = getText("PDV_" + langcode.toUpperCase());
+				if (title != undefined && title.indexOf("%s") > -1) {title = title.replace("%s", poi.tags[tag]);}
+			}
 			if (title != undefined) {
 				data.title = title;
 				data.color = colorcode[values[i]] || "";
@@ -416,7 +418,7 @@ function processContentDatabase(marker, poi, database) {
 	for (var tag in database) {
 		if (database[tag].triggers) {data = database[tag].triggers(data, data[tag]);}
 	}
-	console.log(data);
+	debug_markerobj = marker;
 	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
@@ -503,7 +505,6 @@ function getRightPopup(marker, usePopup) {
 		"furtherInfos": {"content": `<a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "ℹ️", "title": getText().PDV_TITLE_MI, "active": true}
 		}
 	};
-	console.log(popup.playgroundPopup.home.content);
 	createDialog(marker, poi, popup[usePopup]);
 }
 function createDialog(marker, poi, details_data) {

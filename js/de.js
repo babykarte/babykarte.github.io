@@ -64,6 +64,8 @@ var refDe = {"site-map": {
 	"PDV_BABYFEEDING_MALE_NO": "Kein Ort zum Füttern für Männer vorhanden",
 	"PDV_BABYFEEDING_FEMALE_NO": "Kein Ort zum Füttern für Frauen vorhanden",
 	"PDV_LEISURE_PLAYGROUND": "Spielplatzausrüstung",
+	"PDV_MINAGE_*": "Mindestalter: %s",
+	"PDV_MAXAGE_*": "Maximalalter: %s",
 	"PDV_PLAYGROUNDSLIDE_YES": "Rutsche",
 	"PDV_PLAYGROUND_SWING_YES": "Schaukel",
 	"PDV_PLAYGROUND_CLIMBINGFRAME_YES": "Klettergerüst",
