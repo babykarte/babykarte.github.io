@@ -145,6 +145,7 @@ function checkboxes2overpass(bounds, actFilter) {
 			}
 		}
 	}
+	console.log(andquery);
 	return andquery + ");";
 }
 function locateNewArea(fltr, maxNorth, maxSouth, maxWest, maxEast) {
@@ -531,7 +532,7 @@ function createDialog(marker, poi, details_data) {
 		}
 		popupContent += "</div>";
 	}
-	popupContent_header += "<div style='display:flex;'>";
+	popupContent_header += "<div style='display:flex;height:50px;'>";
 	for (var entry in details_data) {
 		var classList = "pdv-icon active";
 		var symbol = details_data[entry].symbol;

@@ -1,4 +1,5 @@
 var activeFilter = {}; //Dictionary of the current selected filters
+var queue = []; //A list of tasks in queue
 var timerForFilter, markerCode, filtersSorted;
 var profiles = { //Colour profiles for the filters
 "defaultMarker": {code: "#004387"},
@@ -26,7 +27,7 @@ var filter = { //The filters, the query they trigger, their colour profile, thei
 1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "category" : "health midwife", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
 2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "category" : "health birth", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
 3: {"query": {"nwr": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.greenMarker, "category" : "activity playground", "priorize": 1, "triggers": {onclick: function() {;setFilter(4);}}, "popup": "POIpopup"},
-4: {"query": {"node|way": ["[\"playground\"]", "[\"min_age\"!~\"[4-99]\"]"], "node|way_": ["[\"playground:*\"]"]},  "color": profiles.lightgreenMarker, "category" : "activity playground-equipment", "priorize": 2, "triggers": {}, "beforeFilter": "&nbsp;&nbsp;", "popup": "playgroundPopup"},
+4: {"query": {"node|way": ["[\"playground\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightgreenMarker, "category" : "activity playground-equipment", "priorize": 2, "triggers": {}, "beforeFilter": "<span style='font-size:22px'>↳</span>", "popup": "playgroundPopup"},
 5: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"access\"!=\"private\"]", "[\"name\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.darkgreenMarker, "category" : "activity park", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
 6: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]},  "color": profiles.blueMarker, "category" : "shop baby_goods", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
 7: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]},  "color": profiles.darkblueMarker, "category" : "shop toys", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
@@ -177,14 +178,24 @@ function osmExpression(poi, value) {
 function getData(url, dataType, data,  fail, success, type) {
 	if (type == undefined) {type = "GET"}
 	if (fail == undefined) {fail = function() {showGlobalPopup(getText().LOADING_FAILURE);progressbar();}}
-	$.ajax({
-		type: type,
-		url: String(url),
-		dataType: String(dataType),
-		data: data,
-		fail: fail,
-		success: success
-		});
+	request = function() {console.log(data);
+		$.ajax({
+			type: type,
+			url: String(url),
+			dataType: String(dataType),
+			data: data,
+			fail: fail,
+			success: success,
+			complete: function(xhr, status) {queue.shift();
+				if (queue.length > 0) {
+					queue[0]();
+				}
+			}
+			});
+	}
+	queue.push(request);
+	console.log(queue.length);
+	if (queue.length == 1) {request();} 
 }
 function getSubtitle(poi) {
 	var json = getText().filtertranslations;
