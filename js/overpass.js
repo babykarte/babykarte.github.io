@@ -1,5 +1,6 @@
-var zoomLevel = "";
 var debug_markerobj;
+var markerStyles = {};
+var zoomLevel = "";
 var url = "https://overpass-api.de/api/interpreter";
 var colorcode = {"yes": "color-green", "no": "color-red", "room": "color-green", "bench": "color-green", undefined: "color-grey", "limited": "color-yellow", "playground": "color-green"};
 // 'undefined' is equal to 'tag does not exist'. In JS, 'undefined' is also a value
@@ -421,7 +422,6 @@ function processContentDatabase(marker, poi, database) {
 	for (var tag in database) {
 		if (database[tag].triggers) {data = database[tag].triggers(data, data[tag]);}
 	}
-	debug_markerobj = poi;
 	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
@@ -481,13 +481,13 @@ function determineRateColor(poi) {
 	}
 }
 function addMarkerIcon(poi, marker) {
-	var markerIcon = markerCode;
+	var iconObject = JSON.parse(JSON.stringify(markerStyles[filter[marker.fltr].markerStyle]));
 	var result = determineRateColor(poi);
 	if (marker.color != "default") {
-		markerIcon = markerIcon.replace("#004387", marker.color);
+		iconObject.html = iconObject.html.replace("#004387", marker.color);
 	}
-	if (result) {markerIcon = markerIcon.replace("rating-default", result)}
-	var iconObject  = L.divIcon({iconSize: [31, 48], popupAnchor: [4, -32], iconAnchor: [12, 45], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + markerIcon + "</svg>"}) //Creates the colourized marker icon
+	if (result) {iconObject.html = iconObject.html.replace("rating-default", result)}
+	iconObject = L.divIcon(iconObject) //Creates the colourized marker icon
 	var markerObject = L.marker([poi.lat, poi.lon], {icon: iconObject}); //Set the right coordinates
 	marker = $.extend(true, markerObject, marker); //Adds the colourized marker icon
 	filter[marker.fltr].layers.push(marker); //Adds the POI to the filter's layers list.
@@ -553,7 +553,7 @@ function createDialog(marker, poi, details_data) {
 	marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + getText().LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + getText().LNK_OSM_REPORT + "</a>";
 	marker.bindPopup(marker.popupContent);
 	marker.openPopup();
-	objref = marker;
+	debug_markerobj = marker;
 } 
 function loadPOIS(e, post) {
 	hideFilterListOnMobile();
@@ -614,6 +614,8 @@ function getStateFromHash() {
 	}
 }
 function requestLocation() {map.locate({setView: true, zoom: zoomLevel});}
+
+
 //init map
 progressbar(30);
 var map = L.map('map');
@@ -630,6 +632,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   minZoom: 10,
   attribution: 'Map data &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Map Tiles &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+
 progressbar();
+
 zoomLevel = String(map.getZoom());
 loadLang("", languageOfUser);
+
+getData("/markers/marker.svg", "text", "", undefined, function (data) {markerStyles["marker"] = {iconSize: [31, 48], popupAnchor: [4, -32], iconAnchor: [12, 45], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:25px;height:41px;'>" + data + "</svg>"} /* Caches the marker for later altering (change of its colour for every single individual filter) */}); //Triggers the loading and caching of the marker icon at startup of Babykarte
+getData("/markers/dot.svg", "text", "", undefined, function (data) {markerStyles["dot"] = {iconSize: [20, 20], popupAnchor: [0, 0], iconAnchor: [10, 10], className: "leaflet-marker-icon leaflet-zoom-animated leaflet-interactive", html: "<svg style='width:20px;height:20px;'>" + data + "</svg>"}; /* Caches the marker for later altering (change of its colour for every single individual filter) */}); //Triggers the loading and caching of the marker icon at startup of Babykarte

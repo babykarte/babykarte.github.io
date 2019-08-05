@@ -23,21 +23,21 @@ var profiles = { //Colour profiles for the filters
 };
 var filter_defaultValues = {"active": false, "layers": [], "coordinates": {"max": {"north": 0, "south": 0, "east": 0, "west": 0}, "current": {"north": 0, "south": 0, "east": 0, "west": 0}}, "usedBefore" : false}; //its active state, markers belonging to that filter, the boundings of a filter (area downloaded and cached)
 var filter = { //The filters, the query they trigger, their colour profile, their category and technical description as dictionary (JSON)
-0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]},  "color": profiles.redMarker, "category" : "health paediatrics", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "category" : "health midwife", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "category" : "health birth", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-3: {"query": {"nwr": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.greenMarker, "category" : "activity playground", "priorize": 1, "triggers": {onclick: function() {;setFilter(4);}}, "popup": "POIpopup"},
-4: {"query": {"node|way": ["[\"playground\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightgreenMarker, "category" : "activity playground-equipment", "priorize": 2, "triggers": {}, "beforeFilter": "<span style='font-size:22px'>↳</span>", "popup": "playgroundPopup"},
-5: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"access\"!=\"private\"]", "[\"name\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.darkgreenMarker, "category" : "rest park", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-6: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]},  "color": profiles.blueMarker, "category" : "shop baby_goods", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-7: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]},  "color": profiles.darkblueMarker, "category" : "shop toys", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-8: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]},  "color": profiles.lightblueMarker, "category" : "shop clothes", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-9: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "category" : "childcare kindergarten", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-10: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "category" : "activity zoo", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-11: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"], "node|way_": ["[\"changing_table\"]", "[\"changing_table\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "category" : "childcare diaper", "priorize": 3, "triggers": {}, "popup": "POIpopup"},
-12: {"query": {"node|way": ["[\"diaper:male\"=\"yes\"]"], "node|way_": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"], "node|way___": ["[\"diaper:wheelchair\"=\"yes\"]"], "node|way____": ["[\"changing_table\"]","[\"changing_table:location\"!=\"female_toilet\"]"]},  "color": profiles.greyMarker, "category" : "childcare diaper", "priorize": 2, "triggers": {}, "popup": "POIpopup"},
-13: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.violetMarker, "category" : "eat cafe", "priorize": 1, "triggers": {}, "popup": "POIpopup"},
-14: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightvioletMarker, "category" : "eat restaurant", "priorize": 1, "triggers": {}, "popup": "POIpopup"}
+0: {"query": {"node|way": ["[\"healthcare:speciality\"~\"paediatrics\"]"]},  "color": profiles.redMarker, "category" : "health paediatrics", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+1: {"query": {"node|way": ["[\"healthcare\"=\"midwife\"]"]},  "color": profiles.darkredMarker, "category" : "health midwife", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+2: {"query": {"node|way": ["[\"healthcare\"=\"birthing_center\"]"]},  "color": profiles.lightredMarker, "category" : "health birth", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+3: {"query": {"nwr": ["[\"leisure\"=\"playground\"]", "[\"access\"!=\"private\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.greenMarker, "category" : "activity playground", "priorize": 1, "triggers": {onclick: function() {;setFilter(4);}}, "popup": "POIpopup", "markerStyle": "marker"},
+4: {"query": {"node|way": ["[\"playground\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightgreenMarker, "category" : "activity playground-equipment", "priorize": 2, "triggers": {}, "beforeFilter": "<span style='font-size:22px'>↳</span>", "popup": "playgroundPopup", "markerStyle": "dot"},
+5: {"query": {"way|relation": ["[\"leisure\"=\"park\"]", "[\"access\"!=\"private\"]", "[\"name\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.darkgreenMarker, "category" : "rest park", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+6: {"query": {"node|way": ["[\"shop\"=\"baby_goods\"]"]},  "color": profiles.blueMarker, "category" : "shop baby_goods", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+7: {"query": {"node|way": ["[\"shop\"=\"toys\"]"]},  "color": profiles.darkblueMarker, "category" : "shop toys", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+8: {"query": {"node|way": ["[\"shop\"=\"clothes\"]", "[\"clothes\"~\"babies|children\"]"]},  "color": profiles.lightblueMarker, "category" : "shop clothes", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+9: {"query": {"node|way": ["[\"amenity\"~\"kindergarten|childcare\"]"]},  "color": profiles.orangeMarker, "category" : "childcare kindergarten", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+10: {"query": {"node|way": ["[\"tourism\"=\"zoo\"]"]},  "color": profiles.yellowMarker, "category" : "activity zoo", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+11: {"query": {"node|way": ["[\"diaper\"]", "[\"diaper\"!=\"no\"]"], "node|way_": ["[\"changing_table\"]", "[\"changing_table\"!=\"no\"]"]},  "color": profiles.lightgreyMarker, "category" : "childcare diaper", "priorize": 3, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+12: {"query": {"node|way": ["[\"diaper:male\"=\"yes\"]"], "node|way_": ["[\"diaper:unisex\"=\"yes\"]"], "node|way__": ["[\"diaper\"=\"room\"]"], "node|way___": ["[\"diaper:wheelchair\"=\"yes\"]"], "node|way____": ["[\"changing_table\"]","[\"changing_table:location\"!=\"female_toilet\"]"]},  "color": profiles.greyMarker, "category" : "childcare diaper", "priorize": 2, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+13: {"query": {"node|way": ["[\"amenity\"=\"cafe\"]", "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.violetMarker, "category" : "eat cafe", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"},
+14: {"query": {"node|way": ["[\"amenity\"=\"restaurant\"]", , "[\"min_age\"!~\"[4-99]\"]"]},  "color": profiles.lightvioletMarker, "category" : "eat restaurant", "priorize": 1, "triggers": {}, "popup": "POIpopup", "markerStyle": "marker"}
 };
 function triggerActivationOfFilters() {
 	clearTimeout(timerForFilter);
@@ -240,4 +240,3 @@ function groupIntoLayers(poi) {
 	marker.color = "default";
 	return marker;
 }
-getData("/markers/marker.svg", "text", "", undefined, function (data) {markerCode = data; /* Caches the marker for later altering (change of its colour for every single individual filter) */}); //Triggers the loading and caching of the marker icon at startup of Babykarte
