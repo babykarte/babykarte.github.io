@@ -390,6 +390,9 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 					data.title = "NODISPLAY";
 				}
 			}
+		} else {
+			data.title = "NODISPLAY";
+			data.color = "";
 		}
 		i += 1;
 	}
@@ -402,8 +405,8 @@ function processContentDatabase(marker, poi, database) {
 		var values = database[tag].values;
 		var children = database[tag].children;
 		data[tag] = {};
-		data[tag] = processContentDatabase_intern(marker, poi, database, tag, values, data[tag]);
 		data[tag].children = {};
+		data[tag] = processContentDatabase_intern(marker, poi, database, tag, values, data[tag]);
 		for (var child in children) {
 			var childname = child;
 			data[tag].children[child] = {};
@@ -418,7 +421,7 @@ function processContentDatabase(marker, poi, database) {
 	for (var tag in database) {
 		if (database[tag].triggers) {data = database[tag].triggers(data, data[tag]);}
 	}
-	debug_markerobj = marker;
+	debug_markerobj = poi;
 	for (var tag in data) {
 		if (Object.keys(data[tag].children).length == 0 || Object.keys(data[tag]).length == 0) {
 			output += "<ul><li class='" + data[tag].color + "'>" + data[tag].title + "</li></ul>\n";
