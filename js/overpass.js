@@ -19,7 +19,7 @@ var PEP_data = {// PEP = Playground Equipment Popup
 				"access": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["yes", "no", "customers", "private", undefined], "children": {}},
 		};
 var PDV_babyTab = { //PDV = POI Details View
-				"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined],
+				"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined], "triggers": function(data, local) {if (local.children.length == 0) {delete data["stroller"];} return data},
 					"children": 
 						{"playground:slide": {"values": ["yes", undefined]},
 						"playground:swing": {"values": ["yes", undefined]},
@@ -67,7 +67,7 @@ var PDV_babyTab = { //PDV = POI Details View
 						}
 				},
 				"highchair": {"nameInherit": true, "applyfor": {"eat": true}, "values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
-				"stroller": {"nameInherit": true, "applyfor": {"activity": true, "childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
+				"stroller": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
 					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|* (implicit specification) (implicit specification)
 				},
 				"kids_area": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
@@ -376,7 +376,7 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 			}
 			if (database[parent].applyfor[marker.category.split(" ")[0]]) {
 				title = getText("PDV_" + langcode.toUpperCase());
-				if (title != undefined && title.indexOf("%s") > -1) {title = title.replace("%s", poi.tags[tag]);}
+				if (title != undefined && title.indexOf("%s") > -1 && poi.tags[tag]) {title = title.replace("%s", poi.tags[tag]);} else {title = undefined;}
 			}
 			if (title != undefined) {
 				data.title = title;
