@@ -115,11 +115,12 @@ label {
 	width:100%;
 }
 .pdv-icon {
+	box-sizing:border-box;
 	height:25px;
 	width:25px;
 	margin:10px;
 	font-size:25px;
-	cursor: pointer;
+	cursor:pointer;
 	text-align:center;
 }
 .small-icon {
@@ -141,13 +142,13 @@ label {
 	margin-left:-10px;
 }
 .inactive {
-	background-color:rgba(0,0,0, 0.2);
+	opacity:0.4;
 }
 .active:hover {
-	background-color:#d6e0f5;
+	border-top:3px solid #d6e0f5;
 }
 .active[active] {
-	border-bottom:4px solid #42bd42;
+	border-top:3px solid #52a0c9;
 }
 .lang-select {
 	margin-right:5px;
@@ -170,6 +171,9 @@ label {
 .color-grey {
 	color:#858585;
 }
+.nounderlinestyle {
+	text-decoration:none;
+}
 .dropdown {
 	padding:5px;
 	padding-left:0px;
@@ -179,21 +183,24 @@ label {
 	background-color:white;
 	padding:5px;
 	display:none;
-	height:100px;
-	width:50px;
+	height:20px;
+	width:100px;
 	z-index:2;
 	position:absolute;
 }
 .dropdown-menu:hover {
-	display:block;
+	display:flex;
 }
 .dropdown-menu a {
-	display:block;
+	box-sizing:border-box;
+	display:inline-block;
 	text-align:center;
-	border-bottom:2px solid lightblue;
+}
+.dropdown-menu a:hover {
+	border-top:3px solid #d6e0f5;
 }
 .dropdown:hover ~ .dropdown-menu {
-	display:block;
+	display:flex;
 }
 #menubutton {
 	display:none;

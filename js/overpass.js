@@ -361,7 +361,7 @@ function addrTab(poi, prefix , condition, symbol, nounicode) {
 		symbol = "<span class='small-icon'>" + symbol + "</span>";
 	}
 	if (result.startsWith("www.") && !prefix.startsWith("mail")) {result = "http://" + result}
-	return "<div class='grid-container'><a target='_blank' href='" + prefix  + result + "'>" + symbol + "'</a><a target='_blank' href='"+ prefix + result + "'>" + result + "</a></div>\n";
+	return "<div class='grid-container'><a class='nounderlinestyle' target='_blank' href='" + prefix  + result + "'>" + symbol + "'</a><a target='_blank' href='"+ prefix + result + "'>" + result + "</a></div>\n";
 }
 function processContentDatabase_intern(marker, poi, database, tag, values, data, parent) {
 	if (!parent) {parent = tag;}

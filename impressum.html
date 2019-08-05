@@ -11,9 +11,12 @@
 
 <body id='site-impress'>
 	<div class='lang-select'>
-  		<a href='#' onclick='loadLang(this, "en");'><span class='small-icon'>🇬🇧</span></a>
-  		<a href='#' onclick='loadLang(this, "de");'><span class='small-icon'>🇩🇪</span></a>
-  		<a href='#' onclick='loadLang(this, "fr");'><span class='small-icon'>🇫🇷</span></a>
+  			<div class='dropdown'><span class='small-icon'>🌍 <span id='languageOfUser'></span></span></div>
+  			<div class='dropdown-menu'>
+  				<a href='#' class='nounderlinestyle' onclick='loadLang(this, "en");'><span class='small-icon'>🇬🇧</span></a>
+  				<a href='#' class='nounderlinestyle' onclick='loadLang(this, "de");'><span class='small-icon'>🇩🇪</span></a>
+  				<a href='#' class='nounderlinestyle' onclick='loadLang(this, "fr");'><span class='small-icon'>🇫🇷</span></a>
+  			</div>
   	</div>
     <h1 id='title'>Impressum</h1>
     <br>
