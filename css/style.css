@@ -202,6 +202,9 @@ label {
 .dropdown:hover ~ .dropdown-menu {
 	display:flex;
 }
+.locatingBtn {
+	z-index:402;
+}
 #menubutton {
 	display:none;
 	font-size:24px;
@@ -214,6 +217,19 @@ label {
 #map{
 	z-index:1;
 	flex:1;
+}
+#map-overlay-notify {
+	z-index:401;
+	position:absolute;
+	width:100%;
+	height:100%;
+	padding-top:30%;
+	padding-bottom:30%;
+	font-size:26px;
+	text-align:center;
+	color:white;
+	display:none;
+	background-color:rgba(0,0,0,0.7);
 }
 #searchfield {
 	padding-top:10px;

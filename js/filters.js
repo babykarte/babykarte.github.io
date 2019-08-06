@@ -89,7 +89,13 @@ function activateFilters() {
 			}
 		}
 	}
-	loadPOIS(""); //Send request to overpass and interpret/render the results for the POI popup
+	console.log(Object.keys(activeFilter).length);
+	if (Object.keys(activeFilter).length > 0) {
+		document.getElementById("map-overlay-notify").style.display = "none";
+		loadPOIS(""); //Send request to overpass and interpret/render the results for the POI popup
+	} else {
+		document.getElementById("map-overlay-notify").style.display = "block";
+	}
 }
 function setFilter(id) {
 	//Gets called when the user (un)checks a filter.
@@ -143,6 +149,7 @@ function initFilters() {
 	}
 	filtersGround.innerHTML = output; //Add filters to the site (displaying them to user)
 	filtersSorted = getSortedListOfFilters(priorizeList);
+	document.getElementById("map-overlay-notify").style.display = "block";
 }
 function osmExpression(poi, value) {
 	var key, content, result;

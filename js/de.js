@@ -6,6 +6,7 @@ var refDe = {"site-map": {
 	"LNK_OSM_REPORT": "Falschinformationen melden",
 	"LNK_OSM_VIEW": "POI in OpenStreetMap ansehen",
 	"LNK_OPEN_WITH": "Mit App öffnen",
+	"FLTR_NOTHINGSELECTED": "Keine Filter ausgewählt. Bitte einen oder mehrere Filter im Menü auswählen. Das Menü öffnet sich bei Geräten mit einem kleinen Bildschirm mit einem Klick auf das &#9776; Icon.",
 	"FLTR_SELECTALL": "Alle (de)aktivieren",
 	"PDV_UNNAME": "Kein Name",
 	"PDV_ADDRESS_UNKNOWN": "Adresse unbekannt",

@@ -6,6 +6,7 @@ var refEn = {"site-map": {
 	"LNK_OSM_REPORT": "Report wrong information",
 	"LNK_OSM_VIEW": "View POI in OpenStreetMap",
 	"LNK_OPEN_WITH": "Open with an app",
+	"FLTR_NOTHINGSELECTED": "No filter selected. Please select one or more filters in the menu which you can open by clicking &#9776; on smaller screens.",
 	"FLTR_SELECTALL": "(De)select all",
 	"PDV_UNNAME": "No Name",
 	"PDV_ZIPCODE_UNKNOWN": "Zipcode not known",
