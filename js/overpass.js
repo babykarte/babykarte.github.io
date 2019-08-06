@@ -377,7 +377,11 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 			}
 			if (database[parent].applyfor[marker.category.split(" ")[0]]) {
 				title = getText("PDV_" + langcode.toUpperCase());
-				if (title != undefined && title.indexOf("%s") > -1 && poi.tags[tag]) {title = title.replace("%s", poi.tags[tag]);} else {title = undefined;}
+				if (title != undefined && title.indexOf("%s") > -1 && poi.tags[tag]) {
+					title = title.replace("%s", poi.tags[tag]);
+				} else if (title != undefined && title.indexOf("%s") > -1) {
+					title = undefined;
+				}
 			}
 			if (title != undefined) {
 				data.title = title;

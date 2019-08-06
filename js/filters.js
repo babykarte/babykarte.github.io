@@ -89,7 +89,6 @@ function activateFilters() {
 			}
 		}
 	}
-	console.log(Object.keys(activeFilter).length);
 	if (Object.keys(activeFilter).length > 0) {
 		document.getElementById("map-overlay-notify").style.display = "none";
 		loadPOIS(""); //Send request to overpass and interpret/render the results for the POI popup
