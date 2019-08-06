@@ -1,8 +1,8 @@
-var saved_lat = 48.160474925320834;
-var saved_lon = 11.4992094039917;
+var saved_lat = 54.32308131652028;
+var saved_lon = 10.139915941399524;
 var mobile = false;
 var message;
-function mobileTrue() {mobile = true;} // Gets triggered when user triggers the menu button which is available for mobile devices only (small screen site)
+function mobileTrue() {mobile = true;} // Gets triggered when user triggers the menu button which is available for mobile devices only (small screen size)
 function togglemenu(value=false) {
 	var obj = document.getElementsByClassName("layermenu")[0]; // JS code for the menu button
 	if (value == true) { // Opens the menu by order from inside the JS code (calibrating its real state)
