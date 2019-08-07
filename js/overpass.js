@@ -249,13 +249,6 @@ function setCoordinatesOfFilter(fltr, values, entries=["current", "max"]) {
 		}
 	}
 }
-function resetFilter(fltr) {
-	var values = {"south": 0, "west": 0, "north": 0, "east": 0}
-	toggleLayers(fltr, 0);
-	filter[fltr].usedBefore = true;
-	setCoordinatesOfFilter(fltr, values);
-	filter[fltr].layers = [];
-}
 function locateNewAreaBasedOnFilter() {
 	//Wrapper around locateNewArea().
 	//Adds filter compactibility to locateNewArea() function.

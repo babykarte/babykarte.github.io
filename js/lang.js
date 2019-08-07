@@ -74,7 +74,7 @@ function setLang(e, lang) {
 				getText().filtertranslations["playground=" + equipment.toLowerCase()] = getText()[json];
 			}
 		}
-		initFilters();
+		hardReset();
 	} else {
 		alert("Language data couldn't be loaded.");
 	}

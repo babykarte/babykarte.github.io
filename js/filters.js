@@ -150,6 +150,21 @@ function initFilters() {
 	filtersSorted = getSortedListOfFilters(priorizeList);
 	document.getElementById("map-overlay-notify").style.display = "block";
 }
+function resetFilter(fltr) {
+	toggleLayers(fltr, 0);
+	filter[fltr].usedBefore = true;
+	setCoordinatesOfFilter(fltr, values);
+	filter[fltr].layers = [];
+}
+function hardReset() {
+	initFilters();
+	for (var fltr in filter) {
+		toggleLayers(fltr, 0);
+		activeFilter = {};
+		filter[fltr].usedBefore = false;
+		filter[fltr].active = false;
+	}
+}
 function osmExpression(poi, value) {
 	var key, content, result;
 	var regExpression = "";
