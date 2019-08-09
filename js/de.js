@@ -67,7 +67,7 @@ var refDe = {"site-map": {
 	"PDV_LEISURE_PLAYGROUND": "Spielplatzausrüstung",
 	"PDV_MINAGE_*": "Mindestalter: %s",
 	"PDV_MAXAGE_*": "Maximalalter: %s",
-	"PDV_PLAYGROUNDSLIDE_YES": "Rutsche",
+	"PDV_PLAYGROUND_SLIDE_YES": "Rutsche",
 	"PDV_PLAYGROUND_SWING_YES": "Schaukel",
 	"PDV_PLAYGROUND_CLIMBINGFRAME_YES": "Klettergerüst",
 	"PDV_PLAYGROUND_CLIMBINGWALL_YES": "Kletterwand",
