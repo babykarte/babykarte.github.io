@@ -20,7 +20,7 @@ var PEP_data = {// PEP = Playground Equipment Popup
 				"access": {"nameInherit": true, "applyfor": {"activity": true}, "values": ["yes", "no", "customers", "private", undefined], "children": {}},
 		};
 var PDV_babyTab = { //PDV = POI Details View
-				"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined], "triggers": function(data, local) {if (local.children.length == 0) {delete data["stroller"];} return data},
+				"leisure": {"nameInherit": false, "applyfor": {"activity": true}, "values": ["playground", undefined], "triggers": function(data, local) {if (Object.keys(local.children).length == 0) {delete data["leisure"];} return data},
 					"children": 
 						{"playground:slide": {"values": ["yes", undefined]},
 						"playground:swing": {"values": ["yes", undefined]},
