@@ -151,6 +151,7 @@ function initFilters() {
 	document.getElementById("map-overlay-notify").style.display = "block";
 }
 function resetFilter(fltr) {
+	var values = {"south": 0, "west": 0, "north": 0, "east": 0}
 	toggleLayers(fltr, 0);
 	filter[fltr].usedBefore = true;
 	setCoordinatesOfFilter(fltr, values);

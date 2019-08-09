@@ -51,7 +51,7 @@ var PDV_babyTab = { //PDV = POI Details View
 						"playground:Skate_equipment": {"values": ["yes", undefined]}
 						}
 				},
-				"diaper": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
+				"diaper": {"nameInherit": true, "applyfor": {"health": true, "eat": true, "shop": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
 					"children": 
 						{"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
 						"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
@@ -60,7 +60,7 @@ var PDV_babyTab = { //PDV = POI Details View
 						"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|* (implicit specification)
 						}
 				},
-				"changing_table": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN) {delete data["changing_table"]}if (data["diaper"] && data["changing_table"]) {delete data["diaper"];} return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
+				"changing_table": {"nameInherit": true, "applyfor": {"health": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN) {delete data["changing_table"]}if (data["diaper"] && data["changing_table"]) {delete data["diaper"];} return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
 					"children":
 						{"fee": {"values": ["yes", "no", undefined]},	//changing_table:fee=yes|no|undefined
 						"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},	//changing_table:location=wheelchair_toilet|female_toilet|male_toilet|unisex_toilet|dedicated_room|room|sales_area|undefined
@@ -68,10 +68,10 @@ var PDV_babyTab = { //PDV = POI Details View
 						}
 				},
 				"highchair": {"nameInherit": true, "applyfor": {"eat": true}, "values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
-				"stroller": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
+				"stroller": {"nameInherit": true, "applyfor": {"eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
 					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|* (implicit specification) (implicit specification)
 				},
-				"kids_area": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
+				"kids_area": {"nameInherit": true, "applyfor": {"health": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
 					"children":
 						{"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
 						"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
@@ -79,7 +79,7 @@ var PDV_babyTab = { //PDV = POI Details View
 						"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
 						}
 				},
-				"baby_feeding": {"nameInherit": true, "applyfor": {"childcare": true, "eat": true, "shop": true, "health": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
+				"baby_feeding": {"nameInherit": true, "applyfor": {"eat": true, "shop": true, "health": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
 					"children":
 						{"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
 						"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
@@ -498,7 +498,7 @@ function getRightPopup(marker, usePopup) {
 		"baby": {"content": `${processContentDatabase(marker, poi, PDV_babyTab)}`, "symbol": "👶", "title": getText().PDV_TITLE_BABY, "active": true},
 		"opening_hours": {"content": `${ parseOpening_hours(poi.tags["opening_hours"]) || "NODISPLAY" }`, "symbol": "🕰️", "title": getText().PDV_TITLE_OH, "active": true},
 		"contact" : {"content": `${ addrTab(poi, "", "poi.tags['website'] || poi.tags['contact:website'] || 'NODISPLAY'", "🌍") }${ addrTab(poi, "tel:", "poi.tags['phone'] || poi.tags['contact:phone'] || 'NODISPLAY'", "☎️") }${ addrTab(poi, "mailto:", "poi.tags['email'] || poi.tags['contact:email'] || 'NODISPLAY'", "📧") }${ addrTab(poi, "", "((poi.tags['facebook'] != undefined) ? ((poi.tags['facebook'].indexOf('/') > -1) ? poi.tags['facebook'] : ((poi.tags['facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['facebook'] : undefined)) : ((poi.tags['contact:facebook'] != undefined) ? ((poi.tags['contact:facebook'].indexOf('/') > -1) ? poi.tags['contact:facebook'] : ((poi.tags['contact:facebook'] == -1) ? 'https://www.facebook.com/' + poi.tags['contact:facebook'] : 'NODISPLAY')) : 'NODISPLAY'))", "/images/facebook-logo.svg", true) }`, "symbol": "📧", "title": getText().PDV_TITLE_CONTACT, "active": true},
-		"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"\n<br/><a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "ℹ️", "title": getText().PDV_TITLE_MI, "active": true}
+		"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"<br/>\n<a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "ℹ️", "title": getText().PDV_TITLE_MI, "active": true}
 		},
 	"playgroundPopup":
 		{"home": {"content": `<h1>${ poi.tags["name"] = ((poi.tags["name"] == undefined && marker.name) ? marker.name : poi.tags["name"]) }</h1><h2>${ ((poi.tags["name"] != marker.name) ? ((marker.name != undefined) ? marker.name : "") : "") }</h2>${ processContentDatabase(marker, poi, PEP_data) }`, "symbol": "🏠", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
