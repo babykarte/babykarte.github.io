@@ -51,7 +51,7 @@ var PDV_babyTab = { //PDV = POI Details View
 						"playground:Skate_equipment": {"values": ["yes", undefined]}
 						}
 				},
-				"diaper": {"nameInherit": true, "applyfor": {"health": true, "eat": true, "shop": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
+				"diaper": {"nameInherit": true, "applyfor": {"health": true, "eat": true, "shop": true, "changingtable": true}, "values": ["yes", "no", "room", "bench", undefined, "*"],											// diaper=yes|no|room|bench|undefined
 					"children": 
 						{"female": {"values": ["yes", "no", undefined]},		//		diaper:female=yes|no|undefined
 						"male": {"values": ["yes", "no", undefined]},			//		diaper:male=yes|no|undefined
@@ -60,7 +60,7 @@ var PDV_babyTab = { //PDV = POI Details View
 						"description": {"values": [undefined, "*"]}				//		diaper:description=undefined|* (implicit specification)
 						}
 				},
-				"changing_table": {"nameInherit": true, "applyfor": {"health": true, "eat": true, "shop": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN) {delete data["changing_table"]}if (data["diaper"] && data["changing_table"]) {delete data["diaper"];} return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
+				"changing_table": {"nameInherit": true, "applyfor": {"health": true, "eat": true, "shop": true, "changingtable": true}, "triggers": function(data, local) {if (local.title == getText().PDV_CHANGINGTABLE_UNKNOWN) {delete data["changing_table"]}if (data["diaper"] && data["changing_table"]) {delete data["diaper"];} return data;}, "values": ["yes", "no", "limited", undefined, "*"],		//changing_table=yes|no|limited|undefined
 					"children":
 						{"fee": {"values": ["yes", "no", undefined]},	//changing_table:fee=yes|no|undefined
 						"location": {"values": ["wheelchair_toilet", "female_toilet", "male_toilet", "unisex_toilet", "dedicated_room", "room", "sales_area", undefined]},	//changing_table:location=wheelchair_toilet|female_toilet|male_toilet|unisex_toilet|dedicated_room|room|sales_area|undefined
@@ -68,10 +68,10 @@ var PDV_babyTab = { //PDV = POI Details View
 						}
 				},
 				"highchair": {"nameInherit": true, "applyfor": {"eat": true}, "values": ["yes", "no", undefined, "*"]},					// highchair=yes|no|undefined|*
-				"stroller": {"nameInherit": true, "applyfor": {"eat": true, "shop": true, "health": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
+				"stroller": {"nameInherit": true, "applyfor": {"eat": true, "shop": true, "health": true, "changingtable": true}, "values": ["yes", "limited", "no", undefined],									// stroller=yes|limited|no|undefined
 					"children": {"description": {"values" : [undefined, "*"]}}			//		stroller:description=undefined|* (implicit specification) (implicit specification)
 				},
-				"kids_area": {"nameInherit": true, "applyfor": {"health": true, "eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
+				"kids_area": {"nameInherit": true, "applyfor": {"eat": true, "shop": true}, "values": ["yes", "no", undefined],																// kids_area=yes|no|undefined
 					"children":
 						{"indoor" :  {"values": ["yes", "no", undefined]},		//		kids_area:indoor=yes|no|undefined
 						"outdoor": {"values": ["yes", "no", undefined]},		//		kids_area:outdoor=yes|no|undefined
@@ -79,7 +79,7 @@ var PDV_babyTab = { //PDV = POI Details View
 						"fee": {"values": ["yes", "no", undefined]}				//		kids_area:fee=yes|no|undefined
 						}
 				},
-				"baby_feeding": {"nameInherit": true, "applyfor": {"eat": true, "shop": true, "health": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
+				"baby_feeding": {"nameInherit": true, "applyfor": {"eat": true, "shop": true, "changingtable": true}, "values": ["yes", "no", "room", undefined],							// baby_feeding=yes|no|room|undefined
 					"children":
 						{"female" : {"values": ["yes", "no", undefined]},		//		baby_feeding:female=yes|no|undefined
 						"male" : {"values": ["yes", "no", undefined]}			//		baby_feeding:male=yes|no|undefined
@@ -368,7 +368,7 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 			} else {
 				langcode += "_" + values[i].replace("_", "").replace(":", "_");;
 			}
-			if (database[parent].applyfor[marker.category.split(" ")[0]]) {
+			if (database[parent].applyfor[marker.category.split(" ")[0]] && !langcode.endsWith("UNKNOWN")) {
 				title = getText("PDV_" + langcode.toUpperCase());
 				if (title != undefined && title.indexOf("%s") > -1 && poi.tags[tag]) {
 					title = title.replace("%s", poi.tags[tag]);
