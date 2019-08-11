@@ -66,7 +66,6 @@ label {
 	margin:5px;
 	border-radius:10px;
 	padding:5px;
-	background-color: rgba(0, 0, 0, 0.7);
 }
 .leaflet-bar {
 	margin:0px !important;
@@ -97,13 +96,14 @@ label {
 	font-size:12px;
 }
 .layermenu {
-	z-index:1;
+	z-index:10;
 	width:33.34%;
+	max-width:300px;
 	height:100%;
 	overflow:hidden;
-	padding-left:5px;
-	padding-right:4px;
+	padding:5px;
 	box-sizing:border-box;
+	box-shadow: 4px 0 6px 0 rgba(0,0,0,.2);
 }
 .info {
 	display:none;
@@ -145,8 +145,7 @@ label {
 	border-bottom:4px solid #42bd42;
 }
 .lang-select {
-	margin-right:5px;
-	padding-left:5px;
+	padding:5px;
 }
 .grid-container {
 	display:grid;
@@ -173,7 +172,7 @@ label {
 	width:50px;
 	opacity:0.7;
 }
-#map{
+#map {
 	z-index:1;
 	flex:1;
 }
