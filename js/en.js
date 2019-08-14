@@ -164,6 +164,7 @@ refEn["site-map"].filtertranslations = {
 	"amenity=toilets": "Toilets",
 	"amenity=cafe": "Cafe",
 	"amenity=restaurant": "Restaurant",
+	"amenity=fast_food": "Fast food",
 	"amenity=kindergarten" : "Kindergarten",
 	"amenity=childcare" : "Kindergarten",
 	"leisure=playground": "Playground",
