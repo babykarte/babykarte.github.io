@@ -231,6 +231,10 @@ label {
 	display:none;
 	background-color:rgba(0,0,0,0.7);
 }
+@media only screen and (min-width:800px) {
+	#map-overlay-notify {
+		display:none !important;}
+}
 #searchfield {
 	padding-top:10px;
 	padding-bottom:10px;

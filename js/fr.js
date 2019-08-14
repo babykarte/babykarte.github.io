@@ -6,7 +6,7 @@ var refFr = {"site-map": {
 	"LNK_OSM_REPORT": "Signaler une information erronée",
 	"LNK_OSM_VIEW": "Voir le Point d'intérêt dans OpenStreetMap",
 	"LNK_OPEN_WITH": "Ouvrir avec une appli",
-	"FLTR_NOTHINGSELECTED": "Aucun filtre sélectionné. Veuillez sélectionner un ou plusieurs filtres dans le menu que vous pouvez ouvrir en cliquant sur &#9776 ; sur des écrans plus petits.",
+	"FLTR_NOTHINGSELECTED": "Veuillez sélectionner un ou plusieurs filtres dans le menu que vous pouvez ouvrir en cliquant sur &#9776; .",
 	"FLTR_SELECTALL": "(De)sélectionnez tout",
 	"PDV_UNNAME": "Sans Nom",
 	"PDV_ADDRESS_UNKNOWN": "Addresse inconnue",
