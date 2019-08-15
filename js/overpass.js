@@ -493,6 +493,8 @@ function addMarkerIcon(poi, marker) {
 function getRightPopup(marker, usePopup) {
 	marker = marker.target;
 	var poi = marker.data;
+	var name = getSubtitle(poi);
+	marker.name = name || getText().filtername[marker.fltr]; //Sets the subtitle which appears under the POI's name as text in grey
 	var popup = {"POIpopup": 
 		{"home": {"content": `<h1>${ ((poi.tags["name"] == undefined) ? ((poi.tags["amenity"] == "toilets") ? getText().TOILET : getText().PDV_UNNAME) : poi.tags["name"]) }</h1><h2>${  String(marker.name) }</h2><address id='address${poi.classId}'>${addrTrigger(poi, marker)}</address>`, "symbol": "🏠", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 		"baby": {"content": `${processContentDatabase(marker, poi, PDV_babyTab)}`, "symbol": "👶", "title": getText().PDV_TITLE_BABY, "active": true},
@@ -501,14 +503,13 @@ function getRightPopup(marker, usePopup) {
 		"furtherInfos": {"content": `<b>${ getText().PDV_OPERATOR }:</b><br/> ${ ((poi.tags["operator"]) ? poi.tags["operator"] + "<br/>" : "NODISPLAY") }\n<b>${ getText().PDV_DESCRIPTION }:</b><br/>"${ ((poi.tags["description:" + languageOfUser]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description:" + languageOfUser] : ((poi.tags["description"]) ? getText().PDV_DESCRIPTION + ": " + poi.tags["description"] : "NODISPLAY")) }"<br/>\n<a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "ℹ️", "title": getText().PDV_TITLE_MI, "active": true}
 		},
 	"playgroundPopup":
-		{"home": {"content": `<h1>${ poi.tags["name"] = ((poi.tags["name"] == undefined && marker.name) ? marker.name : poi.tags["name"]) }</h1><h2>${ ((poi.tags["name"] != marker.name) ? ((marker.name != undefined) ? marker.name : "") : "") }</h2>${ processContentDatabase(marker, poi, PEP_data) }`, "symbol": "🏠", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
+		{"home": {"content": `<h1>${ ((poi.tags["name"] != undefined) ? poi.tags["name"] : marker.name) }</h1><h2>${ ((poi.tags["name"] = undefined) ? "" : marker.name) }</h2>${ processContentDatabase(marker, poi, PEP_data) }`, "symbol": "🏠", "title": getText().PDV_TITLE_HOME, "active": true, "default": true},
 		"furtherInfos": {"content": `<a target='_blank' href='${ "https://www.openstreetmap.org/" + String(poi.type).toLowerCase() + "/" + String(poi.id) }'>${ getText().LNK_OSM_VIEW }</a><br/>\n<a href='${ "geo:" + poi.lat + "," + poi.lon }'>${ getText().LNK_OPEN_WITH }</a>`, "symbol": "ℹ️", "title": getText().PDV_TITLE_MI, "active": true}
 		}
 	};
 	createDialog(marker, poi, popup[usePopup]);
 }
 function createDialog(marker, poi, details_data) {
-	console.log(2);
 	var popupContent = "";
 	var popupContent_header = "";
 	for (var entry in details_data) {
@@ -580,12 +581,13 @@ function loadPOIS(e, post) {
 			}
 			//creates a new Marker() Object, put data in it, determine the right filter and do the rating (add yellow, green or a red dot on the icon).
 			marker = groupIntoLayers(poi);
+			
 			poi = ratePOI(marker, poi);
 			marker = addMarkerIcon(poi, marker);
 			marker.data = poi;
 			marker.data.classId = String(poi.type)[0].toUpperCase() + String(poi.id);
 			//marker.once("click", function(marker) {getRightPopup(marker, filter[marker.target.fltr].popup);});
-			marker.on("click", function(event) {console.log(event);getRightPopup(event, filter[event.target.fltr].popup)});
+			marker.on("click", function(event) {getRightPopup(event, filter[event.target.fltr].popup)});
 			//Add marker to map
 			map.addLayer(marker);
 			/*if (poi.lat == saved_lat && poi.lon == saved_lon) {

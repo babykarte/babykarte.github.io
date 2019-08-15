@@ -246,10 +246,8 @@ function groupIntoLayers(poi) {
 		var query = filter[fltr].query; //Gets the list of queries the filter has.
 		for (var type in query) { //Gets throw all the queries the filter has..
 			type = query[type]; //Instead of its query name it gets the content of the type.
-			name = getSubtitle(poi);
 			if (osmExpression(poi, type[0])) {
 				marker.fltr = fltr;
-				marker.name = name || getText().filtername[fltr]; //Sets the subtitle which appears under the POI's name as text in grey
 				marker.category = filter[fltr].category;
 				marker.color = filter[fltr].color.code;
 				marker.priorize = filter[fltr].priorize;
