@@ -508,6 +508,7 @@ function getRightPopup(marker, usePopup) {
 	createDialog(marker, poi, popup[usePopup]);
 }
 function createDialog(marker, poi, details_data) {
+	console.log(2);
 	var popupContent = "";
 	var popupContent_header = "";
 	for (var entry in details_data) {
@@ -549,8 +550,8 @@ function createDialog(marker, poi, details_data) {
 	popupContent_header += "</div>";
 	marker.popupContent = popupContent_header + popupContent + "<hr/><a target=\"_blank\" href=\"https://www.openstreetmap.org/edit?" + String(poi.type) + "=" + String(poi.id) + "\">" + getText().LNK_OSM_EDIT + "</a>&nbsp;&nbsp;<a target=\"_blank\" href=\"https://www.openstreetmap.org/note/new#map=17/" + poi.lat + "/" + poi.lon + "&layers=N\">" + getText().LNK_OSM_REPORT + "</a>";
 	marker.bindPopup(marker.popupContent);
-	marker.openPopup();
 	debug_markerobj = marker;
+	setTimeout(function() {debug_markerobj.openPopup();}, 100); //workaround for a Bug in Leaflet;
 } 
 function loadPOIS(e, post) {
 	hideFilterListOnMobile();
@@ -583,7 +584,8 @@ function loadPOIS(e, post) {
 			marker = addMarkerIcon(poi, marker);
 			marker.data = poi;
 			marker.data.classId = String(poi.type)[0].toUpperCase() + String(poi.id);
-			marker.once("click", function(marker) {getRightPopup(marker, filter[marker.target.fltr].popup);});
+			//marker.once("click", function(marker) {getRightPopup(marker, filter[marker.target.fltr].popup);});
+			marker.on("click", function(event) {console.log(event);getRightPopup(event, filter[event.target.fltr].popup)});
 			//Add marker to map
 			map.addLayer(marker);
 			/*if (poi.lat == saved_lat && poi.lon == saved_lon) {
