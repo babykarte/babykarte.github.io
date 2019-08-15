@@ -63,13 +63,20 @@ function setLang(e, lang) {
 		9: ((document.getElementById("contact") != null) ? document.getElementById("contact").innerHTML = getText().IMPRESS_CONTACT : ""),
 		10: ((document.getElementById("note") != null) ? document.getElementById("note").innerHTML = getText().IMPRESS_NOTE : ""),
 		11: ((document.getElementById("linkToGitHub") != null) ? document.getElementById("linkToGitHub").innerHTML = getText().LNK_GITHUB : ""),
-		12: ((document.getElementById("linkToOSMWiki") != null) ? document.getElementById("linkToOSMWiki").innerHTML = getText().LNK_OSMWIKI : "")
+		12: ((document.getElementById("linkToOSMWiki") != null) ? document.getElementById("linkToOSMWiki").innerHTML = getText().LNK_OSMWIKI : ""),
+		13: ((document.getElementById("languageOfUser") != null) ? document.getElementById("languageOfUser").innerHTML = languageOfUser : ""),
+		14: ((document.getElementById("map-overlay-notify") != null) ? document.getElementById("map-overlay-notify").innerHTML = getText().FLTR_NOTHINGSELECTED : "")
 		};
-		//try {
-			initFilters();
-		//} catch {}
+		//Search for the names of playground equipment in the language reference
+		for (var json in getText()) {
+			if (json.startsWith("PDV_PLAYGROUND_") && json.endsWith("_YES")) { //Just add to the database 'filtertranslations' (needed by the 'filters.js/getSubtitle' function) what belongs to the playground equipment
+				var equipment = json.replace("PDV_PLAYGROUND_", "").replace("_YES",""); //Generate key from scratch
+				getText().filtertranslations["playground=" + equipment.toLowerCase()] = getText()[json];
+			}
+		}
+		hardReset();
 	} else {
-		alert("Language datas couldn't be loaded.");
+		alert("Language data couldn't be loaded.");
 	}
 }
 getLangFromHash();
