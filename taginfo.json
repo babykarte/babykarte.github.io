@@ -13,14 +13,14 @@
     "tags": [
         {
             "key": "min_age",
-            "object_types": ["node","way","relation"],
+            "object_types": ["node","way","relation","area"],
             "description": "POIs with tag value [4-99] and tagged 'leisure~park|playground' or 'amenity~cafe|restaurant' not shown on map."
         },
         {
             "key": "healthcare:speciality",
             "value": "paediatrics",
             "object_types": ["node","way"],
-            "icon_url": "https://dummyimage.com/16x16.gif/ff0000&text=+",
+            "icon_url": "https://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?size=32&hoffset=0&voffset=0&background=ff0000",
             "description": "POIs with this tag shown on map."
         },
         {
