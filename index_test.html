@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Babykarte</title>
+  	<meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <link rel='stylesheet' href='/style.css' />
+  </head>
+  <body>
+  	<div id='progressbar'></div>
+  	<div class='info' id='infoPopup' style='display:none;'></div>
+  	<section>
+
+	</section>
+	<!--<script src='http://openingh.openstreetmap.de/opening_hours.js/opening_hours+deps.min.js'></script>
+	<script>
+		var nominatimJSON = {"place_id":"16635879","licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":"1538016013","lat":"48.1581513","lon":"11.5104945","display_name":"Südliche Auffahrtsallee, Bezirksteil Neuhausen, Stadtbezirk 09 Neuhausen-Nymphenburg, Munich, Upper Bavaria, Bavaria, 80638, Germany","address":{"road":"Südliche Auffahrtsallee","suburb":"Bezirksteil Neuhausen","city_district":"Stadtbezirk 09 Neuhausen-Nymphenburg","city":"Munich","state_district":"Upper Bavaria","state":"Bavaria","postcode":"80638","country":"Germany","country_code":"de"},"boundingbox":["48.1580513","48.1582513","11.5103945","11.5105945"]}
+		var oh = new opening_hours("open; Tu-Su 08:30-09:00 off; Tu-Su,PH 14:00-14:30 off; Mo 08:00-13:00 off", nominatimJSON);
+		var from = new Date();
+		var to = parseInt(String(from).split(" ")[2]) + 7;
+		to = String(to) + " " + String(from).split(" ")[1] + " " + String(from).split(" ")[3]
+		to   = new Date(to);
+		var iterator = oh.getOpenIntervals(from, to);
+		for (var item in iterator) {
+			console.log(iterator[item][1] + "-" + iterator[item][0]);
+		}
+	</script>-->
+	<script src='oh-interpreter.js'></script>
+  </body>
+</html>

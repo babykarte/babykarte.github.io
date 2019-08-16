@@ -1,0 +1,19 @@
+# Bewertungssystem
+
+## Merkmale
+
+index = 0
+
+- diaper=*    4
+  - yes   2
+  - no    1
+- highchair=*   4 (nur für POIs, in denen es Speisen gibt)
+  - yes    2
+  - no     1
+- kids_area=*  2
+  - yes    2
+  - no     1
+- stroller=*   3
+  - yes       3
+  - limited   2
+  - no        1
