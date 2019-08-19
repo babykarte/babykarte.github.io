@@ -368,8 +368,8 @@ function processContentDatabase_intern(marker, poi, database, tag, values, data,
 			} else {
 				langcode += "_" + values[i].replace("_", "").replace(":", "_");;
 			}
-			if (database[parent].applyfor[marker.category.split(" ")[0]] && !langcode.endsWith("UNKNOWN")) {
-				title = getText("PDV_" + langcode.toUpperCase());
+			if (database[parent].applyfor[marker.category.split(" ")[0]]) {
+				title = getText("PDV_" + langcode.toUpperCase()) || undefined;
 				if (title != undefined && title.indexOf("%s") > -1 && poi.tags[tag]) {
 					title = title.replace("%s", poi.tags[tag]);
 				} else if (title != undefined && title.indexOf("%s") > -1) {
