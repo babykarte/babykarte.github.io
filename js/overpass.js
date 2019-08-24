@@ -141,6 +141,11 @@ function createSQL(bbox, fltr) {
 	}
 	return andquery + ");";
 }
+function roundIt(number) {
+	number = String(number)
+	console.log(Number(number.slice(0, 5)));
+	return Number(number.slice(0, 5))
+}
 function locateNewArea(fltr) {
 	//Complex algorithm. It calculates the coordinates when the user moves the map. Then the coordinates will be used to fetch just more POIs without overwriting/overlaying the existing ones.
 	//NORTH: Number increases when moving to the top (North)
@@ -153,25 +158,29 @@ function locateNewArea(fltr) {
 	var east_new = Number(map.getBounds().getEast());
 	var south_new = Number(map.getBounds().getSouth());
 	var west_new = Number(map.getBounds().getWest());
-	south_new = Number(south_new.toFixed(2));
-	west_new = Number(west_new.toFixed(2));
-	east_new = Number(east_new.toFixed(2));
-	north_new = Number(north_new.toFixed(2));
+	south_new = roundIt(south_new); //Number(south_new.toFixed(2));
+	west_new = roundIt(west_new); //Number(west_new.toFixed(2));
+	east_new = roundIt(east_new); //Number(east_new.toFixed(2));
+	north_new = roundIt(north_new); //Number(north_new.toFixed(2));
 	var size = Number(0.02);
-	var LBs_vertical = Number(Number((north_new - south_new) / size).toFixed());
-	var LBs_horizontal = Number(Number((east_new - west_new) / size).toFixed());
+	var LBs_vertical = roundIt(Number(north_new - south_new)/size ) //Number(Number((north_new - south_new) / size).toFixed());
+	var LBs_horizontal = roundIt(Number(east_new - west_new)/size ) //Number(Number((east_new - west_new) / size).toFixed());
+	console.log(south_new)
 	for (var i = 0;i <= LBs_vertical;i++) {
+		console.log(south_new);
 		for (var u = 0;u < LBs_horizontal;u++) {
+			console.log("  ", west_new);
 			if (!filter[fltr].littleboxes[String(south_new) + "+" + String(west_new)]) {
-				var result2 = createSQL(south_new + "," + west_new + "," +  Number(Number(south_new + size).toFixed(2)) + "," +  Number(Number(west_new + size).toFixed(2)), fltr);
+				//var result2 = createSQL(south_new + "," + west_new + "," +  Number(Number(south_new + size).toFixed(2)) + "," +  Number(Number(west_new + size).toFixed(2)), fltr);
+				var result2 = createSQL(south_new + "," + west_new + "," + Number(south_new + size) + "," +  Number(west_new + size), fltr);
 				result += result2;
 				filter[fltr].littleboxes[String(south_new) + "+" + String(west_new)] = true;
 			}
 			west_new += size;
-			west_new = Number(Number(west_new).toFixed(2));
+			west_new = Number(west_new); //Number(Number(west_new).toFixed(2));
 		}
 	south_new += size;
-	south_new = Number(Number(south_new).toFixed(2));
+	south_new = Number(south_new); //Number(Number(south_new).toFixed(2));
 	}
 	if (result) {
 		return result;
