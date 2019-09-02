@@ -1,9 +1,0 @@
-- Parks nur mit Namen anzeigen (v.1) https://www.openstreetmap.org/relation/1394363 v.1 Implemented
-- Öffnungszeiten gestaffelt nach Wochen (v.1) Implemented but not as good as we wish
-- 'playgrounds' extra mappen (als marker) (v.2)
-- 'Home' in poi detail view standartmäßig anzeigen. (v.1) - Implemented
-- Größe für die Popups (fest definieren) (v.1) - Implemented
-- Bei der Suche von Filter, die entsprechenden Marker und Popups aufploppen lassen (v.1) - Implemented partially
-- 'Stroller' als Filter (v.2)
-
-http://localhost:8080/#16&54.31880116386248&10.132282375852812
